@@ -1259,6 +1259,6 @@ https://www.javatpoint.com/get-vs-post
 
 http://www.jsptut.com/Scriptlets.jsp
 
-http://www.jsptut.com/taglibs.jsp
+
 
 https://www.javatpoint.com/jsp-page-directive
