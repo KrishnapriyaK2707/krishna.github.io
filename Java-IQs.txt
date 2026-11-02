@@ -1,0 +1,1264 @@
+JAVA
+*****
+
+*Java Interview Questions*
+
+1. What are the Principles of OOPS? Explain each of them.
+
+ Answer:
+  
+    Object
+    Class
+    Inheritance
+    Polymorphism
+    Abstraction
+    Encapsulation
+
+
+Object
+
+Any entity that has state and behavior is known as an object. For example: chair, pen, table, keyboard, bike etc. It can be physical and logical.
+
+Class
+
+Collection of objects is called class. It is a logical entity.
+
+Inheritance
+
+When one object acquires all the properties and behaviours of parent object i.e. known as inheritance. It provides code reusability. 
+It is used to achieve runtime polymorphism.
+
+Polymorphism
+
+
+When one task is performed by different ways i.e. known as polymorphism. For example: to convince the customer differently,
+ to draw something e.g. shape or rectangle etc.
+
+In java, we use method overloading and method overriding to achieve polymorphism.
+
+Another example can be to speak something e.g. cat speaks meaw, dog barks woof etc.
+
+Abstraction
+
+Hiding internal details and showing functionality is known as abstraction. For example: phone call, we don't know the internal processing.
+
+In java, we use abstract class and interface to achieve abstraction.
+
+Encapsulation
+
+Binding (or wrapping) code and data together into a single unit is known as encapsulation. For example: capsule, it is wrapped with different medicines.
+
+A java class is the example of encapsulation. Java bean is the fully encapsulated class because all the data members are private here.
+
+
+
+2. Give any real time example of inheritance, abstraction, polymorphism and encapsulation from any objects available in this room.
+3. Which OOPS principles should be used for the given scenarios (scenarios okke avaru appol aa samayam undakki chotikkum)
+4. What is the use of encapsulation?
+   
+   Encapsulation is the process of hiding information details and protecting data and behavior of an object from misuse by other objects. 
+In Java, encapsulation is done using access modifiers (public, protected, private) with classes, interfaces, setters, getters.
+
+What are the differences between protected and default access specifiers in Java? 
+
+The Protected access specifier is visible within the same package and also visible in the subclass whereas the 
+Default is a package level access specifier and it can be visible in the same package.
+
+
+5. How encapsulation is useful even when you are able to access the private variable through a public method?
+   
+   In Java, the access modifier private is used to protect data and behaviors from outside. 
+   The other objects cannot access the data directly. Instead, they have to invoke the getters/setters which are designed to protect the data from misuse or 
+unwanted changes.
+
+6. What's the difference between an abstract class and an interface?
+7. In what case you will need to create an abstract class and an interface?
+8. What is the use of interface if you can make all the methods of a class abstract?
+9. What is a static class, static method and a static variable?
+10. What is a static block and why is it needed in Java?
+11. Can a static method in a class is able to access the non static method of a same class? 
+    And, can a non static method in a class be able to access the static method of the same class?
+12. How can you access a static method from a different class? AND, How can you access a non static method from a different class?
+13. Why Java doesn't support multiple inheritance?
+14. How can we overcome the problem of multiple inheritance in Java?
+15. What are the different types of polymorphism. Explain all of them.
+16. What are the Difference between overloading and overriding?
+17. What are the rules for overriding?
+
+    1) A method can only be overridden in sub class, not in same class.
+
+   2) Overriding method cannot throw checked Exception which is higher in hierarchy, than checked Exception thrown by overridden method. 
+      For example if overridden method throws IOException or ClassNotfoundException, which are checked Exception, 
+      than overriding method can not throw java.lang.Exception because it comes higher in type hierarchy (it's super class of IOException and ClassNotFoundExcepiton).
+
+   3) Overriding method cannot reduce access of overridden method. It means if overridden method is defined as public than overriding method 
+      can not be protected or package private. Similarly if original method is protected then overriding method cannot be package-private.
+
+   4) Overriding method can increase access of overridden method. This is opposite of earlier rule, according to this if overridden method 
+     is declared as protected than overriding method can be protected or public.
+
+   5) private, static and final method can not be overridden in Java.
+
+   6) Return type of overriding method must be same as overridden method.
+
+
+18. What are rules for overloading?
+
+    1) First and foremost rule to overload a method in Java is to change method signature.
+    
+    2) Return type of method is not part of method signature, so just changing the return type will not overload a method in Java. 
+       In fact, just changing the return type will result in compile time error as "duplicate method X in type Y.
+
+  
+
+19. What is Java beans?
+20. What is the default access modifier of an abstract method?
+
+   The access level of the methods would remain as default(would be only visible within the package) even if the abstract class is of public access level.
+ Only if the child class overrides the method with a pulbic access modifier, it would be visible outside the package.
+
+     With abstract classes, you can declare fields that are not static and final, and define public, protected, and private concrete methods.
+     With interfaces, all fields are automatically public, static, and final, and all methods that you declare or define (as default methods) are public. 
+     In addition, you can extend only one class, whether or not it is abstract, whereas you can implement any number of interfaces.
+
+21. Explain how an object is created in Java?
+22. Explain the life cycle of an object.
+
+In Java, it has seven states in Object lifecycle. They are,
+
+    Created
+    In use
+    Invisible
+    Unreachable
+    Collected
+    Finalized
+    De-allocated
+
+
+
+23. In which memory does the object reside?
+24. In which memory does the local variable and global variable resides?
+25. What is garbage collection?
+26. How an object is garbage collected?
+27. What is garbage collectible heap?
+28. What is a constructor?
+29. What is a default constructor?
+30. If I need to create an object of class ONLY if it's instance variables have certain values, then can I do it?
+31. What is the toString() method?
+32. What is the use of .equal() method?
+33. What is the difference between .equals() and ==?
+34. Why is it necessary to override the toString() method in our class?
+35. What is a comparable?
+36. What is a comparator?
+37. What is the difference between comparator and comparable?
+38. What is the "this" keyword?
+39. What is "super" keyword?
+40. Why super keyword is used first in a constructor? 
+41. What is the difference between String object (String s = new String("Arun")) and a string literal (String s= "Arun")?
+42. How string is immutable?
+43. Why string is immutable?
+44. Prove that string is immutable.
+45. What is a wrapper class? Why it is used for?
+46. What is package? Why it is used in Java?
+47. Why is it not possible to create and object of an abstract class?
+48. How is it possible to create a reference variable with a parent class type, pointing to the object of child class? ( Animal a = new Dog())
+49. From the above case, if class animal and class dog has same method (overriden) then the method of which class shall be invoked while calling the method 
+    using reference variable? ( a.someMethod(); // this method exists in animal and dog class, so which method shall be invoked on this line trigger?)
+50. What is a final variable, final method and a final class?
+    A final class cannot be subclassed. Doing this can confer security and efficiency benefits, so many of the 
+    Java standard library classes are final, such as java.lang.System and java.lang.String .
+    final classes example -> java.lang.System and java.lang.String.
+51. What is reflection in Java?
+    Reflection is a language's ability to inspect and dynamically call classes, methods, attributes, etc. at runtime.
+52. What is autoboxing?
+    The automatic conversion of primitive data types into its equivalent Wrapper type is known as boxing and opposite operation is known as unboxing. 
+53. How can you create an instance of an abstract class?an instance of an abstract class cannot be created
+54. What is Exception?
+    An Exception can be anything which interrupts the normal flow of the program. 
+    When an exception occurs program processing gets terminated and doesn’t continue further. 
+    Exception can occur at runtime (known as runtime exceptions) as well as at compile-time (known Compile-time exceptions).
+55. What is the difference between Exception and error?
+
+    Errors indicate serious problems and abnormal conditions that most applications should not try to handle. 
+    Error defines problems that are not expected to be caught under normal circumstances by our program. 
+    For example memory error, hardware error, JVM error etc.
+    Exceptions are conditions within the code. A developer can handle such conditions and take necessary corrective actions.    	
+    Few examples –
+
+    DivideByZero exception
+    NullPointerException
+    ArithmeticException
+    ArrayIndexOutOfBoundsException
+
+
+56. Draw the hierarchy of Exception classes and interfaces.
+    Throwable is the parent class of Java Exceptions Hierarchy and it has two child objects – Error and Exception. 
+Exceptions are further divided into checked exceptions and runtime exception.
+
+57. What is a checked Exception? -> 
+
+    All exceptions other than Runtime Exceptions are known as Checked exceptions as the compiler checks them during compilation to see whether
+ the programmer has handled them or not. If these exceptions are not handled/declared in the program, it will give compilation error.
+
+Examples of Checked Exceptions :-
+ClassNotFoundException
+IllegalAccessException
+NoSuchFieldException
+EOFException etc.
+
+
+58. What is unchecked Exceptions?
+
+Runtime Exceptions are also known as Unchecked Exceptions as the compiler do not check whether the programmer has handled them or not but it’s the 
+duty of the programmer to handle these exceptions and provide a safe exit.
+These exceptions need not be included in any method’s throws list because compiler does not check to see if a method handles or throws these exceptions.
+
+Examples of Unchecked Exceptions:-
+ArithmeticException
+ArrayIndexOutOfBoundsException
+NullPointerException
+NegativeArraySizeException etc.
+
+
+59. What is the difference between throw and throws?
+
+   1. Throws clause in used to declare an exception and throw keyword is used to throw an exception explicitly.
+
+   2. If we see syntax wise than throw is followed by an instance variable and throws is followed by exception class names.
+
+   3. The keyword throw is used inside method body to invoke an exception and throws clause is used in method declaration (signature).
+
+  example:
+
+ Throw
+
+static{
+try {
+throw new Exception("Something went wrong!!");
+} catch (Exception exp) {
+System.out.println("Error: "+exp.getMessage());
+}
+}
+
+Throws
+
+public void sample() throws ArithmeticException{
+
+
+By using Throw keyword in java you cannot throw more than one exception but using throws you can declare multiple exceptions.
+
+
+60. How to create and Exception class?
+    
+61. What is the use of try and catch?
+62. What is the use of finally?
+63. If a return type is given in try, catch and finally then which return type will be executed in case of (1) Exception occurred, (2) No Exception occurred.
+64. How many Exceptions can be handled with a single try?
+65. What should be the order of catches to catch multiple Exceptions?
+66. How multiple catches can be written in a single line?
+67. Name few checked and unchecked Exceptions.
+68. How can we avoid catching Exception?
+69. What is the use of catching Exception? What will happen if we are not handling the exception?
+70. What is serialisation and deserialisation?
+    Serialization is a mechanism to convert an object into stream of bytes so that it can be written into a file, 
+transported through a network or stored into database. De-serialization is just a vice versa.
+A class must implement java.io.Serializable interface to be eligible for serialization.
+71. How can a object be serializer and deserialised in Java?
+    http://beginnersbook.com/2014/07/java-serialization/
+
+Serialzation:
+
+      FileOutputStream fos = new FileOutputStream("Student.ser"); 
+      ObjectOutputStream oos = new ObjectOutputStream(fos);
+      oos.writeObject(obj);
+      oos.close();
+      fos.close();
+      System.out.println("Serialzation Done!!");
+
+De-Serialzation:
+
+      FileInputStream fis = new FileInputStream("Student.ser");
+      ObjectInputStream ois = new ObjectInputStream(fis);
+      o = (Student)ois.readObject();
+      ois.close();
+      fis.close();
+
+
+72. What keyword is used to avoid an instance variable to be serialized?
+      transient
+73. What is thread?
+    A thread is a light-weight smallest part of a process that can run concurrently with the other parts(other threads) of the same process. 
+Threads are independent because they all have separate path of execution that’s the reason if an exception occurs in one thread, 
+it doesn’t affect the execution of other threads.
+ All threads of a process share the common memory. The process of executing multiple threads simultaneously is known as multithreading.
+
+74. How to start a new thread?
+
+    There are two ways to create a thread in Java:
+	1) By extending Thread class.
+	2) By implementing Runnable interface.
+
+75. What is runnable interface?
+76. How to create a thread without using separate runnable implementation?
+77. Why is the following methods used for: Sleep, wait, notify and notifyAll?
+
+    We have few methods through which java threads can communicate with each other. 
+    These methods are wait(), notify(), notifyAll(). All these methods can only be called from within a synchronized method.
+
+1) To understand synchronization java has a concept of monitor. Monitor can be thought of as a box which can hold only one thread. 
+Once a thread enters the monitor all the other threads have to wait until that thread exits the monitor.
+
+2) wait()  tells the calling thread to give up the monitor and go to sleep until some other thread enters the same monitor and calls notify().
+
+3) notify() wakes up the first thread that called wait() on the same object.
+notifyAll() wakes up all the threads that called wait() on the same object. The highest priority thread will run first.
+
+
+78. Why synchronise keyword is used for?
+    When two or more threads need access to a shared resource there should be some way that the resource will be used 
+    only by one thread at a time. The process to achieve this is called synchronization.
+    To implement the synchronous behavior java has synchronous method. Once a thread is inside a synchronized method, 
+    no other thread can call any other synchronized method on the same object. 
+    All the other threads then wait until the first thread come out of the synchronized block.
+
+79. Define the hierarchy of collection framework.
+80. Show how value is added and retrieved in arraylist.
+81. While insertion of one value in arraylist how JVM allocates the memory to that arraylist internally.
+
+     ArrayList stores the element’s value alone and internally maintains the indexes for each element.
+HashMap stores key & value pair. For each value there must be a key associated in HashMap. 
+That clearly shows that memory consumption is high in HashMap compared to the ArrayList.
+
+82. What is the difference between List and Map?
+    A List is an ordered Collection (sometimes called a sequence). Lists may contain duplicate elements. 
+Elements can be inserted or accessed by their position in the list, using a zero-based index. 
+A Map is an object that maps keys to values. A map cannot contain duplicate keys. 
+
+83. What is the difference between arraylist and vector?
+
+   ArrayList is non-synchronized which means multiple threads can work on ArrayList at the same time. while Vector is synchronized. 
+This means if one thread is working on Vector, no other thread can get a hold of it. 
+Unlike ArrayList, only one thread can perform an operation on vector at a time. 
+
+ArrayList gives better performance as it is non-synchronized. Vector operations gives poor performance as they are thread-safe, 
+the thread which works on Vector gets a lock on it which makes other thread wait till the lock is released.
+
+84. How is map iterated to get the values (program)?
+85. What is the difference between for-each Loop and an iterator? Which one has the better performance?
+    Iterator is an interface provided by collection framework to traverse a collection and for a sequential access of items in the collection.
+
+
+In for-each loop, we can’t modify collection, it will throw a ConcurrentModificationException on the other hand with iterator we can modify collection.
+
+    If we have to modify collection, we must use an Iterator.
+    While using nested for loops it is better to use for-each loop, consider the below code for better understanding.
+
+
+Traversing a collection using for-each loops or iterators give the same performance.
+
+86. How duplicates are not allowed in the hashset?
+
+    HashSet.add method adds the element to the HashMap.put as a key. All the values in the map are a same constant value (PRESENT). 
+    Associates the specified value with the specified key in this map. If the map previously contained a mapping for the key, the old value is replaced.
+
+It replaces the key with the new value, this way, no duplicates will be in the HashSet.
+
+87. What is treeset and why it is used?
+
+TreeSet is similar to HashSet except that it sorts the elements in the ascending order while HashSet doesn’t maintain any order. 
+TreeSet allows null element but like HashSet it doesn’t allow. Like most of the other collection classes this class is also not synchronized, 
+however it can be synchronized explicitly like this: SortedSet s = Collections.synchronizedSortedSet(new TreeSet(...));
+
+
+88. What is the difference between hashmap and hashtable?
+
+HashMap is non-synchronized. Hashtable is synchronized. 
+HashMap allows one null key and any number of null values.
+Hashtable doesn’t allow null keys and null values.
+
+
+89. How JVM avoid the duplication of values in HashList internally?
+90. How can the hashcodes be same even if the objects are different?
+
+1) If two Objects are equal according to equal(), then calling the hashcode method on each of those two objects should produce same hashcode.
+2) It is not required that if two objects are unequal according to the equal(), then calling the hashcode method on each of the two objects must 
+produce distinct values.
+
+   Depending on the hashing function, 2 different objects can have the same hash code. 
+For example, if I am hashing integers and my hashing function is simply (n % 10) then the number 17 and the number 27 will produce the same result. 
+This does not mean that those numbers are the same.
+
+91. What are generics?
+    The Java Generics programming is introduced in J2SE 5 to deal with type-safe objects.
+    Before generics, we can store any type of objects in collection i.e. non-generic. Now generics, forces the java programmer to store specific type of objects.
+    
+Uses:
+Code that uses generics has many benefits over non-generic code:
+
+    1. Stronger type checks at compile time.
+    2. Type casting is not required.
+    3. Type-safety : We can hold only a single type of objects in generics. It doesn’t allow to store other objects.
+
+Syntax to use generic collection
+
+    ClassOrInterface<Type>  
+
+Example to use Generics in java
+
+    ArrayList<String>  
+
+92. Explain jdbc connection.
+
+Class.forName("com.mysql.jdbc.Driver");  
+Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/sonoo","root","root");  //here sonoo is database name, root is username and password  
+Statement stmt=con.createStatement();  
+ResultSet rs=stmt.executeQuery("select * from emp");  
+while(rs.next())  
+System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));  
+con.close();  
+
+93.Is all Wrapper classes are immutable ?
+
+  Yes, Java's standard primitive wrapper classes are immutable. Once the object is created, its value cannot be changed.
+Wrapper classes are immutable because their internal value is effectively final, and they don't provide methods that modify the 
+existing object's value.
+Note: AtomicInteger is not immutable; it is mutable, thread-safe numeric class.
+
+
+*General Interview questions*
+
+1. Explain in brief about your project.
+2. Draw the workflow of your project.
+3. How is the mapping of JSP and its corresponding controllers are done?
+4. What is the use of web.xml?
+5. Which all 3rd party tools you have used in your project?
+6. Which ORM is used in your project?
+7. What is the advantages of using ORM over plain JDBC?
+8. What building tools is used in your project?
+9. What is the main purpose of using framework?
+10. What kind of framework is SOFIA/ Struts ? How is it useful?
+11. What are servlets?
+12. What is the difference between servlets and applets?
+13. What is life cycle of servlets?
+14. What is the life of JSP?
+15. What is the difference between servlets and JSP?
+16. What is jBoss and how it's different from Tomcat?
+17. What is iReport? How it is working internally?
+18. What is Ajax and why it used for?
+19. What was your role in Amrita?
+
+
+Q. What is cyclicbarrier in java ?
+
+ A number of threads (also known as parties) want to wait for each other at a common point, also known as the barrier before starting processing again.
+
+Its similar to CountDownLatch but instead of calling countDown() each thread calls await() and when last thread calls await() which signals that it 
+has reached the barrier, all thread started processing again, also known as a barrier is broken.
+
+A CyclicBarrier is used when multiple thread carry out different sub tasks and the output of these sub tasks need to be combined to form the final output. 
+After completing its execution, threads call await() method and wait for other threads to reach the barrier. Once all the threads have reached, 
+the barriers then give the way for threads to proceed.
+
+Q. What is CountDownLatch in java ?
+
+CountDownLatch is used to make sure that a task waits for other threads before it starts. To understand its application, let us consider a server where the main task can only start when all the required services have started.
+
+Working of CountDownLatch:
+When we create an object of CountDownLatch, we specify the number of threads it should wait for, all such thread are required to do count down by calling 
+CountDownLatch.countDown() once they are completed or ready to the job. As soon as count reaches zero, the waiting task starts running. 
+
+
+Q. What is String pool in java ?
+
+ String Pool in Java is a pool of Strings which is stored in Java Heap Memory.
+
+To create a String object in Java, there are two ways:
+
+    Using the new operator. For example,
+
+		String s1 = new String("Joey");
+
+    Using a string literal or constant expression. For example,
+
+		String s1="Joey"; (string literal) or
+		String s1="Joe" + "y"; (string constant expression)
+
+
+ The JVM performs some steps while initializing string literals to increase performance and decrease memory overhead. 
+ To decrease the number of String objects created in the JVM, the String class keeps a pool of strings.
+
+Each time a string literal is created, the JVM checks the string literal pool first. If the string already exists in the string pool, 
+a reference to the pooled instance returns. If the string does not exist in the pool, a new String object initializes and is placed in the pool.
+
+if you’re comparing 2 objects using == operator it compares addresses in the memory.
+
+So we will compare the strings using == to be completely sure that it’s the same object or not.
+
+If you are willing to add this string to the string literal pool, Java provides you with a method called, intern() method;
+
+
+
+Example:
+
+public class StringPoolExperiment
+{
+   public static void main(String[] args)
+{
+        String s1 = "Rachel";
+        String s2 = "Rachel";
+        String s3 = new String("Rachel");
+        String s4 = new String("Rachel").intern();        
+
+        System.out.println(s1 == s2); // true
+        System.out.println(s1 == s3); // false
+        System.out.println(s1 == s4); // true 
+} 
+}
+
+
+
+Q. Difference between Multitasking  and  Multithreading.
+
+
+Multitasking:
+In multitasking, the processes share separate memory.
+In multitasking, processes don’t share same resources, each process is allocated separate resources.
+Multitasking component involves multiprocessing.
+
+
+Multithreading :
+While in multithreading, processes are allocated same memory.
+While in multithreading, each process share same resources.
+While multithreading component does not involve multiprocessing.
+
+
+Multiprocessing: It is same as multitasking, however in multiprocessing more than one CPUs are involved. On the other hand one CPU is involved in multitasking.
+
+Parallel Processing: It refers to the utilization of multiple CPUs in a single computer system.
+
+
+
+
+Q. What are SOLID principles ?
+
+
+SOLID principles are object-oriented design concepts relevant to software development. 
+SOLID is an acronym for five other class-design principles: Single Responsibility Principle, Open-Closed Principle, Liskov Substitution Principle, 
+Interface Segregation Principle, and Dependency Inversion Principle.
+
+a)Single Responsibility Principle: - Every class in Java should have a single job to do. To be precise, there should only be one reason to change a class.
+Ex:
+a Java class that does not follow the single responsibility principle (SRP):
+public class Vehicle {
+    public void printDetails() {}
+    public double calculateValue() {}
+    public void addVehicleToDB() {}
+}
+The Vehicle class has three separate responsibilities: reporting, calculation, and database. 
+By applying SRP, we can separate the above class into three classes with separate responsibilities.
+
+
+b) Open-closed principle: - Software entities (e.g., classes, modules, functions) should be open for an extension, but closed for modification.
+Ex:
+
+public class VehicleCalculations {
+    public double calculateValue(Vehicle v) {
+        if (v instanceof Car) {
+            return v.getValue() * 0.8;
+        if (v instanceof Bike) {
+            return v.getValue() * 0.5;
+
+    }
+}
+
+Suppose we now want to add another subclass called Truck. We would have to modify the above class by adding another if statement,
+which goes against the Open-Closed Principle.
+A better approach would be for the subclasses Car and Truck to override the calculateValue method:
+
+public class Vehicle {
+    public double calculateValue() {...}
+}
+public class Car extends Vehicle {
+    public double calculateValue() {
+        return this.getValue() * 0.8;
+}
+public class Car extends Truck {
+    public double calculateValue() {
+        return this.getValue() * 0.9;
+}
+
+Adding another Vehicle type is as simple as making another subclass and extending from the Vehicle class.
+
+
+
+c) Liskov Substitution Principle: - The Liskov Substitution Principle (LSP) applies to inheritance hierarchies such that derived classes must be 
+completely substitutable for their base classes.
+
+Ex:
+
+Consider a typical example of a Square derived class and Rectangle base class:
+
+public class Rectangle {
+    private double height;
+    private double width;
+    public void setHeight(double h) { height = h; }
+    public void setWidht(double w) { width = w; }
+    ...
+}
+public class Square extends Rectangle {
+    public void setHeight(double h) {
+        super.setHeight(h);
+        super.setWidth(w);
+    }
+    public void setWidth(double h) {
+        super.setHeight(h);
+        super.setWidth(w);
+    }
+}
+
+The above classes do not obey LSP because you cannot replace the Rectangle base class with its derived class Square.
+The Square class has extra constraints, i.e., the height and width must be the same.
+Therefore, substituting Rectangle with Square class may result in unexpected behavior.
+
+d) Interface Segregation Principle: - The Interface Segregation Principle (ISP) states that clients should not be forced to depend upon interface members
+   they do not use. In other words, do not force any client to implement an interface that is irrelevant to them.
+
+Ex:
+Suppose there’s an interface for vehicle and a Bike class:
+
+public interface Vehicle {
+    public void drive();
+    public void stop();
+    public void refuel();
+    public void openDoors();
+}
+public class Bike implements Vehicle {
+
+    // Can be implemented
+    public void drive() {...}
+    public void stop() {...}
+    public void refuel() {...}
+    
+    // Can not be implemented
+    public void openDoors() {...}
+}
+
+As you can see, it does not make sense for a Bike class to implement the openDoors() method as a bike does not have any doors! 
+To fix this, ISP proposes that the interfaces be broken down into multiple, small cohesive interfaces so that no class is forced to implement any interface, 
+and therefore methods, that it does not need.
+
+d) Dependency inversion principle:- The Dependency Inversion Principle (DIP) states that we should depend on abstractions (interfaces and abstract classes) 
+instead of concrete implementations (classes). The abstractions should not depend on details; instead, the details should depend on abstractions.
+
+Ex:
+Consider the example below. We have a Car class that depends on the concrete Engine class; therefore, it is not obeying DIP.
+
+public class Car {
+    private Engine engine;
+    public Car(Engine e) {
+        engine = e;
+    }
+    public void start() {
+        engine.start();
+    }
+}
+public class Engine {
+   public void start() {...}
+}
+
+The code will work, for now, but what if we wanted to add another engine type, let’s say a diesel engine? This will require refactoring the Car class.
+However, we can solve this by introducing a layer of abstraction. Instead of Car depending directly on Engine, let’s add an interface:
+
+public interface EngineInterface {
+    public void start();
+}
+
+Now we can connect any type of Engine that implements the Engine interface to the Car class:
+
+public class Car {
+    private EngineInterface engine;
+    public Car(EngineInterface e) {
+        engine = e;
+    }
+    public void start() {
+        engine.start();
+    }
+}
+public class PetrolEngine implements EngineInterface {
+   public void start() {...}
+}
+public class DieselEngine implements EngineInterface {
+   public void start() {...}
+}
+
+
+
+Q. How to share data between threads ? 
+
+
+using volatile variable ?
+
+Q. Why does Double.NaN==Double.NaN return false?
+
+ NaN is a numeric data type value which stands for “not a number”. NaN usually indicates the result of invalid operations.
+NaN is by definition not equal to any number including NaN. This is part of the IEEE 754 standard and implemented by the CPU/FPU. 
+It is not something the JVM has to add any logic to support.
+
+Q. Why Java compiler shows error in case of checked exceptions ? 
+
+
+    Checked exceptions must be explicitly caught or propagated as described in Basic try-catch-finally Exception Handling. 
+    Unchecked exceptions do not have this requirement. They don't have to be caught or declared thrown.
+
+    Checked exceptions in Java extend the java.lang.Exception class. Unchecked exceptions extend the java.lang.RuntimeException.
+
+This compile-time checking for the presence of exception handlers is designed to reduce the number of exceptions which are not properly handled.
+The checked exception classes named in the throws clause are part of the contract between the implementor and user of the method or constructor. 
+The throws clause of an overriding method may not specify that this method will result in throwing any checked exception which the overridden method 
+is not permitted, by its throws clause, to throw.
+
+For example, the constructor of FileInputStream throws FileNotFoundException if the input file does not exist.
+
+Therefore, we should use the throws keyword to declare a checked exception:
+
+private static void checkedExceptionWithThrows() throws FileNotFoundException {
+    File file = new File("not_existing_file.txt");
+    FileInputStream stream = new FileInputStream(file);
+}
+
+We can also use a try-catch block to handle a checked exception:
+
+private static void checkedExceptionWithTryCatch() {
+    File file = new File("not_existing_file.txt");
+    try {
+        FileInputStream stream = new FileInputStream(file);
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+}
+Some common checked exceptions in Java are IOException, SQLException, and ParseException.
+
+Q. How to create a custom exception in Java ?
+
+To create a custom exception, 
+
+1. We have to extend the java.lang.Exception class.
+2. We also have to provide a constructor that takes a String as the error message and called the parent class constructor.
+
+This is all we need to do to define a custom exception.
+
+Ex:     
+
+  class InvalidAgeException extends Exception{  
+     InvalidAgeException(String s){  
+      super(s);  
+     }  
+    }  
+
+  class TestCustomException{  
+      
+       static void validate(int age)throws InvalidAgeException{  
+         if(age<18)  
+          throw new InvalidAgeException("not valid");  
+         else  
+          System.out.println("welcome to vote");  
+       }  
+         
+       public static void main(String args[]){  
+          try{  
+          validate(13);  
+          }catch(Exception m){System.out.println("Exception occured: "+m);}  
+      
+          System.out.println("rest of the code...");  
+      }  
+    }  
+
+
+
+Q.  What are volatile and transient variables?
+
+transient keyword is used along with instance variables to exclude them from serialization process. 
+If a field is transient its value will not be persisted. 
+On the other hand, volatile keyword is used to mark a Java variable as "being stored in main memory".
+
+Volatile:
+
+The Volatile keyword is used to mark the JVM and thread to read its value from primary memory and not utilize cached value present in the thread stack. 
+It is used in concurrent programming in java.
+
+Transient:
+
+The Transient keyword is used with the instance variable to eliminate it from the serialization process. 
+During serialization, the value of the transient field or variable is not saved.
+
+Q.
+
+How to Create an immutable class in Java?
+
+To create an immutable class in Java, you have to do the following steps.
+
+    1.Declare the class as final so it can’t be extended.
+    2.Make all fields private so that direct access is not allowed.
+    3.Don’t provide setter methods for variables.
+    4.Make all mutable fields final so that its value can be assigned only once.
+    5.Initialize all the fields via a constructor performing deep copy.
+    6.Perform cloning of objects in the getter methods to return a copy rather than returning the actual object reference.
+
+
+Q. Whether a final list can be modified in Java ?
+
+    Yes, a final list can be modified in java. 
+
+But we cannot rebind the variable to point to a different collection instance:
+
+final List<Integer> list = new ArrayList<Integer>();
+list = new ArrayList<Integer>(); // Since `list' is final, this won't compile
+
+
+Q. What is Type casting in Java ?
+
+Convert a value from one data type to another data type is known as type casting.
+
+There are two types of type casting:
+
+    *Widening Type Casting
+    *Narrowing Type Casting
+
+Widening Type Casting:
+
+Converting a lower data type into a higher one is called widening type casting. It is also known as implicit conversion or casting down. 
+It is done automatically. It is safe because there is no chance to lose data. It takes place when:
+
+    Both data types must be compatible with each other.
+    The target type must be larger than the source type.
+
+    byte -> short -> char -> int -> long -> float -> double  
+
+Example:
+
+    int x = 7;  
+    //automatically converts the integer type into long type  
+    long y = x;  
+    //automatically converts the long type into float type  
+    float z = y;  
+    System.out.println("Before conversion, int value "+x);  
+    System.out.println("After conversion, long value "+y);  
+    System.out.println("After conversion, float value "+z);  
+    
+
+Output
+
+Before conversion, the value is: 7
+After conversion, the long value is: 7
+After conversion, the float value is: 7.0
+
+In the above example, we have taken a variable x and converted it into a long type. After that, the long type is converted into the float type.
+
+
+Narrowing Type Casting:
+
+Converting a higher data type into a lower one is called narrowing type casting. It is also known as explicit conversion or casting up. 
+It is done manually by the programmer. If we do not perform casting then the compiler reports a compile-time error.
+
+    double -> float -> long -> int -> char -> short -> byte 
+
+double d = 166.66;  
+//converting double data type into long data type  
+long l = (long)d;  
+//converting long data type into int data type  
+int i = (int)l;  
+System.out.println("Before conversion: "+d);  
+//fractional part lost  
+System.out.println("After conversion into long type: "+l);  
+//fractional part lost  
+System.out.println("After conversion into int type: "+i);  
+
+Output
+
+Before conversion: 166.66
+After conversion into long type: 166
+After conversion into int type: 166
+
+
+In the example, we have performed the narrowing type casting two times. First, we have converted the double type into long data type 
+after that long data type is converted into int type.
+
+
+Q. What is the efficient way to find number of occurrences of a character in string in java
+
+1) Using Apache Commons
+
+int apache = StringUtils.countMatches(testString, ".");
+System.out.println("apache = " + apache);
+
+2) Using Java8 (case 1)
+
+long java8 = testString.chars().filter(ch -> ch =='.').count();
+System.out.println("java8 = " + java8);
+
+3) Using Java8 (case 2), may be better for unicode than case 1
+
+long java8Case2 = testString.codePoints().filter(ch -> ch =='.').count();
+System.out.println("java8 (second case) = " + java8Case2);
+
+Q. What are the types of Java Garbage Collectors In Java ?
+
+Java has four types of garbage collectors,
+
+1.Serial Garbage Collector
+2.Parallel Garbage Collector
+3.CMS Garbage Collector
+4.G1 Garbage Collector
+
+
+We can choose them by passing the choice as JVM argument.
+
+Garbage Collection JVM Options
+
+Following are the key JVM options that are related to Java garbage collection.
+
+Type of Garbage Collector to run
+
+Option				Description
+
+-XX:+UseSerialGC		Serial Garbage Collector		
+-XX:+UseParallelGC		Parallel Garbage Collector
+-XX:+UseConcMarkSweepGC		CMS Garbage Collector
+-XX:ParallelCMSThreads=		CMS Collector – number of threads to use
+-XX:+UseG1GC			G1 Gargbage Collector
+
+Garbage Collectors
+-------------------
+SerialGC - Tiny apps, CLIs - Small, 1 crore
+ParallelGC - Batch jobs - Max throughput
+GIGC(default) - Web services - Balanced
+ZGC/Shenandoah - Trading huge heaps - Lowest pauses
+
+Java 8 Improvement:
+
+Turn on the -XX:+UseStringDeduplication JVM argument while using G1 garbage collector. 
+This optimizes the heap memory by removing duplicate String values to a single char[] array. 
+This option is introduced in Java 8 u 20.
+
+
+
+
+
+Q. How ConcurrentHashMap works internally and what are it's main features.
+   
+   ConcurrentHashMap internally uses HashTable as its data structure. It is thread safe just like Hashtable. It provides all the functionalities 
+   of HashMap except thread safety. ConcurrentHashMap internally divides it into segments. Each segment works independently and can be accessed by 
+   different reader threads simultaneously. However, each segment can be accessed only by one writer thread at a time. The default level of concurrency 
+   is 16. Which means by default, there are 16 segments. Read operations don’t require locking of cocurrent hash map, where as write operations do require
+   locking. Locking is known as segment or bucket locking. Concurrent hash map doesn’t allow null key or null values. 
+   
+   ConcurrentHashMap returns a fail safe iterator. It means, using this iterator, we can modify ConcurrentHashMap while iterating. Each segment works
+   as an individual HashMap. So, if one thread is writing onto one segment, it locks that segment. Now until that thread is done, no other thread will
+   get access to that segment. However, reader threads can still access this segement. If another thread, wants to write to another segment at the
+   same time, it is free to do so. It will acquire lock on that segment and will start doing its job. Read operations return most recently updated 
+   operations, which means the it may not fetch the currently updating value.
+
+
+Q. What changes were done for HashMap in Java 8	?
+  
+  Ans : Java 8 introduced significant improvements in HashMap to optimize performance, especially in scenarios with a high number of hash collisions.
+  When multiple keys collide (have the same hash value), Java 7 stored them in a linked list. If the number of elements in a single bucket exceeds 8,
+  the linked list automatically converts into a Red-Black Tree. This improves the worst-case lookup time from O(n) → O(log n). If the number of elements 
+  in a bucket drops below 6, it converts back to a linked list to reduce memory usage.
+
+Q. Java 17 Features
+  
+a) Sealed classes and Interfaces
+  
+  Enhances the java programming language with sealed classes and interfaces. Sealed classes and interfaces restrict which other classes 
+  or interfaces may extend or implement them. Sealed classes powerful feature that allows you to control the inheritance hierarchy of a 
+  class or interface. They provide a way to explicitly define which classes or interfaces are permitted to extend or implement a sealed type. 
+  Restricted Inheritance: A sealed class or interface is declared using the sealed keyword, followed by a permits clause that lists the specific
+  classes or interfaces allowed to extend or implement it. 
+      public sealed class Shape permits Circle, Square, Rectangle {
+        // ... common properties and methods
+    }
+  	
+  
+b) Pattern matching for the switch:  
+
+   With pattern matching developers can now match the values ​​of Strings, enums, and records, which makes it much easier to write short 
+   and readable code. It expands the expressiveness and applicability of switch expressions and statements by allowing patterns and 
+   statements by allowing patterns to appear in case labels. It also allows the historical null-hostility of the switch to be relaxed 
+   when desired .  There are two new patterns introduced. 1) Guarded pattern: Uses pattern && boolean expression for further refinement.
+   2) Parenthesized pattern. The syntax for pattern matching in Java is fairly straightforward and involves a ‘case’ keyword followed by
+   an arrow (‘->’) to indicate what code should be executed if the pattern matches.
+   
+c) Enhanced pseudo-Random Number Generators :
+   
+   It provides a new interface type and implementations for pseudorandom number generators to make it easier to use various PRNG algorithms and to 
+   better support stream-based operations. 
+   
+d) Strongly Encapsulated JDK Internals:
+
+    It strongly encapsulates all non-critical internal elements of the JDK 
+
+e) Foreign Functions & memory API
+
+   It introduces an API by which java programs can interpret code and data outside of the java runtime.
+   
+f)  Vector API   : It introduces an API to express vector computations that reliably compile at runtime to optimal vector instructions.
+
+
+Q. Java 21 main features
+
+Below are the main features
+
+1. Virtual Threads (Project Loom)
+
+Virtual Threads are lightweight threads in Java (Java 19+) that make it easier to write highly concurrent applications. 
+They're managed by the Java Virtual Machine (JVM) rather than the operating system, allowing you to create millions of them cheaply.
+
+		Platform Thread			Virtual Thread
+		---------------			---------------
+Created by	Operating System		JVM
+Cost		Heavy (1-2 MB memory)		Lightweight (~1-10 KB)
+Quantity	Thousands (limited by OS)	Millions (limited by heap)
+Overhead	High context switching		Minimal
+Use case	Traditional multithreading	I/O-heavy applications
+
+// Before: Expensive OS threads
+new Thread(() -> {
+    System.out.println("Hello from a platform thread");
+}).start();
+
+// After: Cheap virtual threads
+Thread.ofVirtual().start(() -> {
+    System.out.println("Hello from a virtual thread");
+});
+
+2. Pattern Matching Enhancements
+
+Expanded pattern matching for switch expressions and record patterns.
+
+// Old way
+if (obj instanceof String) {
+    String s = (String) obj;
+}
+
+// New way
+if (obj instanceof String s) {
+    System.out.println(s);
+}
+
+// Record pattern matching
+record Point(int x, int y) {}
+if (obj instanceof Point(int x, int y)) {
+    System.out.println("x: " + x + ", y: " + y);
+}
+
+3. Record Patterns (Preview)
+
+Match and extract components from records directly.
+
+record Car(String brand, String model) {}
+
+public String describeCar(Car car) {
+    return switch (car) {
+        case Car(var brand, var model) -> brand + " " + model;
+        default -> "Unknown car";
+    };
+}
+
+4. Sequenced Collections
+
+New collections API defining encounter order (first to last).
+
+
+SequencedCollection<String> list = new ArrayList<>();
+list.addFirst("A");
+list.addLast("B");
+String first = list.getFirst();
+String last = list.getLast();
+list.reversed(); // Get reversed view
+
+
+5. String Templates (Preview)
+
+Simplified string interpolation without concatenation.
+
+
+// Before
+String name = "World";
+String message = "Hello, " + name + "!";
+
+// After (Preview)
+String name = "World";
+String message = "Hello, \{name}!";
+
+// With processors
+String query = QueryProcessor.process("""
+    SELECT * FROM users 
+    WHERE id = \{id}
+""");
+
+
+6. Unnamed Patterns and Variables
+
+Use underscore _ for unused parameters.
+
+// Cleaner code when you don't need a variable
+switch (obj) {
+    case String _ -> System.out.println("It's a string");
+    case Integer _ -> System.out.println("It's an integer");
+    case _ -> System.out.println("Something else");
+}
+
+// In lambdas
+list.forEach((_, v) -> System.out.println(v));
+
+
+7. Foreign Function & Memory API (Third Preview)
+
+Safely access native code and memory without JNI.
+
+// Call C library functions from Java safely
+Arena arena = Arena.ofConfined();
+MemorySegment segment = arena.allocateArray(ValueLayout.JAVA_INT, 10);
+
+
+8. Scoped Values (Preview)
+
+Thread-safe, immutable way to share data across method calls.
+
+static final ScopedValue<User> CURRENT_USER = 
+    ScopedValue.newInstance();
+
+public void doWork() {
+    ScopedValue.where(CURRENT_USER, user)
+        .run(() -> {
+            System.out.println(CURRENT_USER.get());
+        });
+}
+
+9. Generational ZGC
+
+Z Garbage Collector now supports generational mode for better performance.
+
+10. Structured Concurrency (Preview)
+
+Better coordination and error handling for concurrent tasks.
+
+try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+    Callable<String> task1 = scope.fork(() -> "Result 1");
+    Callable<String> task2 = scope.fork(() -> "Result 2");
+    
+    scope.joinUntil(deadline);
+    System.out.println(task1.get() + " and " + task2.get());
+}
+
+
+
+
+
+Q. What is ExecutorService in Java?
+ 
+ Ans : The ExecutorService interface extends Executor by adding methods that help manage and control the execution of threads. An ExecutorService is 
+ a utility in Java that provides a way to execute tasks concurrently. It manages a pool of worker threads, and allows you to submit tasks for execution.
+ The ExecutorService handles creation, management, and reusability of threads, making it easier to handle concurrent tasks in multithreaded applications.
+ 
+ Q.Why Use ExecutorService Instead of Creating Threads Manually?
+ 
+ a) Thread Pooling  - Reuses threads instead of creating new ones. 
+ b) Efficient Resource Management ⚡ - Reduces CPU and memory overhead.
+ c) Task Scheduling - Supports executing tasks with delays or periodically.
+ d) Graceful Shutdown - Provides methods to terminate tasks cleanly
+
+
+Q. What is the usage of try-with-resources ?
+
+Try-with-resources is a Java statement, introduced in Java 7, that automatically closes resources such as files, database connections, or network sockets when you’re done with them. Before it existed, you had to close resources yourself in a finally block.
+ 
+*Only classes implementing AutoCloseable (or its subtype Closeable) can be used. Most I/O classes, JDBC connections, and similar resources qualify.
+*Multiple resources can be declared separated by semicolons, and they’re closed in the reverse order they were opened.
+*Suppressed exceptions: If both the block and the close() call throw exceptions, the close exception is attached to the primary one as a suppressed exception, which you can retrieve with getSuppressed().
+
+Q. Difference between ClassNotFoundException and NoClassDefFoundError.
+
+Key differences
+----------------
+
+Aspect		ClassNotFoundException					NoClassDefFoundError
+------		-----------------------					---------------------
+Type		Checked exception					Error (unchecked)
+When		Dynamic loading by name at runtime			Class referenced in code, but missing when the JVM needs it
+Cause		Class name not found when explicitly requested		Class was present at compile time but is unavailable at runtime
+Handling	Can and should be caught				Generally should not be caught; fix the classpath or dependencies
+
+Quick way to remember: ClassNotFoundException comes from asking the JVM to load a class by name and failing. 
+NoClassDefFoundError comes from the JVM hitting a class reference it can’t resolve, usually because of a classpath problem.
+
+
+Q. Can you explain the date handling APIs introduced in Java 8?
+
+Java 8 completely replaced the flawed java.util.Date and Calendar with the thread-safe, immutable java.time package (JSR-310). 
+Key classes include:
+Instant:
+  Represents a specific point on the timeline in UTC (nanosecond resolution), ideal for machine timestamps.
+LocalDateTime / LocalDate / LocalTime: 
+  Represents date/time details without timezone context (e.g., "2026-10-26 at 5:00 PM").
+ZonedDateTime: 
+   Combines a date and time with a specific timezone (e.g., Asia/Kochi).
+Duration vs. Period: 
+   Duration measures time in machine-based units (seconds, nanoseconds), while Period measures time in human-centric units (days, months, years).
+
+Q. How do you invoke two downstream services in parallel and wait for both to complete in Java?
+
+You utilize Java's concurrent framework via CompletableFuture coupled with a dedicated thread pool executor:
+
+
+// Supply async tasks to a thread pool
+CompletableFuture<ResponseA> futureA = CompletableFuture.supplyAsync(() -> serviceA.call(), customExecutor);
+CompletableFuture<ResponseB> futureB = CompletableFuture.supplyAsync(() -> serviceB.call(), customExecutor);
+// Combine both and block until both executions finish executionCompletableFuture.allOf(futureA, futureB).join();
+// Extract responses safely without blocking indefinitely
+ResponseA resA = futureA.get();
+ResponseB resB = futureB.get();
+
+
+Q. PUT vs PATCH
+
+Both are HTTP methods used to update resources, but they differ in how much of the resource is updated.
+
+Aspect				PUT				PATCH
+------				---				-----
+Purpose				Replace entire resource		Update specific fields
+Request Body			Complete resource		Partial resource
+Unspecified Fields		May be overwritten/removed	Remain unchanged
+Idempotent			✅ Yes				Usually ✅ (depends on implementation)
+Payload Size			Larger				Smaller
+Use Case			Full update			Partial update
+
+
+sites
+*****
+justfortechies.com
+studytonight.com
+javaconceptoftheday.com
+
+
+
+***
+
+Difference between JavaBeans and POJO classes.
+
+
+A JavaBean follows certain conventions. Getter/setter naming, having a public default constructor, being serialisable etc. 
+
+A POJO (plain-old-Java-object) isn't rigorously defined. It's a Java object that doesn't have a requirement to implement a particular interface or derive 
+from a particular base class, or make use of particular annotations in order to be compatible with a given framework, 
+and can be any arbitrary (often relatively simple) Java object. It has getter and setter method, and all the member are declared as private.
+
+
+https://www.javatpoint.com/get-vs-post
+
+http://www.jsptut.com/Scriptlets.jsp
+
+http://www.jsptut.com/taglibs.jsp
+
+https://www.javatpoint.com/jsp-page-directive

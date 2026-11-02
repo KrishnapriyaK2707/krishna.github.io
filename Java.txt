@@ -1,0 +1,798 @@
+ To Study:
+
+1. Platform independence, JVM etc.
+   
+ *  Platform Independent: Java is a platform independent programming language. 
+   Java comes with its platform on which its code is executed. Java doesn't depend upon the operating system to be executed. 
+
+   JVM: Java Virtual Machine is a virtual machine that enables the computer to run the Java program. 
+   JVM is the specification which must be implemented in the computer system. 
+   The Java code is compiled by JVM to be a Bytecode which is machine independent and close to the native code. 
+   JVM is platform dependent. Its implementation has been provided by Oracle and other companies. 
+   Its implementation is known as JRE. 
+
+   JRE: JRE stands for Java Runtime Environment. It is the implementation of JVM.  It is used to provide the runtime 
+   environment. It is the implementation of JVM. It physically exists. It contains a set of libraries + other files that 
+   JVM uses at runtime. 
+
+   JIT Compiler: The Just-In-Time (JIT) compiler is a an essential part of the JRE i.e. Java Runtime Environment, 
+   that is responsible for performance optimization of java based applications at run time.
+   In order to improve performance, JIT compilers interact with the Java Virtual Machine (JVM) at run time and compile suitable bytecode
+   sequences into native machine code.
+
+ *  Classloader:
+
+    Classloader is a subsystem of JVM which is used to load class files. Whenever we run the java program, it is loaded first by the classloader. 
+There are three built-in classloaders in Java.
+
+    Bootstrap ClassLoader: Loads the core Java classes required by the JVM. Ex: java.lang.String, java.lang.Object, java.util.ArrayList.
+    Implemented using native code in traditional JVM implementations.
+    Loads the core Java runtime classes from rt.jar (in Java 8)
+    It is the parent of the Platform ClassLoader in the class-loading hierarchy.
+
+    Platform/Extension ClassLoader: This is the child classloader of Bootstrap and parent classloader of System classloader. 
+    Loads classes from the platform modules, such as java.sql and other non-core Java SE modules. 
+    In Java 9 and later, it replaced the Extension ClassLoader. In Java 8, it loaded jars from the jre/lib/ext directory.
+
+    System/Application ClassLoader: Loads the application’s own classes from the classpath, as set by -cp, -classpath, 
+    or the CLASSPATH environment variable.
+    Typically loads classes from your Java application and its dependencies. This class loader loads your application's main class.
+    ClassLoader.getSystemClassLoader() returns this loader. 
+
+You can also create custom class loaders by extending ClassLoader (or URLClassLoader), which is common in application servers, plugin systems, and frameworks that need to load classes dynamically or isolate them from each other.
+
+ * Types of memory areas are allocated by JVM:
+   
+    1.Class(Method) Area: Class Area stores per-class structures such as the runtime constant pool, field, method data, and the code for methods. 
+     In Hotspot, this lives in Metaspace since Java 8 (it was PermGen before that), and it is native memory, not part of the heap.
+
+    2.Heap: It is the runtime data area in which the memory is allocated to the objects. It is the main area managed by the 
+      garbage collector and is divided into generations (young and old) in most collectors. 
+      Its size is controlled with -Xms (initial) and -Xmx (maximum).
+
+    3.Stack: Java Stack stores frames. It holds local variables and partial results, and plays a part in method invocation and return. 
+      Each thread has its own stack holding frames. A frame is created for each method call and contains local variables, operand stack, 
+      and a reference to the runtime constant pool. Its size is controlled with -Xss, and exceeding it causes a StackOverflowError.
+
+    4.Program Counter Register: PC (program counter) register contains the address of the Java virtual machine instruction currently being executed.
+
+    5.Native Method Stack: It contains all the native methods used in the application.
+
+ *  Access specifiers in Java
+   
+    Public: The classes, methods, or variables which are defined as public, can be accessed by any class or method.
+    Protected: Protected can be accessed by the class of the same package, or by the sub-class of this class, or within the same class.
+    Default: Default are accessible within the package only. By default, all the classes, methods, and variables are of default scope.
+    Private: The private class, methods, or variables defined as private can be accessed within the class only.
+
+ * Static methods and variables:
+
+  The methods or variables defined as static are shared among all the objects of the class. The static is the part of the class and not of the object. 
+  The static variables are stored in the class area, and we do not need to create the object to access such variables. 
+  Therefore, static is used in the case, where we need to define variables or methods which are common to all the objects of the class.
+
+  For example, In the class simulating the collection of the students in a college, the name of the college is the common attribute to all the students.
+  Therefore, the college name will be defined as static.
+
+  The static variable gets memory only once in the class area at the time of class loading.
+  A static method can access static data member and can change the value of it.
+
+There are restrictions for the static method. They are:
+
+    1. The static method can not use non static data member or call non-static method directly.
+    2. this and super cannot be used in static context.
+    3. We can't override static methods. 
+
+  Static block is executed before the main method, at the time of classloading.
+
+Why is the Java main method static?
+
+  It is because the object is not required to call a static method. If it were a non-static method, JVM creates an object first then call main() method
+  that will lead the problem of extra memory allocation.
+
+What do you mean by 'synchronized' Non Access Modifier?
+
+Java provides these modifiers for providing functionalities other than Access Modifiers, synchronized is used to indicate that a method can be accessed
+by only one thread at a time.
+
+String:
+
+The String class is immutable,  Immutable simply means unmodifiable or unchangeable. Once string object is created its data or state can't be changed but a 
+new string object is created. 
+Since String is immutable it can safely be shared between many threads, which is considered very important for multithreaded programming.
+
+String is immutable it means that, the content of the String Object can't be change, once it is created. 
+
+Example: 
+
+class ImmutableStrings {
+
+    public static void main(String[] args) {
+        testmethod();
+    }
+
+    private static void testmethod() {
+    String a="a";
+    System.out.println("a 1-->"+a);
+    System.out.println("a 1 address-->"+a.hashCode());
+
+    a = "ty";
+    System.out.println("a 2-->"+a);
+
+       System.out.println("a 2 address-->"+a.hashCode());
+    }
+}
+output:
+
+a 1-->a
+a 1 address-->97
+a 2-->ty
+a 2 address-->3717
+
+This indicates that whenever you are modifying the content of immutable string object 'a', a new object will be created. 
+i.e you are not allowed to change the content of immutable object. that's why the address are different for both the object.
+
+
+If you want to modify the content then you can go for StringBuffer/StringBuilder instead of String. StringBuffer and StringBuilder are mutable classes.
+
+
+Why is StringBuffer called mutable?
+
+The String class is considered as immutable, so that once it is created a String object cannot be changed. If there is a necessity to make alot of 
+modifications to Strings of characters then StringBuffer should be used.
+
+What is the difference between StringBuffer and StringBuilder class?
+
+Use StringBuilder whenever possible because it is faster than StringBuffer. But, if thread safety is necessary then use StringBuffer objects.
+
+
+* Exception
+
+
+Exception is an error event that can happen during the execution of a program and disrupts it’s normal flow. 
+Exception can arise from different kind of situations such as wrong data entered by user, hardware failure, network connection failure etc.
+
+Whenever any error occurs while executing a java statement, an exception object is created and then JRE tries to find exception handler to handle the exception.
+If suitable exception handler is found then the exception object is passed to the handler code to process the exception, known as catching the exception. 
+If no handler is found then application throws the exception to runtime environment and JRE terminates the program.
+
+What are the Exception Handling Keywords in Java?
+
+There are four keywords used in java exception handling.
+
+    throw: Sometimes we explicitly want to create exception object and then throw it to halt the normal processing of the program. 
+    throw keyword is used to throw exception to the runtime to handle it.
+
+    throws: When we are throwing any checked exception in a method and not handling it, then we need to use throws keyword in method signature to let caller 
+    program know the exceptions that might be thrown by the method. The caller method might handle these exceptions or propagate it to it’s caller method using 
+    throws keyword. We can provide multiple exceptions in the throws clause and it can be used with main() method also.
+
+    try-catch: We use try-catch block for exception handling in our code. try is the start of the block and catch is at the end of try block to handle the exceptions. 
+    We can have multiple catch blocks with a try and try-catch block can be nested also. catch block requires a parameter that should be of type Exception.
+
+    finally: finally block is optional and can be used only with try-catch block. Since exception halts the process of execution, we might have some resources open
+    that will not get closed, so we can use finally block. finally block gets executed always, whether exception occurrs or not.
+
+Checked vs Unchecked Exceptions in Java:
+
+1) Checked: are the exceptions that are checked at compile time. If some code within a method throws a checked exception, then the method must either handle 
+the exception or it must specify the exception using throws keyword.
+
+For example, consider the following Java program that opens file at location “C:\test\a.txt” and prints the first three lines of it. 
+The program doesn’t compile, because the function main() uses FileReader() and FileReader() throws a checked exception FileNotFoundException. 
+It also uses readLine() and close() methods, and these methods also throw checked exception IOException. 
+To fix the program, we either need to specify list of exceptions using throws, or we need to use try-catch block.
+
+2) Unchecked are the exceptions that are not checked at compiled time. It is up to the programmers to specify or catch the exceptions.
+In Java exceptions under Error and RuntimeException classes are unchecked exceptions, everything else under throwable is checked.
+
+Java Exception Hierarchy:
+
+Java Exceptions are hierarchical and inheritance is used to categorize different types of exceptions. 
+Throwable is the parent class of Java Exceptions Hierarchy and it has two child objects – Error and Exception. 
+Exceptions are further divided into checked exceptions and runtime exception.
+
+Errors are exceptional scenarios that are out of scope of application and it’s not possible to anticipate and recover from them, 
+for example hardware failure, JVM crash or out of memory error.
+
+Checked Exceptions are exceptional scenarios that we can anticipate in a program and try to recover from it, 
+for example FileNotFoundException. We should catch this exception and provide useful message to user and log it properly for debugging purpose. 
+Exception is the parent class of all Checked Exceptions.
+
+Runtime Exceptions are caused by bad programming, for example trying to retrieve an element from the Array. We should check the length of array first 
+before trying to retrieve the element otherwise it might throw ArrayIndexOutOfBoundException at runtime. 
+RuntimeException is the parent class of all runtime exceptions.
+
+
+To Create Custom Excepton class:
+
+To create a custom exception class, you just define a class that extends one of the classes in the Java exception hierarchy. 
+Usually you extend Exception to create a custom checked exception.
+
+The Exception class itself and most other exception classes have a constructor that lets you pass a string message that’s stored with the exception 
+and can be retrieved via the getMessage method.
+
+As for any exception, you use a throw statement to throw a custom exception. You usually code this throw statement in the midst of a catch clause that 
+catches some other, more generic exception. 
+
+
+public class ProductDataException extends Exception
+{
+ public ProductDataException
+ {
+ }
+ public ProductDataException(String message)
+ {
+  super(message);
+ }
+}
+
+public class ProductDDB
+{
+ public static Product getProduct(String code)
+  throws ProductDataException
+ {
+  try
+  {
+   Product p;
+   // code that gets the product from a file
+   // and might throw an IOException
+   p = new Product();
+   return p;
+   }
+   catch (IOException e)
+   {
+   throw new ProductDataException(
+    "An IO error occurred.");
+   }
+ }
+}
+
+Here’s some code that calls the getProduct method and catches the exception:
+
+try
+{
+ Product p = ProductDB.getProduct(productCode);
+}
+catch (ProductDataException e)
+{
+ System.out.println(e.getMessage());
+}
+
+Here the message is simply displayed on the console if a ProductDataException is thrown.
+
+2. OOPs concenpts and related interview questions.
+
+* Association, Composition and Aggregation in Java:
+
+Association is relation between two separate classes which establishes through their Objects. Association can be one-to-one, one-to-many, many-to-one, many-to-many.
+Aggregation and Composition are the two forms of association.
+
+Aggregation: Is a special form of Association where:
+    It represents Has-A relationship.
+    It is a unidirectional association i.e. a one way relationship. For example, department can have students but vice versa is not possible and thus unidirectional in nature. 
+    In Aggregation, both the entries can survive individually.
+
+Composition: Is a restricted form of Aggregation in which two entities are highly dependent on each other. Composition is based on PART-OF - death relationship. 
+Example: Human and heart, heart don’t exist separate to a Human.
+
+Type of Relationship: Aggregation relation is “has-a” and composition is “part-of” relation.
+Type of association: Composition is a strong Association whereas Aggregation is a weak Association.
+
+* Inheritance:
+One class can use features from another class to extend its functionality.  Inheritance based on IS-A Relationship.  Inheritance is uni-directional.
+Inheritance is an Object oriented feature which allows a class to inherit behavior and data from other class. 
+For example, a class Car can extend basic feature of Vehicle class by using Inheritance.
+Inheritance is a relation between two classes, the parent and child class. 
+The child class (sub-class) inherits all the properties of the parent class (super-class). To define the relation, we use extends keyword.
+
+Inheritance is implemented in JAVA using below two keywords,
+
+    extends.
+    implements.
+
+-extends inherits between two classes and two interfaces.
+
+-implements inheritance between an interface and class.
+
+Java does not support multiple inheritance: 
+To reduce the complexity and simplify the language, multiple inheritance is not supported in java. Consider a scenario where A, B, and C are three classes. 
+The C class inherits A and B classes. If A and B classes have the same method and you call it from child class object, there will be ambiguity to call the 
+method of A or B class (This is called Diamond problem in java). 
+Ex:
+class A  
+{  
+public void display()  
+{  
+System.out.println("class A display() method called");  
+}  
+}  
+class B extends A  
+{  
+@Override  
+public void display()  
+{  
+System.out.println("class B display() method called");  
+}  
+}  
+class C extends A  
+{  
+@Override  
+public void display()  
+{  
+System.out.println("class C display() method called");  
+}  
+}  
+//not supported in Java  
+public class D extends B,C  
+{  
+public static void main(String args[])  
+{  
+D d = new D();  
+//creates ambiguity which display() method to call  
+d.display();   
+}  
+} 
+When we compile the above program, it shows the compiler error.  Java does not support the multiple inheritance because of this diamond problem.
+
+Solution to diamond problem: -
+
+The solution to the diamond problem is default methods and interfaces. We can achieve multiple inheritance by using these two things.
+From Java8 onwards default methods are introduced in an interface. You can have same default methods (same name and signature) 
+in two different interfaces and, from a class you can implement these two interfaces.
+If you do so, you must override the default method from the class explicitly specifying the default method along with its interface name.
+
+Ex:
+interface MyInterface1{
+   public static int num = 100;
+   public default void display() {
+      System.out.println("display method of MyInterface1");
+   }
+}
+interface MyInterface2{
+   public static int num = 1000;
+   public default void display() {
+      System.out.println("display method of MyInterface2");
+   }
+}
+public class InterfaceExample implements MyInterface1, MyInterface2{
+   public void display() {
+      MyInterface1.super.display();
+      //or,
+      MyInterface2.super.display();
+   }
+   public static void main(String args[]) {
+      InterfaceExample obj = new InterfaceExample();
+      obj.display();
+   }
+}
+
+If we remove implementation of default method from “InterfaceExample”, we get compiler error. 
+
+*  Polymorphism 
+
+   Polymorphism  allows us to perform a single action in different ways. In other words, polymorphism allows you to define one interface and have 
+multiple implementations. It is the ability of an object to take on many forms. The most common use of polymorphism in OOP occurs when a parent class reference is used to refer a child class object.
+
+In Java polymorphism is mainly divided into two types:
+
+    Compile time Polymorphism
+    Runtime Polymorphism
+
+
+ Compile time polymorphism: It is also known as static polymorphism. This type of polymorphism is achieved by function overloading or operator overloading.
+
+    Method Overloading: When there are multiple functions with same name but different parameters then these functions are said to be overloaded. 
+    Functions can be overloaded by change in number of arguments or/and change in type of arguments.
+
+ Run time polymorphism: It is also known as Dynamic Method Dispatch. It is a process in which a function call to the overridden method is resolved at Runtime. 
+                        This type of polymorphism is achieved by Method Overriding.
+
+    Method overriding, on the other hand, occurs when a derived class has a definition for one of the member functions of the base class. 
+    That base function is said to be overridden. 
+    In this process, an overridden method is called through the reference variable of a superclass. The determination of the method to be called is based on 
+    the object being referred to by the reference variable.
+
+    class Animal{  
+     void eat(){System.out.println("animal is eating...");}  
+    }  
+      
+    class Dog extends Animal{  
+     void eat(){System.out.println("dog is eating...");}  
+      
+     public static void main(String args[]){  
+      Animal a=new Dog();  
+      a.eat();  
+     }  
+    }  
+
+* Abstraction
+
+Abstraction is a process of hiding the implementation details and showing only functionality to the user.
+
+There are two ways to achieve abstraction in java
+
+    Abstract class 
+    Interface 
+
+Abstract class in Java
+
+A class which is declared as abstract is known as an abstract class. It can have abstract and non-abstract methods. 
+It needs to be extended and its method implemented. It cannot be instantiated.
+
+
+    * An abstract class must be declared with an abstract keyword.
+    * It can have abstract and non-abstract methods.
+    * It cannot be instantiated.
+    * It can have constructors and static methods also.
+    * It can have final methods which will force the subclass not to change the body of the method.
+
+ With abstract classes, you can declare fields that are not static and final, and define public, protected, and private concrete methods.
+     With interfaces, all fields are automatically public, static, and final, and all methods that you declare or define (as default methods) are public. 
+     In addition, you can extend only one class, whether or not it is abstract, whereas you can implement any number of interfaces.
+
+
+Abstract Classes vs Interfaces in Java
+----------------------------------------
+Quick comparison:-
+
+Feature				Abstract Class				Interface
+-------				-----------------			------------
+Can have instance variables	Yes (with any access modifier)		Only static final constants
+Can have methods		Yes (abstract and concrete)		Yes (abstract, default, static, private - Java 8+)
+Constructor			Yes					No
+Access modifiers		Any (public, private, protected)	Public by default
+Inheritance			extends (single)			implements (multiple)
+
+* Encapsulation:
+
+Encapsulation in Java is a mechanism to wrap up variables(data) and methods(code) together as a single unit.
+ It is the process of hiding information details and protecting data and behavior of the object
+
+We can create a fully encapsulated class in Java by making all the data members of the class private. 
+Now we can use setter and getter methods to set and get the data in it.
+
+The Java Bean class is the example of a fully encapsulated class.
+
+By providing only a setter or getter method, you can make the class read-only or write-only. In other words, you can skip the getter or setter methods.
+
+It provides you the control over the data. Suppose you want to set the value of id which should be greater than 100 only, 
+you can write the logic inside the setter method. You can write the logic not to store the negative numbers in the setter methods.
+
+It is a way to achieve data hiding in Java because other class will not be able to access the data through the private data members.
+
+
+
+
+3. Multithreading
+
+Multithreading:
+
+   Multithreading is a Java feature that allows concurrent execution of two or more parts of a program for maximum utilization of CPU. 
+Each part of such program is called a thread. So, threads are light-weight processes within a process.
+
+Threads can be created by using two mechanisms :
+1. Extending the Thread class
+2. Implementing the Runnable Interface
+
+ Thread creation by extending the Thread class:
+
+We create a class that extends the java.lang.Thread class. This class overrides the run() method available in the Thread class.
+A thread begins its life inside run() method. We create an object of our new class and call start() method to start the execution of a thread. 
+Start() invokes the run() method on the Thread object.
+
+Ex:
+// Java code for thread creation by extending 
+// the Thread class 
+class MultithreadingDemo extends Thread 
+{ 
+    public void run() 
+    { 
+        try
+        { 
+            // Displaying the thread that is running 
+            System.out.println ("Thread " + 
+                  Thread.currentThread().getId() + 
+                  " is running"); 
+  
+        } 
+        catch (Exception e) 
+        { 
+            // Throwing an exception 
+            System.out.println ("Exception is caught"); 
+        } 
+    } 
+} 
+  
+// Main Class 
+public class Multithread 
+{ 
+    public static void main(String[] args) 
+    { 
+        int n = 8; // Number of threads 
+        for (int i=0; i<n; i++) 
+        { 
+            MultithreadingDemo object = new MultithreadingDemo(); 
+            object.start(); 
+        } 
+    } 
+} 
+
+Output :
+
+Thread 8 is running
+Thread 9 is running
+Thread 10 is running
+Thread 11 is running
+Thread 12 is running
+Thread 13 is running
+Thread 14 is running
+Thread 15 is running
+
+
+Thread creation by implementing the Runnable Interface:
+
+We create a new class which implements java.lang.Runnable interface and override run() method. 
+Then we instantiate a Thread object and call start() method on this object.
+
+Ex:
+
+// Java code for thread creation by implementing 
+// the Runnable Interface 
+class MultithreadingDemo implements Runnable 
+{ 
+    public void run() 
+    { 
+        try
+        { 
+            // Displaying the thread that is running 
+            System.out.println ("Thread " + 
+                                Thread.currentThread().getId() + 
+                                " is running"); 
+  
+        } 
+        catch (Exception e) 
+        { 
+            // Throwing an exception 
+            System.out.println ("Exception is caught"); 
+        } 
+    } 
+} 
+  
+// Main Class 
+class Multithread 
+{ 
+    public static void main(String[] args) 
+    { 
+        int n = 8; // Number of threads 
+        for (int i=0; i<n; i++) 
+        { 
+            Thread object = new Thread(new MultithreadingDemo()); 
+            object.start(); 
+        } 
+    } 
+} 
+
+Output :
+
+Thread 8 is running
+Thread 9 is running
+Thread 10 is running
+Thread 11 is running
+Thread 12 is running
+Thread 13 is running
+Thread 14 is running
+Thread 15 is running
+
+Thread Class vs Runnable Interface"
+
+1. If we extend the Thread class, our class cannot extend any other class because Java doesn’t support multiple inheritance. 
+But, if we implement the Runnable interface, our class can still extend other base classes.
+
+2. We can achieve basic functionality of a thread by extending Thread class because it provides some inbuilt methods like yield(), interrupt() etc.
+ that are not available in Runnable interface.
+
+synchronized keyword:
+
+synchronized keyword is used to make the class or method thread-safe which means only one thread can have lock of synchronized method and use it, 
+other threads have to wait till the lock releases and anyone of them acquire that lock. 
+
+The Lifecycle of a thread: 
+    
+    New
+    Runnable
+    Blocked
+    Waiting
+    Timed Waiting
+    Terminated
+
+
+New − A new thread begins its life cycle in the new state. It remains in this state until the program starts the thread. It is also referred to as a born thread.
+
+Runnable − After a newly born thread is started, the thread becomes runnable. A thread in this state is considered to be executing its task.
+
+Blocked – Waiting to acquire a monitor lock to enter or re-enter a synchronized block/method
+
+Waiting − Sometimes, a thread transitions to the waiting state while the thread waits for another thread to perform a task. 
+          A thread transitions back to the runnable state only when another thread signals the waiting thread to continue executing.
+
+Timed Waiting − A runnable thread can enter the timed waiting state for a specified interval of time.
+          A thread in this state transitions back to the runnable state when that time interval expires or when the event it is waiting for occurs.
+
+Terminated (Dead) − A runnable thread enters the terminated state when it completes its task or otherwise terminates.
+
+
+4. Memmory
+
+In Java, memory management is the process of allocation and de-allocation of objects, called Memory management. Java does memory management automatically. 
+Java uses an automatic memory management system called a garbage collector. Thus, we are not required to implement memory management logic in our application. 
+Java memory management divides into two major parts:
+
+
+ Java Memory Structure:
+
+JVM defines various run time data area which are used during execution of a program. Some of the areas are created by the JVM whereas some are created
+by the threads that are used in a program. However, the memory area created by JVM is destroyed only when the JVM exits.
+The data areas of thread are created during instantiation and destroyed when the thread exits.
+
+    1.Class(Method) Area: Class Area stores per-class structures such as the runtime constant pool, field, method data, and the code for methods.
+
+    2.Heap: It is the runtime data area in which the memory is allocated to the objects
+
+    3.Stack: Java Stack stores frames. It holds local variables and partial results, and plays a part in method invocation and return. 
+             Each thread has a private JVM stack, created at the same time as the thread. A new frame is created each time a method is invoked. 
+             A frame is destroyed when its method invocation completes.
+
+    4.Program Counter Register: PC (program counter) register contains the address of the Java virtual machine instruction currently being executed.
+
+    5.Native Method Stack: It contains all the native methods used in the application.
+
+
+Why are stack and heap designed so?
+
+The stack is used for data that has a short lifetime- local variables or primitive data variables. 
+Heap is used for data that has a longer lifetime like objects that need to be shared by various functions or code blocks.
+If you look at the physical memory amount allocated to heap and stack, heap memory is massive compared to stack memory.
+
+Every thread has its own stack. Heap memory is shared across all threads. 
+
+In an application, there is one heap that is shared across all threads and there are multiple stacks, one for each thread.
+By placing objects on the heap, it makes it easy to pass them around threads and code blocks in the application.
+
+
+ Working of the Garbage Collector:
+
+JVM triggers this process and as per the JVM garbage collection process is done or else withheld. 
+It reduces the burden of programmer by automatically performing the allocation or deallocation of memory.
+
+
+System.gc() and Runtime.gc() are the methods which requests for Garbage collection to JVM explicitly but it doesn’t ensures garbage collection 
+as the final decision of garbage collection is of JVM only.
+
+Memory related errors:
+----------------------
+
+StackOverflowError: Usually caused by excessive/deep recursion
+OutOfMemoryError: Java heap space
+   - Usually occurs when the application cannot allocate more objects in the heap.
+OutOfMemoryError: Metaspace
+
+   - Can occur when class metadata consumes available Metaspace, for example excessive class/classloader creation.
+
+Memory Leak in Java:
+____________________
+
+A memory leak occurs when  objects are no longer logically needed by the application but are still reachable, so the Garbage Collector cannot 
+remove them.
+
+Common causes: Static collections, Caches without eviction/TTL, Listeners not removed, Unclosed resources,  ThreadLocal not cleaned up.
+
+
+Memory Leak vs OutOfMemoryError:
+--------------------------------
+
+Memory Leak -> Objects remain reachable unnecessarly -> Heap usage keeps increasing -> GC cannot reclaim enough memory -> OutOfMemoryError
+
+memory leak can eventually cause an OutOfMemoryError. But OutOfMemoryError can also occur for other reasons, 
+such as genuninely requiring more heap memory than configured.
+	
+How to troubleshoot a memory leak:
+_________________________________
+
+1. Monitor heap - If old gen continuously grows after GC, that is a strong warning sign.
+2. Take heap dumps - Useful JVM option: -XX:+HeapDumpOnOutOfMemoryError
+   Then analyze the .hprof file using tools such as Visual VM, JProfiler etc.
+3. Look for GC behavior - If post-GC baseline keeps increasing, investigate retained objects.
+
+
+
+Serialization
+
+Serialization is a mechanism to convert an object into stream of bytes so that it can be written into a file, transported through a network or stored into database. 
+De-serialization is just a vice versa. In simple words serialization is converting an object to stream of bytes and de-serialization is rebuilding the 
+object from stream of bytes. Java Serialiation API provides the features to perform seralization & de-serialization. A class must implement 
+java.io.Serializable interface to be eligible for serialization.
+
+
+Ex:
+
+Serialization of Object
+
+This class is writing an object of Student class to the Student.ser file. We are using FileOutputStream and ObjectOutputStream to write the object to File.
+
+Note: As per the best practices of Java Serialization, the file name should have .ser extension.
+
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+public class SendClass
+{
+  public static void main(String args[])
+  {
+    Student obj = new Student(101, 25, "Chaitanya", "Agra", 6);
+    try{ 
+      FileOutputStream fos = new FileOutputStream("Student.ser"); 
+      ObjectOutputStream oos = new ObjectOutputStream(fos);
+      oos.writeObject(obj);
+      oos.close();
+      fos.close();
+      System.out.println("Serialzation Done!!");
+   }catch(IOException ioe){
+      System.out.println(ioe);
+    }
+  }
+}
+
+Output:
+
+Serialzation Done!!
+
+De-serialization of Object
+
+This class would rebuilt the object of Student class after reading the stream of bytes from the file. Observe the output of this class, 
+student address and student height fields are having null & 0 values consecutively. This is because these fields were declared transient in the Student class.
+
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.io.IOException;
+public class AcceptClass {
+
+ public static void main(String args[])
+ {
+    Student o=null;
+    try{
+      FileInputStream fis = new FileInputStream("Student.ser");
+      ObjectInputStream ois = new ObjectInputStream(fis);
+      o = (Student)ois.readObject();
+      ois.close();
+      fis.close();
+    }
+    catch(IOException ioe)
+    {
+       ioe.printStackTrace();
+       return;
+    }catch(ClassNotFoundException cnfe)
+     {
+       System.out.println("Student Class is not found.");
+       cnfe.printStackTrace();
+       return;
+     }
+    System.out.println("Student Name:"+o.getStuName());
+    System.out.println("Student Age:"+o.getStuAge());
+    System.out.println("Student Roll No:"+o.getStuRollNum());
+    System.out.println("Student Address:"+o.getStuAddress());
+    System.out.println("Student Height:"+o.getStuHeight());
+ }
+}
+
+Output:
+
+Student Name:Chaitanya
+Student Age:25
+Student Roll No:101
+Student Address:null
+Student Height:0
+
+https://www.studytonight.com/tests/?subject=java
+
+
