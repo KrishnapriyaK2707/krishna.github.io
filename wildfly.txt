@@ -1,0 +1,82 @@
+https://www.guru99.com/n-tier-architecture-system-concepts-tips.html
+
+Software architecture:
+----------------------
+Software architecture refers to the fundamental structures of a software system and the discipline of creating such structures and systems.
+Software architecture is about making fundamental structural choices that are costly to change once implemented. Software architecture choices include 
+specific structural options from possibilities in the design of the software. For example, the systems that controlled the Space Shuttle launch vehicle 
+had the requirement of being very fast and very reliable. Therefore, an appropriate real-time computing language would need to be chosen.
+
+Software Architecture Patterns:
+-------------------------------
+An architectural pattern is a general, reusable solution to a commonly occurring problem in software architecture within 
+a given context. 
+The architectural patterns address various issues in software engineering, such as computer hardware performance 
+limitations, high availability and minimization of a business risk.
+
+Example: Layered Pattern, Microkernel , Client-server pattern, Microservices etc.
+
+Single Tier Architecture:
+------------------------
+
+ - a one-tier architecture keeps all of the elements of an application, including the interface, middleware and 
+   back-end data, in one place. That is, applications that could be installed and run on a single computer.
+
+Ex: MP3 player, MS Office etc come under one tier application.
+
+Risk - If the server is down, the application will be down. 
+If the server is externally attacked, you are at greater risk of data loss.
+
+
+Multi Tier architecture:
+------------------------
+
+Two-Tier Architecture:
+----------------------
+
+ - The two-tier architecture is like client server application. The direct communication takes place between client and server. 
+There is no intermediate between client and server.
+
+The Two-tier architecture is divided into two parts:
+
+1. Client Tier
+2. Data Tier
+
+In two-tier, the application logic is either buried inside the user interface on the client or within the database 
+on the server (or both).
+
+Risk - It is less secured as client can communicate with database directly. 
+It results in performance loss whenever the users increase rapidly.
+
+Ex:ATM machine
+
+Three-Tier Architecture:
+----------------------
+
+The Three-tier architecture is divided into three parts:
+
+1. Presentation layer (Client Tier)
+2. Application layer (Business Tier)
+3. Database layer (Data Tier)
+
+Client system handles Presentation layer, Application server handles Application layer and Server system handles 
+Database layer.
+
+Ex: Web application.
+
+J2EE;
+-----
+J2EE uses a multi-tier distributed model. This model generally includes a Client Tier, a Middle Tier, and an EIS Tier.
+The Client Tier can be one or more applications or browsers. The J2EE Platform is in the Middle Tier and consists of
+a Web Server and an EJB Server. (These servers are also called "containers.") 
+
+When there is a request from the client, the application server process the business logic and makes a
+call to the database to retrieve the relevant data.
+
+Application Server vs. Web Application Server
+
+An application server is distinct from but often works in conjunction with, a web application server. A web server can 
+only handle HTTP requests, while an application server can serve business logic via many different protocols. 
+In a standard setup, the web server receives a request from the GUI or front end and then sends that request to the 
+application server for business logic processing before it is sent back to the web application server and then back to 
+the user via a modified web form.

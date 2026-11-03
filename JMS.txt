@@ -1,0 +1,135 @@
+Background:
+
+Remote procedure call (RPC) systems, including Java RMI, are synchronous -- the caller must block and wait until the called method completes execution, 
+and thus offer no potential for developing loosely coupled enterprise applications without the use of multiple threads. In other words, RPC systems require
+the client and the server to be available at the same time. However, such tight coupling may not be possible or desired in some applications. 
+Message-Oriented Middleware (MOM) systems provide solutions to such problems. They are based on the asynchronous interaction model, and provide the abstraction 
+of a message queue that can be accessed across a network. Note, however, that messaging here refers to asynchronous requests or events that are consumed 
+by enterprise applications and not humans as in electronic mail (email). These messages contain formatted data that describe specific business actions.
+
+ The Java Message Service (JMS) was designed to make it easy to develop business applications that asynchronously send and receive business data and events. 
+It defines a common enterprise messaging API that is designed to be easily and efficiently supported by a wide range of enterprise messaging products. 
+JMS supports both messaging models: point-to-point (queuing) and publish-subscribe.
+
+Architecture
+
+A JMS application is composed of the following parts:
+
+    *A JMS provider: A messaging system that implements the JMS specification.
+    *JMS clients: Java applications that send and receive messages.
+    *Messages: Objects that are used to communicate information between JMS clients.
+    *Administered objects: Preconfigured JMS objects that are created by an administrator for the use of JMS clients.
+
+
+Message Delivery Models:
+
+JMS supports two different message delivery models:
+
+    Point-to-Point Messaging Domain
+    Publisher/Subscriber Messaging Domain
+
+1) Point-to-Point (PTP) Messaging Domain
+
+In PTP model, one message is delivered to one receiver only. Here, Queue is used as a message oriented middleware (MOM).
+
+The Queue is responsible to hold the message until receiver is ready.
+
+In PTP model, there is no timing dependency between sender and receiver.
+
+2) Publisher/Subscriber (Pub/Sub) Messaging Domain
+
+In Pub/Sub model, one message is delivered to all the subscribers. It is like broadcasting. Here, Topic is used as a message oriented middleware 
+that is responsible to hold and deliver messages.
+
+In this model, there is timing dependency between publisher and subscriber.
+
+
+Message Driven Bean
+
+A message driven bean (MDB) is a bean that contains business logic. But, it is invoked by passing the message. So, it is like JMS Receiver.
+
+MDB asynchronously receives the message and processes it.
+
+A message driven bean receives message from queue or topic, so you must have the knowledge of JMS API.
+
+
+Client to Produce Messages
+
+  1 . Use the Java Naming and Directory Interface (JNDI) to find a ConnectionFactory object, or instantiate a ConnectionFactory object directly and set its attributes.
+
+    A client uses a connection factory, which is an instance of either QueueConnectionFactory (point-to-point) or TopicConnectionFactory (publish/subscribe),
+    to create a connection to a provider. The following snippet of code demonstrates how to use JNDI to find a connection factory object:
+    
+
+    Context ctx = new InitialContext();
+    ConnectionFactory cf1 = (ConnectionFactory) ctx.lookup("jms/QueueConnectionFactory");
+    ConnectionFactory cf2 = (ConnectionFactory) ctx.lookup("/jms/TopicConnectionFactory");
+
+2. Use the ConnectionFactory object to create a Connection object. This can be done as follows:
+
+	Connection connection = connFactory.createConnection();
+
+Use the Connection object to create one or more Session objects, which provide transactional context with which to group a set of sends and receives 
+into an atomic unit of work. A session can be created as follows:
+
+Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE)
+
+The createSession() method takes two arguments: the first (false in this case) means that the session is not transacted, and the second means that the session
+ will automatically acknowledge messages when they have been received successfully.
+Use JNDI to find Destination object(s), or instantiate one directly and configure it by setting its attributes.
+
+A destination object is used by the client to specify the source of messages it consumes and the target of messages it produces. 
+In the point-to-point messaging, destinations are known as queues, and in the publish/subscribe model of messaging, they are known as topics. 
+The following snippet of code demonstrates how to perform a JNDI lookup of a queue named jms/SomeQueue:
+
+Destination dest = (Queue) ctx.lookup("jms/SomeQueue");
+
+Or, you can directly instantiate and configure a destination object as follows:
+
+Queue q = new com.sun.messaging.Queue("world");
+Use a Session and a Destination object to create the needed MessageProducer object, which are used for sending messages to a destination. 
+The code below shows how that is done. Note that you can create a MessageProducer object without specifying a Destination object, 
+but in that case a Destination object must be specified for each message produced.
+
+MessageProducer producer = session.createProducer(SomeQueue OR SomeTopic);
+
+Once a producer has been created, it can be used to send messages as follows:
+
+producer.send(message);
+Client to Consume Messages
+
+The first four steps are the same as above.
+
+5. Use a Session object and a Destination object to create any needed MessageConsumer objects that are used for receiving messages. This can be done as follows:
+
+MessageConsumer consumer = session.createConsumer(SomeQueue or SomeTopic);
+
+Note that if topic is being used, then you can use the Session.createDurableSubscriber() to create a durable topic subscriber.
+
+Once the consumer has been created, it can be used to receive messages. Message delivery, however, doesn't begin until you start the connection created earlier, 
+which can be done by calling the start() method:
+
+connection.start();
+Message msg = consumer.receive();
+
+A long parameter can be passed to the receive() method to specify a time-out (for example, 3000L for 3 seconds).
+
+It is important to note that the receive() method is used to consume a message synchronously. In order to consume a message asynchronously, 
+a message listener is used.
+
+6. If asynchronous communication is desired, instantiate a MessageListener object and register it with a MessageConsumer object.
+
+A MessageListener object acts as an asynchronous event handler for messages. The MessageListener interface contains one method, onMessage(), 
+which you implement to receive and process the messages.
+
+In the following snippet of code, the class MyListener implements the MessageListener interface. The message listener is registered with a specific consumer 
+using the setMessageListener():
+
+
+MessageListener listener = new MyListener();
+consumer.setMessageListener(listener);
+
+In order to avoid missing messages, the start() method should be called on the connection after the listener has been registered. 
+When message delivery begins, the JMS provides automatically invokes the message listener's onMessage() whenever a message is delivered.
+
+7. Instruct the Connection object to start delivery of messages by calling the start() method.
