@@ -1235,17 +1235,7 @@ Payload Size			Larger				Smaller
 Use Case			Full update			Partial update
 
 
-sites
-*****
-justfortechies.com
-studytonight.com
-javaconceptoftheday.com
-
-
-
-***
-
-Difference between JavaBeans and POJO classes.
+Q.Difference between JavaBeans and POJO classes.
 
 
 A JavaBean follows certain conventions. Getter/setter naming, having a public default constructor, being serialisable etc. 
@@ -1255,10 +1245,29 @@ from a particular base class, or make use of particular annotations in order to 
 and can be any arbitrary (often relatively simple) Java object. It has getter and setter method, and all the member are declared as private.
 
 
-https://www.javatpoint.com/get-vs-post
+What are Functional Interfaces?
+What is lambda expression?
+How are functional interfaces and Lambda Expressions related? 
+What is an optional class?
+What is Method Reference?
+What is Type Inference?
+What are the default methods?
+How will you call a default method of an interface in a class?
+How will you call a static method of an interface in a class?
+What Is a Stream? How Does It Differ from a Collection?
+What are the features of Java Stream
+What are different operations of Java Stream
+What is stream pipelining in Java 8?
+What is the difference between Iterator and Spliterator?
+What are the issues of the old Date and Time APIs.  Can you explain the new Date and Time APIs in java 8?
+Can we list the numbers and remove the duplicate elements in the list using Java SE 8 features?
+Advantage of having default & static method in functional interfaces in java ? 
+Explain Default Methods and Multiple Inheritance Ambiguity Problems 
+Easiest way to convert an array into a a stream in Java8.?
+How to sort an array of strings w.r.t lenght in Java8 ?
 
-http://www.jsptut.com/Scriptlets.jsp
-
-
-
-https://www.javatpoint.com/jsp-page-directive
+sites
+*****
+justfortechies.com
+studytonight.com
+javaconceptoftheday.com
