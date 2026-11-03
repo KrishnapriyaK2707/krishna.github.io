@@ -1,0 +1,1025 @@
+1) List down the new features introduced in Java 8?
+
+    Lambda Expressions − A new language feature allowing treating actions as objects.
+    Method References − Enable defining Lambda Expressions by referring to methods directly using their names.
+    Optional Class − Special wrapper class used for expressing optionality.
+    Functional Interface – An interface with maximum one abstract method, implementation can be provided using a Lambda Expression.
+    Default methods − Give us the ability to add full implementations in interfaces besides abstract methods.
+    Nashorn, JavaScript Engine − Java-based engine for executing and evaluating JavaScript code.
+    Stream API − A special iterator class that allows processing collections of objects in a functional manner.
+    forEach() method in Iterable interface.
+    Date API − An improved, immutable JodaTime-inspired Date API.
+    Base64 Encode Decode
+
+2) What are main advantages of using Java 8?
+
+    More compact code
+    Less boiler plate code
+    More readable and reusable code
+    More testable code
+    Parallel operations
+
+3) What are Functional Interfaces?
+
+The functional interface is an interface with one abstract method, but it can have any number of default and static methods
+and it can also override java.lang.Object class method. 
+
+If an interface has an abstract method that overrides one of the public methods of “java.lang.object” then it is not considered as the interface’s 
+abstract method.
+
+Given below is a valid Functional Interface example.
+@FunctionalInterface
+public interface FunctionalInterface_one
+{
+    public void firstInt_method();
+ 
+    @Override
+    public String toString();                //Overridden from Object class
+ 
+    @Override
+    public boolean equals(Object obj);        //Overridden from Object class
+}
+
+
+We use the @Functional annotation with a functional interface. This ensures that the interface can’t have more than one abstract method.
+If we define more than one abstract method in this interface, then the compiler shows an error ‘Invalid '@FunctionalInterface' annotation.’
+
+There are many functional interfaces already present in java such as Comparable, Runnable.
+
+You can implement functional interfaces using lambda expressions.
+
+4) What is lambda expression?
+
+A lambda expression is an anonymous function. A function that doesn’t have a name and doesn’t belong to any class. 
+Lambda expressions are similar to methods, but they do not need a name and they can be implemented right in the body of a method.
+
+Java Lambda Expression Syntax:
+
+To create a lambda expression, we specify input parameters (if there are any) on the left side of the lambda operator ->, and place the expression or 
+block of statements on the right side of lambda operator. For example, the lambda expression (x, y) -> x + y specifies that lambda expression takes 
+two arguments x and y and returns the sum of these.
+
+Structure of Lambda Expressions:
+ 
+(Argument List) ->{expression;} or
+(Argument List) ->{statements;}
+
+Example:
+
+ 1. ()->{System.out.println("Hello")}; //Without argument, will print hello 
+ 2. (int a)->{System.out.println(a)} //; One argument, will print value of a
+ 3. (int a,int b)-> {a+b};//two argument, will return sum of these two integers
+
+Lambda expression can have zero or more arguments.
+You can choose to not declare type of arguments as it can be inferred from context. ex: (a,b)->{a+b};//two argument, will return sum of these two numbers
+You can not declare one argument’s type and do not declare type for other argument.
+When there is a single parameter, if its type is inferred, it is not mandatory to use parentheses
+
+5. How are functional interfaces and Lambda Expressions related? 
+
+ The Lambda expression is used to provide the implementation of a functional interface.
+ It saves a lot of code. In case of lambda expression, we don't need to define the method again for providing the implementation.
+ Here, we just write the implementation code.
+
+Ex:
+
+    @FunctionalInterface  //It is optional  
+    interface Drawable{  
+        public void draw();  
+    }  
+      
+    public class LambdaExpressionExample2 {  
+        public static void main(String[] args) {  
+            int width=10;  
+              
+            //with lambda  
+            Drawable d2=()->{  
+                System.out.println("Drawing "+width);  
+            };  
+            d2.draw();  
+        }  
+    } 
+
+Output : Drawing 10
+
+The major benefit of java 8 functional interfaces is that we can use lambda expressions to instantiate them and avoid using bulky anonymous class implementation.
+
+
+
+6. What is an optional class?
+
+Optional is a final Class introduced as part of Java SE 8. It is defined in java.util package.
+It is used to represent optional values that are either exist or not exist.
+Optional’s chief benefit is avoiding null checks, and there are no longer any “NullPointerException” results at run-time.
+This class has various utility methods to facilitate code to handle values as ‘available’ or ‘not available’ instead of checking null values. 
+
+Example:
+
+import java.util.Optional;   
+public class Main{   
+  
+   public static void main(String[] args) {   
+        String[] str = new String[10];   
+        Optional<String>checkNull =  
+                       Optional.ofNullable(str[5]);   
+        if (checkNull.isPresent()) {   
+            String word = str[5].toLowerCase();   
+            System.out.print(str);   
+         } else 
+           System.out.println("string is null");   
+    }   
+}  
+
+Output:
+
+Optional class output
+
+In this program, we use the “ofNullable” property of the Optional class to check if the string is null. If it is, the appropriate message is printed to the user.
+
+
+7.What are the default methods?
+
+Default methods are the methods of the Interface which has a body. These methods, as the name suggests, use the default keywords.
+The use of these default methods is “Backward Compatibility” which means if JDK modifies any Interface (without default method) then the classes 
+which implement this Interface will break.
+
+
+8. What is Method Reference?
+
+In Java 8, a new feature was introduced known as Method Reference. This is used to refer to the method of functional interface.
+It can be used to replace Lambda Expression while referring to a method. Method reference is a compact method of Lambda expression.
+
+Ex: 
+If the Lambda Expression looks like
+num -> System.out.println(num)
+Then the corresponding Method Reference would be,
+System.out::println
+where “::” is an operator that distinguishes class name from the method name.
+System.out::println is a static method reference to println method of out object of System class.
+
+
+A method reference can be used to point the following types of methods −
+
+    Static methods
+    Instance methods
+    Constructors using new operator (TreeSet::new)
+
+
+9. What is Type Inference?
+
+Type Interface in Java SE 8 is referred to as determining the Type by the compiler at the compile time.
+Type inference helps the compiler determine the argument types by looking at each method invocation and corresponding declaration.
+
+
+10. How will you call a default method of an interface in a class?
+
+Using super keyword along with interface name.
+
+interface Vehicle {
+   default void print() {
+      System.out.println("I am a vehicle!");
+   }
+}
+class Car implements Vehicle {
+   public void print() {
+      Vehicle.super.print();                  
+   }
+}
+
+11. How will you call a static method of an interface in a class?
+
+Using name of the interface.
+
+interface Vehicle {
+   static void blowHorn() {
+      System.out.println("Blowing horn!!!");
+   }
+}
+class Car implements Vehicle {
+   public void print() {
+      Vehicle.blowHorn();                  
+   }
+}
+
+12. What Is a Stream? How Does It Differ from a Collection?
+
+Java provides a new additional package in Java 8 called java.util.stream. This package consists of classes, interfaces and enum to allows 
+functional-style operations on the elements. 
+Stream API is used for processing the collection of objects and it supports a different type of iteration. 
+A Stream is a sequence of objects (elements) that allows you to pipeline different methods to produce the desired results.
+
+The Java Stream API provides a functional approach to processing collections of objects. 
+
+The Java Stream API is not related to the Java InputStream and Java OutputStream of Java IO. The InputStream and OutputStream are related to streams of bytes.
+The Java Stream API is for processing streams of objects - not bytes.
+
+
+Differences between Collection API and Stream API are as follow :
+
+1. Collection API was introduced in JDK 1.2 while Stream API is introduced in JDK 1.8
+2. Collection objects are created eagerly while Stream API objects are created lazily.
+3. Iterate and Consume elements at any number of times for the Collection object while iterate and consume elements only one time for the Stream object.
+4.  Collection API  helps in storing Data which are set of objects. Stream API helps in computing data wherein computations of a set of data objects are made.
+5.  Collection API can be used for storing a limited number of elements.  Stream API  can be used for storing an unlimited number of elements.
+
+Differences between a Stream and a Collection:
+
+    *Collection helps store object data. A stream helps in computation of data.
+    *Collection executes eagerly, while Stream executes lazly.
+    *Collections stores a limited number of elements. Streams can store unlimited no.of elements.
+    *Like an Iterator, a new stream must be generated to revisit the same elements of the source.
+    *An operation on a stream does not modify its source, but simply produces a result.
+
+
+
+
+13. What are the features of Java Stream
+
+The features of Java stream are –
+
+    a) A stream is not a data structure instead it takes input from the Collections, Arrays or I/O channels.
+    b) Streams don’t change the original data structure, they only provide the result as per the pipelined methods.
+    c) Each intermediate operation is lazily executed and returns a stream as a result, hence various intermediate operations can be pipelined.
+       Terminal operations mark the end of the stream and return the result.
+
+Parallel vs Sequential Stream in Java:
+
+All the operations of streams can be executed either in serial or in parallel. 
+For example, Collection has methods Collection.stream() and Collection.parallelStream(), which produces sequential and parallel streams respectively.
+
+The list.stream() works in sequence on a single thread with the print() operation and in the output of the preceding program, 
+the content of the list is printed in an ordered sequence as this is a sequential stream.
+
+Ex:
+ List<String> list = Arrays.asList( "Hello ", G", "E", "E", "K", "S!"); 
+ list.stream().forEach(System.out::print); 
+
+Output: Hello GEEKS!
+
+ Using parallel streams, our code gets divide into multiple streams which can be executed parallelly on separate cores of the system and the final result 
+ is shown as the combination of all the individual core’s outcomes.
+
+The Java stream library provides a couple of ways to do it. easily, and in a reliable manner. 
+
+    *One of the simple ways to obtain a parallel stream is by invoking the parallelStream() method of Collection interface.
+    *Another way is to invoke the parallel() method of BaseStream interface on a sequential stream.
+
+List<String> list = Arrays.asList("Hello ","G", "E", "E", "K", "S!"); 
+list.parallelStream().forEach(System.out::print); 
+
+Output: ES!KGEHello
+
+Here we can see the order is not maintained as the list.parallelStream() works parallelly on multiple threads. 
+If we run this code multiple times then we can also see that each time we are getting a different order as output but this parallel stream boosts 
+the performance so the situation where the order is not important is the best technique to use.
+
+If we want to make each element in the parallel stream to be ordered, we can use the forEachOrdered() method, instead of the forEach() method.
+
+ List<String> list   = Arrays.asList("Hello ","G", "E", "E", "K", "S!"); 
+ list.parallelStream().forEachOrdered(System.out::print); 
+
+  Output: Hello GEEKS!
+
+
+14. What are different operations of Java Stream
+
+Different Operations On Streams:-
+Intermediate Operations:
+
+    map: The map method is used to returns a stream consisting of the results of applying the given function to the elements of this stream.
+    List number = Arrays.asList(2,3,4,5);
+    List square = number.stream().map(x->x*x).collect(Collectors.toList());
+
+    filter: The filter method is used to select elements as per the Predicate passed as argument.
+    List names = Arrays.asList("Reflection","Collection","Stream");
+    List result = names.stream().filter(s->s.startsWith("S")).collect(Collectors.toList());
+
+    sorted: The sorted method is used to sort the stream.
+    List names = Arrays.asList("Reflection","Collection","Stream");
+    List result = names.stream().sorted().collect(Collectors.toList());
+
+
+Stateless Operations: filter and map - retain no state from previous element.
+Stateful Operations:distinct and sorted - may have state from the previous elements.
+
+
+Terminal Operations:
+
+    collect: The collect method is used to return the result of the intermediate operations performed on the stream.
+    List number = Arrays.asList(2,3,4,5,3);
+    Set square = number.stream().map(x->x*x).collect(Collectors.toSet());
+
+    forEach: The forEach method is used to iterate through every element of the stream.
+    List number = Arrays.asList(2,3,4,5);
+    number.stream().map(x->x*x).forEach(y->System.out.println(y));
+
+    reduce: The reduce method is used to reduce the elements of a stream to a single value.
+    The reduce method takes a BinaryOperator as a parameter.
+    List number = Arrays.asList(2,3,4,5);
+    int even = number.stream().filter(x->x%2==0).reduce(0,(ans,i)-> ans+i); 
+
+
+15. What is stream pipelining in Java 8?
+
+Most of the stream operations return stream itself so that their result can be pipelined. 
+These operations are called intermediate operations and their function is to take input, process them, and return output to the target. collect() method 
+is a terminal operation which is normally present at the end of the pipelining operation to mark the end of the stream.
+
+16. What are collectors in Java 8?
+
+Collectors are mainly used to combine the final result after the processing of elements in a Stream. They are used to return a lists or a strings.
+
+Ex:
+ List number = Arrays.asList(2,3,4,5,3);
+ Set square = number.stream().map(x->x*x).collect(Collectors.toSet());
+
+17. What is the difference between PermGenSpace and MetaSpace?
+
+In JDK 8 onwards PermGenSpace is removed. Earlier PermGenSpace is used for storing the metadata. Metadata means storing information about classes 
+like bytecodes, names, and JIT information.
+Java classes metadata now stored in a native heap and this space is called MetaSpace. Metaspace grows automatically by default and will be garbage collected.
+
+So the major difference between PermGenSpace and MetaSpace is that PermGenSpace was fixed in size and did not grow automatically, 
+but MetaSpace does not have any size constraints.
+
+18. What is the difference between Iterator and Spliterator?
+
+Difference between Iterator and Spliterator  are as follow:
+
+1. Introduction: Iterator was introduced in JDK 1.2 while Spliterator  is introduced in JDK 1.8
+2. Use in API: Iterator is used for Collection API while Spliterator is used for Stream API
+3. Spliterator  helps to iterate streams in parallel and sequential order.  Iterator  helps in iterate collections only in sequential order.
+
+19.  What is Nashorn in java 8?
+
+Nashorn is the latest javascript engine released with java8. Before JDK 8, the javascript engine was based on Mozilla Rhino.
+It provides better compliance with ECMA normalized javascript specifications and better runtime performance.
+For Nashorn engine, JAVA 8 introduces a new command line tool, jjs, to execute javascript codes at console.
+
+Nashorn directly compiles the code in memory and then passes the bytecode to JVM thereby improving the performance by 10 times.
+
+Nashorn introduces a new command-line tool – jjs that executes JavaScript code at the console.
+
+Let us create a JavaScript file ‘sample.js’ that contains the following code.
+print (‘Hello, World!!’);
+
+Give the following command in the console:
+
+C:\Java\jjs sample.js
+
+Output: Hello, World!!
+
+We can also run JavaScript programs in interactive mode and also provide arguments to the programs.
+
+
+
+20.  What are the issues of the old Date and Time APIs.  Can you explain the new Date and Time APIs in java 8?
+
+ New Date and Time API is designed in Java SE 8 under the package java.time so that the problems and issues related to JDK or Java.util.date can be avoided.
+
+Prior to java 8, Old Date and Time API's are there. Let's find out what are the issues with them:
+
+Performance:  Java 8 APIs are better in terms of performance than older Date and Time APIs.
+Standards: Java 8 Date and Time API  comply with ISO standard, meanwhile, older java 8 Date and Time API were hard to understand and poorly designed.
+Thread-safe: Most frequently used java.util.Date is mutable and not thread-safe. New Java 8 Date and Time API are thread-safe.
+LocalDate, LocalTime and LocalDateTime are few of the latest core API classes of java 8.
+
+The most important classes among them are:
+
+    Local: Simplified date-time API with no complexity of timezone handling.
+    Zoned: Specialized date-time API to deal with various timezones.
+
+Dates
+
+Date class has become obsolete in Java 8.
+
+Following are the new classes introduced:
+
+    The LocalDate class defines a date. It has no representation for time or time-zone.
+    The LocalTime class defines a time. It has no representation for date or time-zone.
+    The LocalDateTime class defines a date-time. It has no representation of a time-zone.
+
+To include time-zone information with date functionality, you can use Lambda that provides 3 classes i.e. OffsetDate, OffsetTime, and OffsetDateTime. 
+Here Timezone offset is represented using another class – “ZoneId”. 
+
+
+
+21. How will you get the current date using local datetime api of java8?
+
+Following code gets the current date using local datetime api −
+
+//Get the current date
+LocalDate today = LocalDate.now();
+System.out.println("Current date: " + today);
+
+21.  Is there any difference between the Functional interface and SAM interface?
+
+Answer: No, there is no difference between Functional interface and SAM interface. The SAM interface or Single Abstract Method interface is a 
+kind of Functional interface defined in Java SE 8 API.
+
+22.  What are the common types of Functional Interfaces in the Standard Library?
+
+Answer: The common types of Functional Interfaces in the Standard Library include the following.
+
+    Predicate – it takes one argument and returns a boolean
+    Function – it takes one argument and returns a result
+    Consumer – it takes one argument and returns no result (represents a side effect)
+    Supplier – it takes no argument and returns a result   
+    BiFunction – it takes two arguments and returns a result
+    BinaryOperator – it is similar to a BiFunction, taking two arguments and returning a result. The two arguments and the result are all of the same types
+    UnaryOperator – it is similar to a Function, taking a single argument and returning a result of the same type
+
+
+23.  Explain Built-in Functional Interfaces in Java.
+
+Answer: 
+
+*   Predicate is a single argument function that gives the outcome as true or false. Its code is <T>.
+
+    Predicate: The Predicate interface has an abstract method test which gives a Boolean value as a result for the specified argument. Its prototype is
+
+    public interface Predicate
+    {
+       public boolean test(T  t);
+     }
+
+    The Predicate interface contains more methods than the test() method, but the rest of the methods are default or static methods which you don't have to implement.
+
+	You can implement the Predicate interface using a class, like this:
+
+	public class CheckForNull implements Predicate {
+   		 @Override
+   		 public boolean test(Object o) {
+       			 return o != null;
+    		}
+	}
+
+	You can also implement the Java Predicate interface using a Lambda expression. Here is an example of implementing the Predicate interface using a 
+        Java lambda expression:
+
+	Predicate predicate = (value) -> value != null;
+
+*   Function: The Function interface represents a function (method) that takes a single parameter and returns a single value. 
+    The Function interface has an abstract method apply which takes argument of type T and returns a result of type R. Its prototype is
+
+    public interface Function 
+    {
+       public R apply(T t);
+    }
+
+     The Function interface actually contains a few extra methods in addition to the methods listed above, but since they all come with a default implementation,
+     you do not have to implement these extra methods. The extra methods will be explained in later sections.
+
+     The only method you have to implement to implement the Function interface is the apply() method. Here is a Function implementation example:
+
+	public class AddThree implements Function<Long, Long> {
+
+   		 @Override
+    		public Long apply(Long aLong) {
+        		return aLong + 3;
+    		}
+	}
+
+	This Function implementation implements the apply() method so it takes a Long as parameter, and returns a Long. 
+	Here is an example of using the above AddThree class:
+
+	Function<Long, Long> adder = new AddThree();
+	Long result = adder.apply((long) 4);
+	System.out.println("result = " + result);
+
+	First this example creates a new AddThree instance and assigns it to a Function variable. Second, the example calls the apply() method on the 
+        AddThree instance. Third, the example prints out the result (which is 7).
+
+	You can also implement the Function interface using a Java lambda expression. Here is how that looks:
+
+	Function<Long, Long> adder = (value) -> value + 3;
+	Long resultLambda = adder.apply((long) 8);
+	System.out.println("resultLambda = " + resultLambda);
+
+* UnaryOperator
+
+    The Java UnaryOperator interface is a functional interface that represents an operation which takes a single parameter and returns a 
+    parameter of the same type. Here is an example of a Java UnaryOperator implementation:
+
+   UnaryOperator<Person> unaryOperator =   (person) -> { person.name = "New Name"; return person; };
+
+  The UnaryOperator interface can be used to represent an operation that takes a specific object as parameter, modifies that object, 
+  and returns it again - possibly as part of a functional stream processing chain. 
+
+
+*   BinaryOperator: The BinaryOperator interface has an abstract method apply which takes two argument and returns a result of same type. Its prototype is
+
+    public interface BinaryOperator 
+    {
+         public T apply(T x, T y);
+    }       
+
+     The Java BinaryOperator interface is a functional interface that represents an operation which takes two parameters and returns a single value. 
+     Both parameters and the return type must be of the same type.
+
+     The Java BinaryOperator interface is useful when implementing functions that sum, subtract, divide, multiply etc. two elements of the same type, 
+     and returns a third element of the same type.
+
+     Here is an example implementation of the BinaryOperator interface:
+
+     BinaryOperator<MyValue> binaryOperator =    (value1, value2) -> { value1.add(value2); return value1; };
+
+
+* Supplier
+
+The Java Supplier interface is a functional interface that represents an function that supplies a value of some sorts.
+ The Supplier interface can also be thought of as a factory interface. Here is an example implementation of the Java Supplier interface:
+
+Supplier<Integer> supplier = () -> new Integer((int) (Math.random() * 1000D));
+
+This Java Supplier implementation returns a new Integer instance with a random value between 0 and 1000.
+
+* Consumer
+
+The Java Consumer interface is a functional interface that represents an function that consumes a value without returning any value. 
+A Java Consumer implementation could be printing out a value, or writing it to a file, or over the network etc. 
+Here is an example implementation of the Java Consumer interface:
+
+Consumer<Integer> consumer = (value) -> System.out.println(value);
+
+This Java Consumer implementation prints the value passed as parameter to it out to System.out. 
+
+24. What are the Core API classes for Java SE 8?
+
+Answer: The Core API classes for Java SE 8 include LocalDate, LocalTime, and LocalDateTime.
+
+25. Can we list the numbers and remove the duplicate elements in the list using Java SE 8 features?
+
+Answer: Yes, we can list the numbers and remove the duplicate elements in the list by applying stream and then collecting 
+it to set using Collections.toSet() method.
+
+// ArrayList with duplicate elements
+ArrayList<Integer> numbersList  = new ArrayList<>(Arrays.asList(1, 1, 2, 3, 3, 3, 4, 5, 6, 6, 6, 7, 8));
+  
+Set<Integer> setWithoutDuplicates = numbersList.stream().collect(Collectors.toSet());
+  
+System.out.println(setWithoutDuplicates);
+
+ >> Stream.distinct() to remove duplicates
+    --------------------------------------
+
+// ArrayList with duplicate elements
+ArrayList<Integer> numbersList = new ArrayList<>(Arrays.asList(1, 1, 2, 3, 3, 3, 4, 5, 6, 6, 6, 7, 8));
+  
+List<Integer> listWithoutDuplicates = numbersList.stream().distinct().collect(Collectors.toList());
+  
+System.out.println(listWithoutDuplicates);
+
+Lamda expressions:
+*******************
+
+1.	// Lambda expression without return keyword.  
+        Addable ad1=(a,b)->(a+b);  
+        System.out.println(ad1.add(10,20));  
+          
+        // Lambda expression with return keyword.    
+        Addable ad2=(int a,int b)->{  
+                            return (a+b);   
+                            };  
+        System.out.println(ad2.add(100,200));  
+
+2.      List<String> list=new ArrayList<String>();  
+        list.add("ankit");  
+        list.add("mayank");  
+        list.add("irfan");  
+        list.add("jai");  
+          
+        list.forEach(  
+            (n)->System.out.println(n)  
+        );  
+
+3. Creating Thread
+
+	//Thread Example without lambda  
+        Runnable r1=new Runnable(){  
+            public void run(){  
+                System.out.println("Thread1 is running...");  
+            }  
+        };  
+        Thread t1=new Thread(r1);  
+        t1.start();  
+
+        //Thread Example with lambda  
+        Runnable r2=()->{  
+                System.out.println("Thread2 is running...");  
+        };  
+        Thread t2=new Thread(r2);  
+        t2.start();  
+
+4. Comparator
+
+         List<Product> list=new ArrayList<Product>();  
+          
+        //Adding Products  
+        list.add(new Product(1,"HP Laptop",25000f));  
+        list.add(new Product(3,"Keyboard",300f));  
+        list.add(new Product(2,"Dell Mouse",150f));  
+          
+        System.out.println("Sorting on the basis of name...");  
+  
+        // implementing lambda expression  
+        Collections.sort(list,(p1,p2)->{  
+        return p1.name.compareTo(p2.name);  
+        });  
+
+        for(Product p:list){  
+            System.out.println(p.id+" "+p.name+" "+p.price);  
+        }  
+
+5. Filter Collection Data
+
+
+        List<Product> list=new ArrayList<Product>();  
+        list.add(new Product(1,"Samsung A5",17000f));  
+        list.add(new Product(3,"Iphone 6S",65000f));  
+        list.add(new Product(2,"Sony Xperia",25000f));  
+        list.add(new Product(4,"Nokia Lumia",15000f));  
+        list.add(new Product(5,"Redmi4 ",26000f));  
+        list.add(new Product(6,"Lenevo Vibe",19000f));  
+          
+        // using lambda to filter data  
+        Stream<Product> filtered_data = list.stream().filter(p -> p.price > 20000);  
+          
+        // using lambda to iterate through collection  
+        filtered_data.forEach(  
+                product -> System.out.println(product.name+": "+product.price)  
+        );  
+
+
+6. Event Listener
+
+ 	JTextField tf=new JTextField();  
+        tf.setBounds(50, 50,150,20);  
+        JButton b=new JButton("click");  
+        b.setBounds(80,100,70,30);  
+          
+        // lambda expression implementing here.  
+        b.addActionListener(e-> {tf.setText("hello swing");});  
+
+
+Streams in Java8
+****************
+
+Intermediate Operations:
+
+   a) map: The map method is used to returns a stream consisting of the results of applying the given function to the elements of this stream.
+    List number = Arrays.asList(2,3,4,5);
+    List square = number.stream().map(x->x*x).collect(Collectors.toList());
+
+  b)  filter: The filter method is used to select elements as per the Predicate passed as argument.
+    List names = Arrays.asList("Reflection","Collection","Stream");
+    List result = names.stream().filter(s->s.startsWith("S")).collect(Collectors.toList());
+
+  c)  sorted: The sorted method is used to sort the stream.
+    List names = Arrays.asList("Reflection","Collection","Stream");
+    List result = names.stream().sorted().collect(Collectors.toList())
+
+Terminal Operations:
+
+   a) collect: The collect method is used to return the result of the intermediate operations performed on the stream.
+    List number = Arrays.asList(2,3,4,5,3);
+    Set square = number.stream().map(x->x*x).collect(Collectors.toSet());
+
+   b) forEach: The forEach method is used to iterate through every element of the stream.
+    List number = Arrays.asList(2,3,4,5);
+    number.stream().map(x->x*x).forEach(y->System.out.println(y));
+
+   c) reduce: The reduce method is used to reduce the elements of a stream to a single value.
+    The reduce method takes a BinaryOperator as a parameter.
+
+    List number = Arrays.asList(2,3,4,5);
+    int even = number.stream().filter(x->x%2==0).reduce(0,(ans,i)-> ans+i);
+
+Here ans variable is assigned 0 as the initial value and i is added to it .
+
+26. forEach() Method In Iterable Interface.
+
+Java 8 has introduced a “forEach” method in the interface java.lang.Iterable that can iterate over the elements in the collection. 
+“forEach” is a default method defined in the Iterable interface. It is used by the Collection classes that extend the Iterable interface to iterate elements.
+
+Example:
+
+importjava.util.ArrayList;  
+importjava.util.List;  
+public class Main {  
+     public static void main(String[] args) {  
+        List<String> subList = new ArrayList<String>();  
+        subList.add("Maths");  
+        subList.add("English");  
+        subList.add("French");  
+        subList.add("Sanskrit");
+        subList.add("Abacus");
+        System.out.println("------------Subject List--------------");  
+        subList.forEach(sub -> System.out.println(sub));  
+  }  
+}
+
+So we have a collection of subjects i.e. subList. We display the contents of the subList using the forEach method that takes Lambda Expression to print each element.
+
+27. Base64 Encode Decode
+
+In Java 8 there is inbuilt encode and decode for Base64 encoding. The class for Base64 encoding is java.util.Base64.
+
+This class provides three Base64 encodes and decoders:
+
+    Basic: In this, the output is mapped to a set of characters between A-Za-z0-9+/. No line feed is added to the output by the encoder and the decoder rejects 
+           any character other than the above.
+    URL: Here the output is the URL and filename safe is mapped to the set of characters between A-Za-z0-9+/.
+    MIME: In this type of encoder, the output is mapped to a MIME friendly format.
+
+28. Collection API Improvements
+
+Java 8 has added the following new methods to the Collection API:
+
+    forEachRemaining (Consumer action): This is a Default method and it is for the Iterator. It performs the “action” for each of the remaining elements until all 
+     the elements are processed or “action” throws an exception.
+    The default method for collection removeIf (Predicate filter): This removes all the elements in the collection that satisfies the given “filter”.
+    Spliterator (): This is a collection method and returns spliterator instance which you can use for traversing the elements in either sequential or 
+    parallel fashion.
+    Map collection has replaceAll (), compute() and merge() methods.
+    HashMap class with Key collisions has been improved to enhance performance.
+
+29. Concurrency API Changes/Enhancements
+
+Following are the important enhancements in Concurrent API:
+
+    ConcurrentHashMap is enhanced with the following methods:
+        compute (),
+        forEach (),
+        forEachEntry (),
+        forEachKey (),
+        forEachValue (),
+        merge (),
+        reduce () and
+        search ()
+    The method “newWorkStealingPool ()” for executors creates a work-stealing thread pool. It uses the available processors as its target parallelism level.
+    Method “completableFuture” is the one that we can complete explicitly (by setting its value and status).
+
+
+30. Miscellaneous Core API Improvements
+
+We have the following misc API improvements:
+
+    Static method withInitial (Supplier supplier) of ThreadLocal to create instance easily.
+    The interface “Comparator” is extended with the default and static methods for natural ordering reverse order etc.
+    Integer, Long and Double wrapper classes have min (), max () and sum () methods.
+    Boolean class is enhanced with logicalAnd (), logicalOr () and logicalXor () methods.
+    Several utility methods are introduced in the Math class.
+    JDBC-ODBC Bridge is removed.
+    PermGen memory space is removed.
+
+31. Memory management in Java 8
+
+	1. Heap
+    		In Java8, objects are primarily stored in heap, which consists of Young and Old generations.
+	New objects are generally created in Eden and surviving objects can be promoted to the Old Generation.
+
+	2. Metaspace:
+        	Java 8 replaced the old PermGen with Metaspace.
+
+  	Metaspace stores class-related metadata such as: 
+   		1. Class information
+   		2. Method metadata
+   		3. Runtime constant pool information
+   		4. Static-related class metadata
+
+	Unlike PermGen, Metaspace uses native memory.
+
+	3. Stack
+
+ 		 Each thread has its own stack.
+
+  	It contains:
+
+     		1.Local variables
+    		2. Method Parameters
+     		3. Method call frames
+     		4. References to heap objects.
+
+	4. Garbage Collection
+
+ 		GC automatically removes objects that are no longer reachable.
+
+		Common Java 8 Garbage Collectors
+
+		Collector	Typical Use
+
+		Serial GC 	Small applications
+		Parallel GC	Throughput-oriented applications
+		CMS		Low-pause applications
+		G1 GC		Large heaps / predictable pauses
+
+	G1 GC was introduced earlier, but Java 8 supports it and it became an important alternative to CMS.
+
+G1 GC divides the Java heap into multiple regions and dynamically manages them as Eden, Survivor, Old, or Humongous regions.
+It identifies regions with the most reclaimable garbage and collect then first.
+ 
+Memory related errors:
+-------------------------
+
+StackOverflowError: Usually caused by excessive/deep recursion
+OutOfMemoryError: Java heap space
+   - Usually occurs when the application cannot allocate more objects in the heap.
+OutOfMemoryError: Metaspace
+   - Can occur when class metadata consumes available Metaspace, for example excessive class/classloader creation.
+
+Memory Leak in Java:
+____________________
+
+A memory leak occurs when  objects are no longer logically needed by the application but are still reachable, so the Garbage Collector cannot 
+remove them.
+
+Common causes: Static collections, Caches without eviction/TTL, Listeners not removed, Unclosed resources,  ThreadLocal not cleaned up.
+
+
+Memory Leak vs OutOfMemoryError:
+--------------------------------
+
+Memory Leak -> Objects remain reachable unnecessarly -> Heap usage keeps increasing -> GC cannot reclaim enough memory -> OutOfMemoryError
+
+memory leak can eventually cause an OutOfMemoryError. But OutOfMemoryError can also occur for other reasons, 
+such as genuninely requiring more heap memory than configured.
+	
+How to troubleshoot a memory leak:
+_________________________________
+
+1. Monitor heap - If old gen continuously grows after GC, that is a strong warning sign.
+2. Take heap dumps - Useful JVM option: -XX:+HeapDumpOnOutOfMemoryError
+   Then analyze the .hprof file using tools such as Visual VM, JProfiler etc.
+3. Look for GC behavior - If post-GC baseline keeps increasing, investigate retained objects.
+
+
+
+IQs in Java 8
+______________
+
+1. Advantage of functional interfaces in java ? 
+
+The major benefit of java 8 functional interfaces is that we can use lambda expressions to instantiate them and avoid using bulky anonymous class implementation.
+
+// Define a functional interface
+@FunctionalInterface
+interface MyInterface {
+    void doSomething(int x);
+}
+
+// Call it using a lambda expression
+MyInterface obj = (x) -> System.out.println("Value: " + x);
+obj.doSomething(5);
+
+// Traditional way
+Runnable r1 = new Runnable() {
+    @Override
+    public void run() {
+        System.out.println("Hello");
+    }
+};
+r1.run();
+
+// Using lambda
+Runnable r2 = () -> System.out.println("Hello");
+r2.run();
+
+2. Advantage of having default & static method in Java?
+
+Java 8 introduced default and static methods in interfaces. This feature enables us to add new functionality in the interfaces without breaking
+the existing contract of the implementing classes.
+
+1. The default methods were introduced to provide backward compatibility so that existing interfaces can use the lambda expressions without 
+implementing the methods in the implementation class.
+
+Why default method?
+
+For example, if several classes such as A, B, C and D implements an interface XYZInterface then if we add a new method to the XYZInterface, 
+we have to change the code in all the classes(A, B, C and D) that implements this interface. 
+
+This is why in java 8, we have a new concept “default methods”. These methods can be added to any existing interface and we do not need to implement 
+these methods in the implementation classes mandatorily, thus we can add these default methods to existing interfaces without breaking the code.
+
+2. Default Methods and Multiple Inheritance Ambiguity Problems
+
+Java supports multiple inheritance of interfaces. Consider having two interfaces, InterfaceA and InterfaceB , having default methods with the same signature.
+Your class ConcreteC is implementing both the interfaces.
+
+interface InterfaceA {
+
+  void performA();
+
+  default boolean canPerform() {
+
+    // return true if I can perform the action
+
+  }
+
+}
+
+
+interface InterfaceB {
+
+  void performB();
+
+  default boolean canPerform() {
+    //return true if I can perform the action
+
+  }
+
+}
+
+class ConcreteC implements InterfaceA, InterfaceB {
+
+
+}
+
+
+The above code will fail to compile with "error: unrelated defaults for canPerform()from InterfaceA and InterfaceB."
+
+To overcome this problem, you need to override the default method.
+
+
+class ConcreteC implements InterfaceA, InterfaceB {
+
+
+  public boolean canPerform() {
+
+
+  }
+
+}
+
+
+But say you don't want to provide the implementation of the overridden default method but instead want to reuse the existing one. 
+That is also possible with the following syntax.
+
+class ConcreteC implements InterfaceA, InterfaceB {
+
+  override
+  public boolean canPerform() {
+
+    return InterfaceA.super.canPerform();
+
+  }
+
+}
+
+Static method in Interface
+
+Static methods in interface are similar to default method so we need not to implement them in the implementation classes. 
+We can safely add them to the existing interfaces without changing the code in the implementation classes. 
+Since these methods are static, we cannot override them in the implementation classes.
+
+
+
+
+3. What is functional programming ?
+
+Java 8 introduced Java developers to functional programming with lambda expressions. 
+A functional programming function is like a mathematical function, which produces an output that typically depends only on its arguments.
+
+Functional programming is a paradigm that allows programming using expressions i.e. declaring functions, passing functions as arguments and 
+using functions as statements (rightly called expressions in Java8).
+
+
+4. Abstract classes vs interfaces in Java8
+
+With the introduction of default methods in interfaces, it seems that the abstract classes are same as interface in java 8. 
+However this is not entirely true, even though we can now have concrete methods(methods with body) in interfaces just like abstract class, 
+this doesn’t mean that they are same. There are still few differences between them, one of them is that abstract class can have constructor while 
+in interfaces we can’t have constructors.
+
+The purpose of interface is to provide full abstraction, while the purpose of abstract class is to provide partial abstraction. This still holds true. 
+The interface is like a blueprint for your class, with the introduction of default methods you can simply say that we can add additional features in the 
+interfaces without affecting the end user classes.
+
+
+5. What is the use of the peek() method in Java8 ?
+
+The peek() method is a part of the stream class in Java,  which is used to see actions performed through a stream pipeline. Peeking can be done at every step to
+print messages about the code being executed onto the console.
+ Peeking has a wide amount of usage when  efficiency is a requirement, when debuggin code with lamda expression, or when performing stream processing. 
+
+6. Easiest way to convert an array into a a stream in Java8.?
+
+String[] testArray = {'Hello','Hi','hai'};
+Stream numbers = Stream.of(testArray);
+numbers.forEach(System.out::println);
+
+7. How to sort an array of strings w.r.t lenght in Java8 ?
+
+ Arrays.sort(stringArray, Comparator.comparing(String::length));
+
+if arraylist,
+
+list.sort((first, second) -> Integer.compare(first.length(),
+                                                   second.length()));
+
+or
+
+List<String> strings = Arrays.asList("ac", "a", "abc");
+List<String> sortedStrings = strings.stream()
+				.sorted(Comparator.comparing(String::length))
+				.toList();

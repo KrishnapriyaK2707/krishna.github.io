@@ -1,0 +1,685 @@
+What is Collection framework
+
+The Collection framework represents a unified architecture for storing and manipulating a group of objects. It has:
+
+   1. Interfaces and its implementations, i.e., classes
+   2. Algorithm
+
+
+Java Collection means a single unit of objects. Java Collection framework provides many interfaces 
+(Set, List, Queue, Deque) and classes (ArrayList, Vector, LinkedList, PriorityQueue, HashSet, LinkedHashSet, TreeSet).
+
+In addition to collections, the framework defines several map interfaces and classes. Maps store key/value pairs. 
+Although maps are not collections in the proper use of the term, but they are fully integrated with collections.
+
+Iterable Interface
+
+The Iterable interface is the root interface for all the collection classes. The Collection interface extends the Iterable interface and therefore all the 
+subclasses of Collection interface also implement the Iterable interface.
+
+It contains only one abstract method. i.e.,
+
+    Iterator<T> iterator()  
+
+
+The Collection Interfaces:
+
+1. The Collection Interface
+
+	This enables you to work with groups of objects; it is at the top of the collections hierarchy.
+
+2. The List Interface
+
+	This extends Collection and an instance of List stores an ordered collection of elements.
+
+3. The Set
+
+	This extends Collection to handle sets, which must contain unique elements.
+
+4. The SortedSet
+
+	This extends Set to handle sorted sets.
+
+5. The Map
+
+	This maps unique keys to values.
+
+6. The Map.Entry
+
+	This describes an element (a key/value pair) in a map. This is an inner class of Map.
+
+7. The SortedMap
+
+	This extends Map so that the keys are maintained in an ascending order.
+
+8. The Enumeration
+
+	This is legacy interface defines the methods by which you can enumerate (obtain one at a time) the elements in a collection of objects. 
+        This legacy interface has been superceded by Iterator.
+
+
+List:
+
+A List is an ordered Collection of elements which may contain duplicates. It is an interface that extends the Collection interface. 
+Lists are further classified into the following:
+
+   1. ArrayList
+   2. LinkedList
+   3. Vectors
+   4. Stack
+
+Array list: Arraylist class implements List interface and it is based on an Array data structure. Elements can be dynamically added or removed from the list. 
+Also, the size of the list is increased dynamically if the elements are added more than the initial size. 
+
+LinkedList: LinkedList class is an implementation of the LinkedList data structure which is a linear data structure. 
+LinkedList elements are not stored in contiguous locations like arrays, they are linked with each other using pointers. 
+Each element of the LinkedList has the reference(address/pointer) to the next element of the LinkedList.
+Each element in the LinkedList is called the Node. 
+Each Node of the LinkedList contains two items: 1) Content of the element 2) Pointer/Address/Reference to the Next Node in the LinkedList.
+
+Vector: Vector implements List Interface. Like ArrayList it also maintains insertion order but it is rarely used in non-thread environment 
+as it is synchronized and due to which it gives poor performance in searching, adding, delete and update of its elements.
+Vector is identical to ArrayList in terms of implementation. However, the primary difference between a vector and an ArrayList is that a Vector is synchronized 
+and an ArrayList is non-synchronized. 
+
+Stack: Stack class models and implements the Stack data structure. The class is based on the basic principle of last-in-first-out.
+Stack is a subclass of Vector and a legacy class. 
+
+Set:
+
+A set is an unordered collection of objects in which duplicate values cannot be stored. This collection is used when we wish to avoid the duplication 
+of the objects and wish to store only the unique objects. 
+
+There are three main implementations of Set interface: 
+
+1.HashSet
+2.LinkedHashSet
+3.TreeSet
+
+HashSet: The HashSet class is an inherent implementation of the hash table data structure. 
+The objects are inserted based on their hashcode. 
+HashSet doesn’t maintain any order, the elements would be returned in any random order.
+HashSet doesn’t allow duplicates. If you try to add a duplicate element in HashSet, the old value would be overwritten.
+HashSet allows null values however if you insert more than one nulls it would still return only one null value.
+HashSet is non-synchronized.
+
+LinkedHashSet:  A LinkedHashSet is very similar to a HashSet. The difference is that this uses a doubly linked list to store the data.
+LinkedHashSet maintains the insertion order. Elements gets sorted in the same sequence in which they have been added to the Set. 
+
+Sorted Set Interface: This interface is very similar to the set interface. The only difference is that this interface has extra methods that maintain the 
+ordering of the elements. The sorted set interface extends the set interface and is used to handle the data which needs to be sorted.
+The class which implements this interface is TreeSet. 
+
+TreeSet: The TreeSet class uses a Tree for storage. TreeSet is similar to HashSet except that it sorts the elements in the ascending order while
+HashSet doesn’t maintain any order. TreeSet doesn’t allow duplicates and null values. 
+HashSet gives better performance (faster) than TreeSet for the operations like add, remove, contains, size etc.
+
+Map Interface:
+
+A Map is an object that maps keys to values. A map cannot contain duplicate keys. 
+
+There are three main implementations of Map interfaces:
+
+1.HashMap
+2.LinkedHashMap
+3.TreeMap
+
+HashMap: HashMap provides the basic implementation of the Map interface of Java. It stores the data in (Key, Value) pairs. 
+HashMap doesn’t maintain any order. HashMap is not synchronized and permits nulls (null values and null key).
+HashMap uses a technique called Hashing. The HashMap class uses a hashtable to implement the Map interface.
+
+LinkedHashMap: LinkedHashMap is just like HashMap with an additional feature of maintaining an order of elements inserted into it.
+LinkedHashMap is a Hash table and linked list implementation of the Map interface. 
+HashMap provided the advantage of quick insertion, search and deletion but it never maintained the track and order of insertion which the LinkedHashMap 
+provides where the elements can be accessed in their insertion order. 
+
+TreeMap: TreeMap is the implementation of Map and SortedMap. It implements the NavigableMap interface and extends AbstractMap class also. 
+The main difference between them is that HashMap is an unordered collection while TreeMap is sorted in the ascending order of its keys. 
+
+HashTable: HashTable implements Map  interface. Hashtable is the oldest implementation of a hash table data structure in Java.
+The HashMap is the second implementation, which was introduced in JDK 1.2.  It is similar to HashMap, but is synchronized.
+Hashtable doesn’t allow null keys and null values.
+HashMap and Hashtable store key/value pairs in a hash table. When using a Hashtable or HashMap, we specify an object that is used as a key, 
+and the value that you want linked to that key. The key is then hashed, and the resulting hash code is used as the index at which the value is stored within the table.
+
+Queue Interface:
+A Queue is designed in such a way so that the elements added to it are placed at the end of Queue and removed from the beginning of Queue (FIFO). 
+
+Queue interface in Java collections has two implementation:
+
+1.LinkedList 
+2.PriorityQueue
+
+PriorityQueue:  PriorityQueue serves the request based on the priority that we set using Comparator, rather than FIFO.
+
+Deque Interface: 
+
+Is a Queue in which you can add and remove elements from both sides.  It can either be used as a queue(first-in-first-out/FIFO) or
+as a stack(last-in-first-out/LIFO). Deque is the acronym for double ended queue. 
+
+Deque is an interface and has two implementations: 
+
+1.LinkedList 
+2.ArrayDeque
+
+ArrayDeque: The class which implements the Deque interface is ArrayDeque.
+ArrayDeque class which is implemented in the collection framework provides us with a way to apply resizable-array.
+ArrayDeque has the ability to add or remove the elements from both ends (head or tail).
+
+
+Iterator/ListIterator:
+
+Both Iterator and ListIterator are used to iterate through elements of a collection class. Using Iterator we can traverse in one direction (forward) while
+using ListIterator we can traverse the collection class on both the directions(backward and forward).
+
+1) Iterator is used for traversing List and Set both.
+2) ListIterator is used to traverse List only.
+3) We can traverse in only forward direction using Iterator.
+4) We cannot obtain indexes while using Iterator.
+
+Comparable and Comparator Interfaces:
+
+These interfaces are used for sorting objects of user defined class (custom class).
+
+Comparable :
+
+1. Comparable provides a single sorting sequence. In other words, we can sort the collection on the basis of a single element such as id, name, and price.
+2. Comparable affects the original class, i.e., the actual class is modified.
+3. Comparable provides compareTo() method to sort elements.
+4. Comparable is present in java.lang package.
+5. We can sort the list elements of Comparable type by Collections.sort(List) method (and Arrays.sort).
+6. If you want to sort the objects of custom class then you need to implement the Comparable interface in our custom class.
+
+The Comparable interface has compareTo(T obj) method which is used by sorting methods, you can check any Wrapper, String or Date class to confirm this.
+ We should override this method in such a way that it returns a negative integer, zero, or a positive integer if “this” object is less than, 
+equal to, or greater than the object passed as an argument. If String object, we can call compareTo method of String class  which does exactly the same and no need to write the mentioned logic.
+
+
+Comparator :
+
+1. The Comparator provides multiple sorting sequences. In other words, we can sort the collection on the basis of multiple elements such as id, name, and price etc.
+2. Comparator doesn't affect the original class, i.e., the actual class is not modified.
+3. Comparator provides compare() method to sort elements.
+4. A Comparator is present in the java.util package.
+5. We can sort the list elements of Comparator type by Collections.sort(List, Comparator) method.
+
+Comparator interface compare(Object o1, Object o2) method need to be implemented that takes two Object argument, 
+it should be implemented in such a way that it returns negative int if the first argument is less than the second one and returns zero if they are 
+equal and positive int if the first argument is greater than the second one.
+
+
+Java Collections Interview Questions.
+
+1. What is the difference between ArrayList and Vector?
+2. What is the difference between ArrayList and LinkedList?
+3. What is the difference between HashMap and Hashtable?
+4. What is the difference between HashSet and TreeSet?
+5. What is the difference between ArrayList and HashMap?
+6. What is the difference among List, Set and Map interfaces?
+7. What is the difference between Iterator and ListIterator?
+8. What is the difference between Iterator and Enumeraton?
+	A) Here are the few differences between them:
+	1) Iteator can be used on legacy(Vector etc.) classes as well as non-legacy classes (ArrayList, LinkedList etc.), whereas Enumeration is basically 
+           used for legacy classes such as Vector.
+	2) Iterator is comparatively slower than Enumeration.
+	3) Iterator is fail-fast where as Enumeration is not.
+9. How to remove repeated elements from ArrayList?
+	A)
+	1) Copying all the elements of ArrayList to LinkedHashSet. Why we choose LinkedHashSet? Because it removes duplicates and maintains the insertion order.
+	2) Emptying the ArrayList
+	3) Copying all the elements of LinkedHashSet(non-duplicate elements) to the ArrayList. 
+
+10. Explain various interfaces used in Collection framework?
+	A)
+	Collection interface: Collection (java.util.Collection) is the primary interface, and every collection must implement this interface.
+	List interface: List interface extends the Collection interface, and it is an ordered collection of objects. It contains duplicate elements. It also allows random access of elements.
+	Set interface: Set (java.util.Set) interface is an unordered collection which cannot contain duplicate elements. It can only include inherited methods of Collection interface.
+ 	Map interface: A Map (java.util.Map) represents a key, value pair storage of elements. Map interface does not implement the Collection interface. It can only contain a unique key but can have duplicate elements. There are two interfaces which implement Map in java that are Map interface and Sorted Map.
+	Queue interface: Queue (java.util.Queue) interface defines queue data structure, which stores the elements in the form FIFO (first in first out).
+        Dequeue interface: it is a double-ended-queue. It allows the insertion and removal of elements from both ends. It implants the properties of both Stack and queue so it can perform LIFO (Last in first out) stack and FIFO (first in first out) queue, operations.
+
+11. What is hash-collision in Hashtable and how it is handled in Java?
+
+Two different keys with the same hash value are known as hash-collision. Two separate entries will be kept in a single hash bucket to avoid the collision. 
+There are two ways to avoid hash-collision.
+
+    Separate Chaining
+    Open Addressing
+
+
+12. Explain diamond operator
+
+Diamond operator enables the compiler to collect the type arguments of generic class.
+In Java SE, developer can substitute the parameterized constructor with an empty parameter sets (<>) known as diamond operator. 
+
+13. Default size of ArrayList
+	10.
+
+14. What is concurrent hashmap.
+
+The ConcurrentHashMap class is introduced in JDK 1.5 belongs to java.util.concurrent package, which implements ConcurrentMap as well as Serializable interface also. 
+The underlined data structure for ConcurrentHashMap is Hashtable.
+ConcurrentHashMap class is thread-safe i.e. multiple threads can operate on a single object without any complications.
+Inserting null objects is not possible in ConcurrentHashMap as key or value.
+
+
+15. Difference between Collection and Collections.
+
+Collection:
+
+Collection is an interface in the java collection framework. It is divided into two parts −
+
+    Java util collection - It contains classes such as Set , queue , List and etc.
+    Java util map - It contains classes such as Map , sortedMap and etc.
+
+
+ It doesn't has all static methods 
+ It is used to store list of object in a single object  
+
+
+Collections:
+
+It is a utility class in Collection framework 
+It has all static method 
+It is used to operate on collection.
+
+16. Why iterator is fail fast ?
+
+Iterators in java are used to iterate over the Collection objects.Fail-Fast iterators immediately throw ConcurrentModificationException if there is 
+structural modification of the collection. Structural modification means adding, removing or updating any element from collection while a thread is 
+iterating over that collection. Iterator on ArrayList, HashMap classes are some examples of fail-fast Iterator.
+
+Fail-Safe iterators don’t throw any exceptions if a collection is structurally modified while iterating over it. 
+This is because, they operate on the clone of the collection, not on the original collection and that’s why they are called fail-safe iterators. 
+Iterator on CopyOnWriteArrayList, ConcurrentHashMap classes are examples of fail-safe Iterator.
+
+17. Internal working of HashMap ? If two objects have same hashcode, how it will work ?
+
+HashMap in Java works on hashing principles.In hashing, hash functions are used to link key and value in HashMap.
+
+HashMap maintains an array of the bucket. When we store or retrieve any key-value pair, 
+HashMap calculates the index of the bucket for each and every operation. The Key object is used to calculate the index of the bucket. 
+By using this key, the hash value is calculated using the  hash(key) private method of HashMap.
+This hash value is used to calculate the index in the array for storing the Entry objects.
+When two key return same hashcode, they end up in the same bucket. Two separate entries will be kept in a single hash bucket.
+Now, in order to find the correct value, you used keys.equals() method to compare with key stored in each Entry of linked list there.
+
+
+
+
+18. Getting an element from 50th index of an arraylist or 5000 index of an arraylist is faster ? And why ? 
+
+ There are two classes which implement RandomAccess Interface. They are:
+
+ArrayList (Part of List<I>)
+Vector    (Part of List<I>)
+
+* The purpose of RandomAccess Interface is to retrieve any random element in the Collection at the same speed. 
+Example: I have a collection of 1 million objects. Implementing RandomAccess interface makes your time to retrieve the 10th element and 17869th element the same.
+This makes ArrayList and Vector more powerful.
+
+* RandomAccess Interface has no methods or fields and is also called a Marker Interface. 
+These are used to indicate something to the compiler, in other words implementing these interfaces is meant to imply some special treatment of the implementing class.
+
+
+19. What is weak hashmap?
+
+WeakHashMap is a hashtable-based implementation of the Map interface, with keys that are of a WeakReference type.
+
+An entry in a WeakHashMap will automatically be removed when its key is no longer in ordinary use, meaning that there is no single Reference 
+that point to that key. When the garbage collection (GC) process discards a key, its entry is effectively removed from the map, so this class behaves 
+somewhat differently from other Map implementations.
+
+Java.util.HashMap class is a Hashing based implementation. In HashMap, we have a key and a value pair.
+Even though the object is specified as key in hashmap, it does not have any reference and it is not eligible for garbage collection if it is 
+associated with HashMap i.e. HashMap dominates over Garbage Collector.
+
+WeakHashMap is an implementation of the Map interface. WeakHashMap is almost same as HashMap except in case of WeakHashMap, if object is specified as key 
+doesn’t contain any references- it is eligible for garbage collection even though it is associated with WeakHashMap. i.e Garbage Collector dominates 
+over WeakHashMap.
+
+
+20. In HashMap, how to add an custom key object and what we need to do to calclulate the hashcode ?
+
+The very basic need for designing a good key is that “we should be able to retrieve the value object back from the map without failure“.
+Key’s hash code is used primarily in conjunction to its equals() method, for putting a key in map and then getting it back from map. 
+So, our only focus point is these two methods hashCode() and equals().
+
+So if hash code of key object changes after we have put a key value pair in map, then its almost impossible to fetch the value object back from map.
+
+* Make HashMap key object immutable.
+
+For above basic reasoning, key objects are suggested to be IMMUTABLE. Immutability allows you to get same hash code every time, for a key object. 
+So it actually solves most of the problems in one go. Also, this class must honor the hashCode() and equals() methods contract.
+
+* But remember that immutability is recommended and not mandatory. If you want to make a mutable object as key in hashmap, 
+then you have to make sure that state change for key object does not change the hash code of object. 
+This can be done by overriding the hashCode() method. But, you must make sure you are honoring the contract with equals() also.
+
+
+HashMap custom key object example:
+
+An example is always better for demonstration, right? Then lets have one.
+
+In this example, I have created an Account class with only two fields for simplicity.
+I have overridden the hashcode and equals method such that it uses only account number to verify the uniqueness of Account object. 
+All other possible attributes of Account class can be changed on runtime.
+
+public class Account 
+{
+    private int accountNumber;
+    private String holderName;
+ 
+    public Account(int accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+ 
+    public String getHolderName() {
+        return holderName;
+    }
+ 
+    public void setHolderName(String holderName) {
+        this.holderName = holderName;
+    }
+ 
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+ 
+    //Depends only on account number
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + accountNumber;  
+        return result;
+    }
+ 
+    //Compare only account numbers
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Account other = (Account) obj;
+        if (accountNumber != other.accountNumber)
+            return false;
+        return true;
+    }
+ 
+
+21. What are Concurrent Collection Classes?
+
+Java Collection classes are fail-fast which means that if the Collection will be changed while some thread is traversing over it using iterator, 
+the iterator.next() will throw ConcurrentModificationException.
+
+Concurrent Collection classes support full concurrency of retrievals and adjustable expected concurrency for updates.
+Major classes are ConcurrentHashMap, CopyOnWriteArrayList and CopyOnWriteArraySet.
+
+22. How to sort a HashMap in the order of values ?
+
+private static HashMap sortByValues(HashMap map) { 
+       List list = new LinkedList(map.entrySet());
+       // Defined Custom Comparator here
+       Collections.sort(list, new Comparator() {
+            public int compare(Object o1, Object o2) {
+               return ((Comparable) ((Map.Entry) (o1)).getValue())
+                  .compareTo(((Map.Entry) (o2)).getValue());
+            }
+       });
+
+       // Here I am copying the sorted list in HashMap
+       // using LinkedHashMap to preserve the insertion order
+       HashMap sortedHashMap = new LinkedHashMap();
+       for (Iterator it = list.iterator(); it.hasNext();) {
+              Map.Entry entry = (Map.Entry) it.next();
+              sortedHashMap.put(entry.getKey(), entry.getValue());
+       } 
+       return sortedHashMap;
+  }
+
+23. How to sort an array of string in descending order.
+
+String[] stringArray =  new String[] { "FF", "PP", "AA", "OO", "DD" };
+
+// Sorting String Array in descending order
+Arrays.sort(stringArray, Collections.reverseOrder());
+
+
+Q. When to use ArrayList and LinkedList in Java ?
+
+LinkedList and ArrayList are two different implementations of the List interface. 
+LinkedList implements it with a doubly-linked list. ArrayList implements it with a dynamically re-sizing array.
+
+ArrayList provides constant time for search operation, so it is better to use ArrayList if searching is more frequent operation than add and remove operation. 
+The LinkedList provides constant time for add and remove operations. So it is better to use LinkedList for manipulation.
+
+
+Q. How to sort an array of strings w.r.t lenght in Java8 ?
+
+Arrays.sort(stringArray, Comparator.comparing(String::length));
+
+if arraylist,
+
+list.sort((first, second) -> Integer.compare(first.length(),
+                                                   second.length()));
+
+
+Q. How to sort an list of objects based on the alphabetical order of name ?
+
+We generally use Collections.sort() method to sort a simple array list. However if the ArrayList is of custom object type then in such case
+you have two options for sorting- comparable and comparator interfaces. 
+
+
+Consider the below example – I have a Student class which has properties like Student name, roll no and student age.
+
+public class Student  {
+    private String studentname;
+    private int rollno;
+    private int studentage;
+
+    public Student(int rollno, String studentname, int studentage) {
+         this.rollno = rollno;
+         this.studentname = studentname;
+         this.studentage = studentage;
+    }
+
+    public String getStudentname() {
+         return studentname;
+    }
+    public void setStudentname(String studentname) {
+	this.studentname = studentname;
+    }
+    public int getRollno() {
+	return rollno;
+    }
+    public void setRollno(int rollno) {
+	this.rollno = rollno;
+    }
+    public int getStudentage() {
+	return studentage;
+    }
+    public void setStudentage(int studentage) {
+ 	this.studentage = studentage;
+    }	
+}
+
+And I want to have an ArrayList of Student Object. We do it like this –
+
+import java.util.*;
+public class ArrayListSorting  {
+
+     public static void main(String args[]){
+	   ArrayList<Student> arraylist = new ArrayList<Student>();
+	   arraylist.add(new Student(223, "Chaitanya", 26));
+	   arraylist.add(new Student(245, "Rahul", 24));
+	   arraylist.add(new Student(209, "Ajeet", 32));
+
+	   Collections.sort(arraylist);
+
+	   for(Student str: arraylist){
+			System.out.println(str);
+	   }
+     }
+}
+
+Sorting of ArrayList<Object> with Comparable
+**********************************************
+
+Let’s say we need to sort the ArrayList<Student> based on the student Age property. 
+This is how it can be done – First implement Comparable interface and then Override the compareTo method.
+
+package beginnersbook.com;
+
+public class Student implements Comparable {
+    private String studentname;
+    private int rollno;
+    private int studentage;
+
+    public Student(int rollno, String studentname, int studentage) {
+        this.rollno = rollno;
+        this.studentname = studentname;
+        this.studentage = studentage;
+    }
+    ...
+    //getter and setter methods same as the above example 
+    ...
+    @Override
+    public int compareTo(Student comparestu) {
+        int compareage=((Student)comparestu).getStudentage();
+        /* For Ascending order*/
+        return this.studentage-compareage;
+
+        /* For Descending order do like this */
+        //return compareage-this.studentage;
+    }
+
+    @Override
+    public String toString() {
+        return "[ rollno=" + rollno + ", name=" + studentname + ", age=" + studentage + "]";
+    }
+
+}
+Now we can very well call Collections.sort on ArrayList
+
+import java.util.*;
+public class ArrayListSorting  {
+
+	public static void main(String args[]){
+	   ArrayList<Student> arraylist = new ArrayList<Student>();
+	   arraylist.add(new Student(223, "Chaitanya", 26));
+	   arraylist.add(new Student(245, "Rahul", 24));
+	   arraylist.add(new Student(209, "Ajeet", 32));
+
+	   Collections.sort(arraylist);
+
+	   for(Student str: arraylist){
+			System.out.println(str);
+	   }
+	}
+}
+Output:
+
+[ rollno=245, name=Rahul, age=24]
+[ rollno=223, name=Chaitanya, age=26]
+[ rollno=209, name=Ajeet, age=32]
+
+Since Comparable is implemented by the same class whose objects are sorted so it binds you with that sorting logic which is ok 
+in most of the cases but in case you want to have more than way of sorting your class objects you should use comparators. 
+
+
+Sorting ArrayList<Object> multiple properties with Comparator
+***************************************************************
+
+We are overriding compare method of Comparator for sorting.
+
+package beginnersbook.com;
+import java.util.Comparator;
+public class Student  {
+    private String studentname;
+    private int rollno;
+    private int studentage;
+
+    public Student(int rollno, String studentname, int studentage) {
+        this.rollno = rollno;
+        this.studentname = studentname;
+        this.studentage = studentage;
+    }
+    ...
+    //Getter and setter methods same as the above examples
+    ...
+    /*Comparator for sorting the list by Student Name*/
+    public static Comparator<Student> StuNameComparator = new Comparator<Student>() {
+
+	public int compare(Student s1, Student s2) {
+	   String StudentName1 = s1.getStudentname().toUpperCase();
+	   String StudentName2 = s2.getStudentname().toUpperCase();
+
+	   //ascending order
+	   return StudentName1.compareTo(StudentName2);
+
+	   //descending order
+	   //return StudentName2.compareTo(StudentName1);
+    }};
+
+    /*Comparator for sorting the list by roll no*/
+    public static Comparator<Student> StuRollno = new Comparator<Student>() {
+
+	public int compare(Student s1, Student s2) {
+
+	   int rollno1 = s1.getRollno();
+	   int rollno2 = s2.getRollno();
+
+	   /*For ascending order*/
+	   return rollno1-rollno2;
+
+	   /*For descending order*/
+	   //rollno2-rollno1;
+   }};
+    @Override
+    public String toString() {
+        return "[ rollno=" + rollno + ", name=" + studentname + ", age=" + studentage + "]";
+    }
+
+}
+ArrayList class:
+
+package beginnersbook.com;
+import java.util.*;
+public class Details  {
+
+	public static void main(String args[]){
+	   ArrayList<Student> arraylist = new ArrayList<Student>();
+	   arraylist.add(new Student(101, "Zues", 26));
+	   arraylist.add(new Student(505, "Abey", 24));
+	   arraylist.add(new Student(809, "Vignesh", 32));
+
+	   /*Sorting based on Student Name*/
+	   System.out.println("Student Name Sorting:");
+	   Collections.sort(arraylist, Student.StuNameComparator);
+
+	   for(Student str: arraylist){
+			System.out.println(str);
+	   }
+
+	   /* Sorting on Rollno property*/
+	   System.out.println("RollNum Sorting:");
+	   Collections.sort(arraylist, Student.StuRollno);
+	   for(Student str: arraylist){
+			System.out.println(str);
+	   }
+	}
+}
+Output:
+
+Student Name Sorting:
+[ rollno=505, name=Abey, age=24]
+[ rollno=809, name=Vignesh, age=32]
+[ rollno=101, name=Zues, age=26]
+RollNum Sorting:
+[ rollno=101, name=Zues, age=26]
+[ rollno=505, name=Abey, age=24]
+[ rollno=809, name=Vignesh, age=32]
