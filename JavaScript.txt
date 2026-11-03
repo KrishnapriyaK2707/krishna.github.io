@@ -1,0 +1,639 @@
+What is JavaScript ?
+--------------------
+
+     JavaScript is a programming language designed for webpages.
+
+History
+-------
+
+* First web scripting language.
+* Developed by Netscape and Sun.
+* Standardized by European Computer Manufacturers Association (ECMA)
+
+Why Use JavaScript ?
+--------------------
+
+* JavaScript enhances Web pages with dynamic and interactive features.
+
+* JavaScript runs in client software.
+
+
+What can JavaScript do ?
+------------------------
+
+* JavaScript gives HTML designers a programming tool.
+* Javascript can react to events.
+* Validate data.
+* Read/write/modify HTML elements.
+
+Characteristics
+---------------
+
+* JavaScript is an easy-to-use programming language that can be embedded in the header of your web pages. 
+* It is an interpreted language (means that scripts execute without preliminary compilation) .
+* Object Oriented.
+* Case Sensitive.
+* Loosely typed language. Variables take on any data type depending on the value assigned.
+* End-of-line semicolons are optional.
+
+
+Document Object Model (DOM)
+---------------------------
+
+The Document Object Model (DOM) is an application programming interface (API) for HTML as well as XML. 
+A common set of properties/methods to access everything in a web document.
+
+Every web page resides inside a browser window which can be considered as an object.
+
+A Document object represents the HTML document that is displayed in that window. The Document object has various properties that refer to other objects which 
+allow access to and modification of document content.
+
+The way a document content is accessed and modified is called the Document Object Model, or DOM. The Objects are organized in a hierarchy.
+ This hierarchical structure applies to the organization of objects in a Web document.
+
+    Window object − Top of the hierarchy. It is the outmost element of the object hierarchy.
+
+    Document object − Each HTML document that gets loaded into a window becomes a document object. The document contains the contents of the page.
+
+    Form object − Everything enclosed in the <form>...</form> tags sets the form object.
+
+    Form control elements − The form object contains all the elements defined for that object such as text fields, buttons, radio buttons, and checkboxes.
+
+document.forms 				Returns a collection of all <form> elements in the document
+document.getElementById() 		Returns the element that has the ID attribute with the specified value
+document.getElementsByClassName() 	Returns a NodeList containing all elements with the specified class name
+document.getElementsByName() 		Returns a NodeList containing all elements with a specified name
+document.getElementsByTagName() 	Returns a NodeList containing all elements with the specified tag name
+
+
+
+DataTypes
+---------
+
+ * Primitive Types
+ * Reference Types
+
+ Primitive Types
+ ---------------
+
+ Primitive values are stored directly on the variable object.
+ Use typeof keyword to check type of variable.
+
+  Boolean 	→ true or false.
+  Number 	→ Any integer or floating-point numeric value.
+  String  	→ A character or sequence of characters delimited by either single or double quotes.
+  Null 	  	→ A primitive type that has only one value, null.
+  Undefined 	→ A 
+
+Eventhough primitive types, strings, numbers and booleans have methods. For example:
+
+          var name = “Nicholas”
+          var lowercaseName = name.toLowerCase(); // to lowecase
+          var firstLetter = name.charAt(0); // get first character
+          var count = 10;
+          var hexCount = count.toString(16); // “a” 
+          var flag = true;
+          var stringFlag = flag.toString(); // convert to “true”
+
+Reference Types
+---------------
+
+Reference types are the closest thing to classes in JavaScript, and objects are instances of  reference types .      
+Reference types do not store the object directly in to the variable to which it is assigned, instead it holds a pointer (or reference) to the 
+location in memory where the object exists.
+
+ There are couple of ways to create, or instantiate objects.
+            var object = new Object();
+                         Or
+           var myclass = function(){};
+           var myobject = new myclass();
+                        Or Json way,
+            var myobject = {};
+
+
+
+
+Built-In Types
+--------------
+
+Array → An ordered list of numerically indexed values.
+Date  → A data and time.
+Error → A runtime error (there are also several more specific error subtypes)
+Function → A function.
+Object   → A generic object.
+RegExp   → A regular expression.
+We can instantiate each built-in type as follows;
+      var items = new Array();
+      var now = new Date();
+      var error = new Error(“Error occured”);
+      var func = new Function(“console.log('Hi');”);
+      var object = new Object();
+
+
+Reference Type Function can be identified by typeof operator.
+
+Ex: function reflect(value) {
+      return value;
+}
+console.log(typeof reflect); // “function”
+For all other reference types, typeof returns “object”. 
+
+ We can use instanceof operator to identify the other reference types.
+
+Example:
+Console.log(items instanceof Array); // true
+Console.log(items instanceof Object); // true
+Console.log(reflect instanceof Function); // true
+
+Javascript Objects
+-------------------
+
+A JavaScript object is a collection of named values.
+
+Example:
+var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"}; 
+
+* JavaScript Object Properties:-
+
+Properties are the values associated with a JavaScript object.
+
+A JavaScript object is a collection of unordered properties.
+
+Example 1
+	person.firstname + " is " + person.age + " years old.";
+Example 2
+	person["firstname"] + " is " + person["age"] + " years old.";
+
+
+* JavaScript for...in Loop
+
+The JavaScript for...in statement loops through the properties of an object.
+
+Example
+var person = {fname:"John", lname:"Doe", age:25};
+
+for (x in person) {
+    txt += person[x];
+}
+
+* Adding New Properties
+
+You can add new properties to an existing object by simply giving it a value.
+
+Assume that the person object already exists - you can then give it new properties:
+Example
+person.nationality = "English";
+
+* Deleting Properties
+
+The delete keyword deletes a property from an object:
+Example
+var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"};
+delete person.age;   // or delete person["age"]; 
+
+* JavaScript Object Methods
+
+ You create an object method with the following syntax:
+methodName : function() { code lines }
+
+You access an object method with the following syntax:
+objectName.methodName()
+
+Example
+
+var person = {
+    firstName: "John",
+    lastName : "Doe",
+    id       : 5566,
+    fullName : function() {
+       return this.firstName + " " + this.lastName;
+    }
+};
+
+document.getElementById("demo").innerHTML = person.fullName();
+
+If you access the fullName property, without (), it will return the function definition:
+
+* JavaScript Object Prototypes
+
+Every JavaScript object has a prototype. The prototype is also an object.
+All JavaScript objects inherit their properties and methods from their prototype.
+
+Objects created using an object literal, or with new Object(), inherit from a prototype called Object.prototype.
+Objects created with new Date() inherit the Date.prototype.
+The Object.prototype is on the top of the prototype chain.
+All JavaScript objects (Date, Array, RegExp, Function, ....) inherit from the Object.prototype. 
+
+Creating a Prototype
+
+The standard way to create an object prototype is to use an object constructor function:
+
+Example
+function Person(first, last, age, eyecolor) {
+    this.firstName = first;
+    this.lastName = last;
+    this.age = age;
+    this.eyeColor = eyecolor;
+}
+The constructor function is the prototype for Person objects.
+It is considered good practice to name constructor function with an upper-case first letter.
+
+With a constructor function, you can use the new keyword to create new objects from the same prototype:
+Example
+var myFather = new Person("John", "Doe", 50, "blue");
+var myMother = new Person("Sally", "Rally", 48, "green"); 
+
+Adding Properties to a Prototype
+
+You cannot add a new property to a prototype the same way as you add a new property to an existing object, because the prototype is not an existing object.
+
+To add a new property to a prototype, you must add it to the constructor function:
+
+Example
+function Person(first, last, age, eyecolor) {
+    this.firstName = first;
+    this.lastName = last;
+    this.age = age;
+    this.eyeColor = eyecolor;
+    this.nationality = "English";
+} 
+
+Adding Methods to a Prototype
+
+Your constructor function can also define methods:
+Example
+function Person(first, last, age, eyecolor) {
+    this.firstName = first;
+    this.lastName = last;
+    this.age = age;
+    this.eyeColor = eyecolor;
+    this.name = function() {return this.firstName + " " + this.lastName;};
+} 
+
+Using the prototype Property
+
+The JavaScript prototype property allows you to add new properties to an existing prototype:
+Example
+function Person(first, last, age, eyecolor) {
+    this.firstName = first;
+    this.lastName = last;
+    this.age = age;
+    this.eyeColor = eyecolor;
+}
+Person.prototype.nationality = "English"; 
+
+The JavaScript prototype property also allows you to add new methods to an existing prototype:
+Example
+function Person(first, last, age, eyecolor) {
+    this.firstName = first;
+    this.lastName = last;
+    this.age = age;
+    this.eyeColor = eyecolor;
+}
+Person.prototype.name = function() {
+    return this.firstName + " " + this.lastName;
+}; 
+
+
+Comparison operators 
+--------------------
+
+Comparison operators are used in logical statements to determine equality or difference between variables or values. 
+     == , === , != , !== , >, <, >= , <=
+    Example:
+                    var x = 5;
+                     x ==  8   → false
+                     x ==  5   → true
+                     x ==  “5” → true
+                     xx === “5” → false ( “ ===” checks the type also )
+
+Logical operators
+------------------
+
+ Logical operators are used to determine the logic between variables or values.
+     &&  - and, ||    -  or ,  !    - not
+
+Bitwise operators
+-----------------
+ JavaScript has the same set of bitwise operators in Java,
+ &  → and, |  → or, ^ → xor,~ → not
+
+Example: x = 5 & 1  // 0101 & 0001 = 0001 , ie. result is 1
+
+Events
+------
+
+* Events associate an object with an action. 
+* User actions trigger events.
+* The easiest example is a button, whose definition includes the words onClick="run_my_function()". 
+  The onClick event, as its name implies, will run the function when the user clicks on the button. 
+  Other events include OnMouseOver, OnMouseOut, OnFocus, OnBlur, OnLoad, and OnUnload.  
+
+Literal Forms
+-------------
+
+     A literal is a syntax that allows us to define a reference value for built-in reference type without creating an object using the new operator and 
+the onbject's constructer.
+For example;
+
+ var book = {
+         name: “Principles of Javascript”
+         Year : 2014  }
+
+is equal to :- 
+
+var book = new Object(); 
+book.name = “Principles of Javascript”;
+book.year = 2014;
+      
+Function Literal
+     function reflect(value){
+            return value;
+     }  //is same as
+var reflect = new Function(“value”, “return value;”);
+
+Functions
+----------
+
+* Functions in JavaScript are objects.
+* Functions can return any data type, 'undefined' if none specified
+* By default in window scope.
+* 'this' points to current object's scope, defaults to window.
+* Can be altered by using  apply method.
+  func.apply(any_scope,[arg1,arg2..])
+* The apply method lets us construct an array of arguments to use to invoke a function. Two parameters, first is the value bound to 'this'. 
+Second is array of parameters.
+
+Self-Invoking Functions:
+
+A self-invoking expression is invoked (started) automatically, without being called.
+
+Function expressions will execute automatically if the expression is followed by ().
+
+You cannot self-invoke a function declaration.
+
+You have to add parentheses around the function to indicate that it is a function expression:
+Example
+(function () {
+    var x = "Hello!!";      // I will invoke myself
+})(); 
+
+
+Invoking a Function with a Function Method:
+
+In JavaScript, functions are objects. JavaScript functions have properties and methods.
+
+call() and apply() are predefined JavaScript function methods. Both methods can be used to invoke a function, and both methods must have the owner object as 
+first parameter. 
+
+Example
+1.function myFunction(a, b) {
+    return a * b;
+}
+myObject = myFunction.call(myObject, 10, 2);     // Will return 20 
+
+2. function sayHello(){
+  return "Hello " + this.name;
+}
+        
+var obj = {name: "Sandy"};
+        
+sayHello.call(obj); // Returns "Hello Sandy"
+
+
+
+Example
+
+1.function myFunction(a, b) {
+    return a * b;
+}
+myArray = [10, 2];
+myObject = myFunction.apply(myObject, myArray);  // Will also return 20 
+
+2. function saySomething(message){
+  return this.name + " is " + message;
+}
+        
+var person4 = {name:  "John"};
+        
+saySomething.apply(person4, ["awesome"]);
+
+
+
+The simplest use of bind() method is to make a function that, no matter how it is called, is called with a particular 'this' value. 
+
+Example:
+
+this.x = 9;    // this refers to global "window" object here in the browser
+var module = {
+  x: 81,
+  getX: function() { return this.x; }
+};
+module.getX(); // 81
+
+var retrieveX = module.getX;
+retrieveX();   
+// returns 9 - The function gets invoked at the global scope
+
+// Create a new function with 'this' bound to module
+// New programmers might confuse the
+// global var x with module's property x
+var boundGetX = retrieveX.bind(module);
+boundGetX(); // 81
+
+Javascript currying
+-------------------
+	Currying is a way of calling a function with less arguments than the function requires. Currying allows you to easily create custom functions 
+by partially invoking an existing function.
+
+Currying is an advanced technique to transform a function of arguments n, to n functions of one or less arguments. 
+By using the currying technique, we do not change the functionality of a function, we just change the way it is invoked. 
+
+Example:
+
+1. This binary function:
+
+function sum(x, y) {
+  return x + y;
+}
+
+…could be rewritten as a curried function like this:
+
+function sum(x) {
+  return function(y) {
+    return x + y;
+  };
+}
+
+var addTen = sum(10); 
+
+addTen(20); // 30
+addTen(55); // 65
+
+
+This approach starts to become unwieldy as the number of values to be provided by the caller grows:
+
+function sumFour(w) {
+  return function (x) {
+    return function (y) {
+      return function (z) {
+        return w + x + y + z;
+      }
+    }
+  }
+}
+
+sumFour(1)(2)(10)(20); // 33
+
+var addTen = sumFour(3)(3)(4);
+addTen(20); // 30
+
+
+
+2.
+var add = function(a,b) {
+    return a + b;
+}
+ 
+var addTen = add.curry(10); //create function that returns 10 + argument
+addTen(20); //30
+
+	The curry function does not exist in native JavaScript, but it’s easy to write your own. Here I’m augmenting function’s prototype with an implementation based on the Prototype framework. (Notice I’m also throwing in a toArray function for convenience. This is because function’s arguments property is not a true array, and we need it to work with array’s concat function)
+	
+function toArray(enum) {
+    return Array.prototype.slice.call(enum);
+}
+ 
+Function.prototype.curry = function() {
+    if (arguments.length<1) {
+        return this; //nothing to curry with - return function
+    }
+    var __method = this;
+    var args = toArray(arguments);
+    return function() {
+        return __method.apply(this, args.concat(toArray(arguments)));
+    }
+}
+The returned function expects to be invoked with additional argument(s) which it will concatenate with the argument(s) it got from the curry function.
+
+
+
+3.
+
+var getColorBetween = function(transitionFactor, color1, color2) {
+    //..
+}
+ 
+getColorBetween(0.5, "red", "green"); //<span style="color:#7f4000;">"#7f4000"</span>
+
+var getFallColor = getColorBetween.curry(0.25, "#ff8000");
+ 
+reddishFallColor = getFallColor("red"); //<span style="color:#ff6000;">"#ff6000"</span>
+yellowishFallColor = getFallColor("yellow"); //<span style="color:#ff9b00;">"#ff9b00"</span>
+brownishFallColor = getFallColor("#800000"); //<span style="color:#df7000;">"#df7000"</span>
+
+4.
+
+var converter = function(ratio, symbol, input) {
+    return [(input*ratio).toFixed(1),symbol].join(" ");
+}
+ 
+var kilosToPounds = converter.curry(2.2,"lbs");
+var litersToUKPints = converter.curry(1.75, "imperial pints");
+var litersToUSPints = converter.curry(1.98, "US pints");
+var milesToKilometers = converter.curry(1.62, "km");
+ 
+kilosToPounds(4); //8.8 lbs
+litersToUKPints(2.4); //4.2 imperial pints
+litersToUSPints(2.4); //4.8 US pints
+milesToKilometers(34); //55.1 km
+
+
+ Explain Hoisting in javascript.
+***********************************
+
+
+Hoisting is a default behaviour of javascript where all the variable and function declarations are moved on top. 
+
+This means that irrespective of where the variables and functions are declared, they are moved on top of the scope. The scope can be both local and global.
+
+
+Example 1:
+
+hoistedVariable = 3;
+console.log(hoistedVariable); // outputs 3 even when the variable is declared after it is initialized	
+var hoistedVariable;
+
+
+Example 2:
+
+hoistedFunction();  // Outputs " Hello world! " even when the function is declared after calling
+
+function hoistedFunction(){ 
+  console.log(" Hello world! ");
+}
+
+
+Example 3:
+
+// Hoisting takes place in the local scope as well
+function doSomething(){
+  x = 33;
+  console.log(x);
+  var x;
+}
+
+
+doSomething(); // Outputs 33 since the local variable “x” is hoisted inside the local scope
+
+**Note - Variable initializations are not hoisted, only variable declarations are hoisted:
+
+var x;
+console.log(x); // Outputs "undefined" since the initialization of "x" is not hoisted
+x = 23;
+
+
+**Note - To avoid hoisting, you can run javascript in strict mode by using “use strict” on top of the code:
+
+"use strict";
+x = 23; // Gives an error since 'x' is not declared
+var x; 
+
+
+
+
+
+Some useful functions
+---------------------
+
+* parseInt is a function that converts string to integer.
+* parseFloat function parses a string argument and returns a  floating point number.
+* The eval function passes a string to the JavaScript compiler and  executes the result. 
+
+
+JSON
+----
+
+ * Javascript Object Notation (JSON) is a light weight data interchange format. It is based on Javascript's object literal notation.
+* It is primarily used to transmit data between a server and web applications.
+* Language independent and  can be used with modern programming languages.
+* JSON has six kind of values: objects,arrays,strings,numbers,boolean and null. Also can insert Whitespace before or after any value.
+* A JSON object is an unordered container of name/value pairs. A name can be any string. A value can be any JSON value including arrays and objects.
+* The JSON array is an ordered sequence of values. 
+
+Example:
+
+var object1 = { "language" : "Java", "author"  : "herbert schildt" };
+
+  document.write("<h3>Language = " + object1.language+"</h3>");  
+  document.write("<h3>Author = " + object1.author+"</h3>");   
+
+Ajax
+----
+
+* Ajax stands for  Asynchronous JavaScript and XML.
+* Functions without reloading the Web page that hosts the application on the client computer;
+* Extensively uses the Document Object Model (DOM) and JavaScript to implement the interactivity of the application;
+* Relies on XMLHttpRequest calls to exchange information with the Web server;
+* Performs the client-server data exchanges asynchronously, behind the scenes, while the user can continue interacting with the Web application in the Web browser. 
+
