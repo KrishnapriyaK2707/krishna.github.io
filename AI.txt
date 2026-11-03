@@ -1,0 +1,161 @@
+AI Questions
+------------
+
+
+1. What is AI model ?
+
+   An AI model is a program trained on large amounts of data to recognize patterns and make predictions or generate outputs.
+   Once trained, it can take new input and produce something useful: answering questions, translating text, recognizing faces in photos, recommending products, or writing code.
+
+Here are some everyday examples of AI models, grouped by what they do:
+
+Language models (text)
+-----------------------
+
+Chatbots like Claude or ChatGPT, which answer questions and hold conversations.
+Autocomplete in your phone keyboard, which suggests the next word as you type.
+Email spam filters, which learn to tell junk mail from legitimate messages.
+
+Vision models (images)
+----------------------
+Face unlock on your phone, which recognizes your face from the camera.
+Photo apps that group pictures by person or tag them as “beach” or “food.”
+Medical imaging tools that flag possible tumors in X-rays or scans.
+
+Speech models (audio)
+----------------------
+Voice assistants like Siri or Alexa, which turn your spoken words into commands.
+Automatic captions on YouTube or Zoom.
+
+Recommendation models
+----------------------
+Netflix suggesting shows based on what you’ve watched.
+Spotify building a playlist like your favorites.
+Amazon showing “customers also bought” items.
+
+Generative models (creating new content)
+----------------------------------------
+Image generators like DALL-E or Midjourney, which create pictures from a text description.
+Music tools that compose a melody in a chosen style.
+
+Forecasting models
+------------------
+Weather apps predicting rain tomorrow.
+Banks estimating the chance a loan will be repaid.
+
+Each of these was trained on data relevant to its task, such as millions of labeled photos for face recognition or years of viewing history for recommendations.
+
+2. What is LLM ?
+   
+   An LLM (large language model) is a type of AI model. An LLM is a neutral network trained on massive text datasets to understand and generate human language.
+
+   Examples: GPT, Gemini, Claude
+
+3. What is Tokenization ?
+
+   Process of converting text into smaller units called tokens.
+
+4. What is Context Window ?
+
+   Maximum amount of information an LLM can process at one time.
+
+5. What is hallucination in AI ?
+
+   When an LLM generates incorrect or fabricated information.
+
+6. How can hallucinations be reduced ?
+
+   RAG, Better prompting, Fine tuning, Validation layers.
+
+7. What is RAG ?
+
+    RAG stands for Retrieval-Augmented Generation. It allows the model to use external knowledge.
+    It’s a technique that makes an AI model give better answers by first looking up relevant information from a source, 
+    then using that information to write its response.
+
+    Here’s how it works:
+
+	Retrieval: When you ask a question, the system searches a collection of documents, such as company manuals, a knowledge base, 
+        or a set of PDFs, and pulls out the passages most relevant to your question.
+	Augmentation: Those passages are added to your question as extra context.
+	Generation: The language model reads the question along with the retrieved text and writes an answer based on it.
+
+	Ex: If a company builds a support chatbot with RAG, a customer asking about the return policy won’t get an answer based 
+        only on what the model learned during training. 
+        Instead, the system finds the current return policy document and the model answers from that text.
+        It reduces the chance of the model making up facts, since it has real text to base its answer on.
+
+8. Why is RAG important ?
+
+     Benefits: Reduces hallucinations, Improves accuracy, Uses latest information.
+
+9. What is temperature in LLMs ?
+
+       Controls randomness of generated response.
+
+Low temperature (near 0): The model strongly favors the most likely words. Its answers are more focused, consistent, and repeatable. This suits tasks like factual Q&A, summarizing, or writing code.
+
+High temperature (above 1): The model gives less likely words a bigger chance of being picked. Its answers become more varied, surprising, and creative, but also more prone to errors or rambling. This suits brainstorming, poetry, or generating varied ideas.
+
+Medium temperature: A balance between the two, often the default in many tools.
+
+10. What is Chunking ?
+
+   Breaking large documents into smaller pieces for retrieval.
+
+11. What are embeddings ?
+
+    Numerical representation of text used for semantic search.
+
+12. What is semantic search ?
+
+   Search based on meaning rather than exact keywords.
+
+13. What is a vector database ?
+
+   Database optimized for storing and searching embeddings.
+   
+   Ex: Pinecone, Weaviate, Qdrant, Milvus
+
+14. What is Prompt engineering ?
+
+  Designing prompts to guide AI models towards desired outputs.
+
+15. What is zero shot prompting ?
+
+   Model receives no examples, only prompts.
+
+16. What is few shot prompting ?
+
+   Prompt include examples, before actual task.
+
+17. What is role based prompting ?
+
+  Assigning a role to the model.
+
+ Ex: Act as a senior software architect
+
+18. How would you reduce LLM costs in production ?
+
+  Prompt optimization, Caching, Smaller models, RAG architecture.
+
+19. What is Generative AI
+
+Generative AI is a type of AI that creates new content, such as text, images, audio, video, or code, rather than only analyzing or classifying existing data.
+
+These models use techniques like deep learning and neural networks to generate output.
+
+Some common examples:
+
+Text: Claude and ChatGPT write essays, emails, and code.
+Images: DALL-E and Midjourney turn a written description into a picture.
+Audio: Tools that generate speech in a particular voice or compose music.
+Video: Models that create short clips from a text prompt.
+
+Most generative AI today is built on large neural networks trained on huge datasets. Large language models (LLMs) are the generative AI systems for text, which is why the two terms often come up together. Generative AI is the broader category, and LLMs are one important part of it.
+
+20. What is Natural Language Processing (NLP)?
+
+NLP is a branch of AI which enables machines to understand, interpret, and manipulate human language.
+
+
