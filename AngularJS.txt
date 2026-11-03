@@ -69,3 +69,28 @@ view and model. Most of the work in moving data from one to the other just happe
 automatically.
  In Angularjs, part of the DOM can be updated separately, rather than updating the
 whole page.
+
+Example 2:
+
+<html ng-app>
+<head>
+<script src="angular.js"></script>
+<script src="controllers.js"></script>
+</head>
+<body>
+<div ng-controller='HelloController'>
+<input ng-model='greeting.text'>
+<p>{{greeting.text}}, World</p>
+</div>
+</body>
+</html>
+The controller, HelloController, can stay exactly the same as in Example 1.
+
+If we replace Hello with Hi in the input field, same will be reflected in browser automatically.
+
+	Without ever registering a change listener on the input field, we have a UI that will
+dynamically update. The same would be true for changes coming to and from the server.
+In our controller, we could make a request to our server, get the response, and set
+$scope.greeting.text to equal what it returns. Angular would automatically update
+both the input and the text in the curly braces to that value.
+
