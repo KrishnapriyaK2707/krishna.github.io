@@ -156,4 +156,293 @@ $scope.someText = 'You have started your journey.';
 </body>
 </html>
 
+Loading this in a browser, you would see:
+
+   You have started your journey.
+
+Though this primitive-style model works in simple cases, for most applications you’ll
+want to create a model object to contain your data. We’ll create a messages model object
+and use it to store our someText . So instead of:
+var someText = 'You have started your journey.';
+you would write:
+
+var messages = {};
+messages.someText = 'You have started your journey.';
+function TextController($scope) {
+$scope.messages = messages;
+}
+and use it in your template as:
+<p>{{messages.someText}}</p>
+
+The right way is to define a controller is as part of something called a module,
+which provides a namespace for related parts of your application. The updated code
+would look like the following:
+
+
+<html ng-app='myApp'>
+	<body ng-controller='TextController'>
+	<p>{{someText.message}}</p>
+	<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js">
+        </script>
+<script>
+	var myAppModule = angular.module('myApp', []);
+	myAppModule.controller('TextController',
+	function($scope) {
+		var someText = {};
+		someText.message = 'You have started your journey.';
+		$scope.someText = someText;
+	});
+</script>
+</body>
+</html>
+
+
+In this version, we told our ng-app element about the name of our module, myApp. We
+then called the Angular object to create a module named myApp and pass our controller’s
+function to a call to that module’s controller function.
+
+
+The basic startup flow looks like this:
+
+1. A user requests the first page of your application.
+2. The user’s browser makes an HTTP connection to your server and loads the 
+   index.html page containing your template.
+3. Angular loads into the page, waits for the page to be fully loaded, and then looks
+   for ng-app to define its template boundaries.
+4. Angular traverses the template and looks for directives and bindings. This results
+   in registration of listeners and DOM manipulation, as well as fetching initial data
+   from the server. The end result of this work is that the app is bootstrapped and the
+   template is converted into view as a DOM.
+5. You connect to your server to load additional data you need to show the user as
+   needed.
+
+Displaying Text:
+
+ We can use either {{ }} or ng-bind directive.
+
+So why would you use one form over the other?
+
+	We created the double-curly interpo‐lation syntax to read more naturally and require less typing. While both forms produce equivalent output, with the double-curly syntax, on the very first page load of your
+application’s index.html, there’s a chance that your user will see the un-rendered template
+before Angular has a chance to replace the curlies with your data. Subsequent views
+won’t suffer from this.
+	The reason is that the browser loads the HTML page, renders it, and only then does
+Angular get a chance to interpret it as you intended.
+The good news is that you can still use {{ }} in the majority of your templates. For the
+data binding you do in your index.html page, however, use ng-bind instead. That way,
+your users will see nothing until the data has loaded.
+
+Lists, Tables, and Other Repeated Elements :
+
+Possibly the most useful Angular directive, ng-repeat creates a copy of a set of elements
+once for every item in a collection. You should use it everywhere you want to create lists
+of things.
+
+The ng-repeat will make a copy of all of the HTML inside the tag, including the tag it’s
+placed on.
+
+The ng-repeat directive also gives you references to the index of the current element
+via $index , and booleans that tell you if you’re on the first element, somewhere in the
+middle, or the last element of the collection with $first , $middle , and $last .
+
+
+Observing Model Changes with $watch:
+
+Possibly the most used of all scope functions is $watch , which notifies you when parts
+of your model change.
+
+You can watch individual object properties and computed results
+(functions), really anything that could be accessed as a property or computed as a Java‐
+Script function. The function’s signature is:
+
+ >> $watch(watchFn, watchAction, deepWatch)
+
+
+Formatting Data with Filters:
+
+Filters allow you to declare how to transform data for display to the user within an
+interpolation in your template. The syntax for using filters is:
+{{ expression | filterName : parameter1 : ...parameterN }}
+
+Changing Views with Routes and $location:
+
+	Though AJAX apps are technically single-page apps (in the sense that they only load an
+HTML page on the first request, and then just update areas within the DOM thereafter),
+we usually have multiple sub-page views that we show or hide from the user, as appro‐
+priate.
+	We can use Angular’s $route service to manage this scenario for us. Routes let you
+specify that, for a given URL that the browser points to, Angular should load and display
+a template, and instantiate a controller to provide context for the template.
+You create routes in your application by calling functions on the $routeProvider service
+as a configuration block. 
+
+It goes something like this pseudo-code:
+
+var someModule = angular.module('someModule', [...module dependencies...])
+someModule.config(function($routeProvider) {
+$routeProvider.
+when('url', {controller:aController, templateUrl:'/path/to/tempate'}).
+when(...other mappings for your app...).
+...
+otherwise(...what to do if nothing else matches...);
+)};
+
+
+Talking to Servers:
+
+	Angular provides a service called $http . It has an extensive list of abstractions
+that make it easier to talk to servers.It supports vanilla HTTP, JSONP, and CORS. It
+includes security provisions to protect from both JSON vulnerabilities and XSRF. It lets
+you easily transform the request and response data, and it even implements simple
+caching.
+
+
+Suppose we wanted to fetch a user’s information from our server. If the API is available
+at /api/user, and accepts the id as a URL parameter, then our XHR request using An‐
+gular’s core $http service would look something like the following:
+
+$http.get('api/user', {params: {id: '5'}
+}).success(function(data, status, headers, config) {
+	// Do something successful.
+}).error(function(data, status, headers, config) {
+	// Handle the error
+});
+
+Similarly, if you wanted to make a POST request using AngularJS with the same URL parameters and
+some POST data, you would do so as follows:
+
+var postData = {text: 'long blob of text'};
+	// The next line gets appended to the URL as params
+	// so it would become a post request to /api/user?id=5
+var config = {params: {id: '5'}};
+$http.post('api/user', postData, config
+).success(function(data, status, headers, config) {
+	// Do something successful
+}).error(function(data, status, headers, config) {
+	// Handle the error
+});
+
+Similar convenience methods are provided for most of the common request types, in‐
+cluding:
+• GET
+• HEAD
+• POST
+• DELETE
+• PUT
+• JSONP
+
+Changing the DOM with Directives:
+
+	Directives extend HTML syntax, and are the way to associate behavior and DOM trans‐
+formations with custom elements and attributes. Through them, you can create reusable
+UI components, configure your application, and do almost anything else you can imag‐
+ine wanting to do in your UI template.
+
+
+Ex:
+
+var someModule = angular.module('someModule', [...module dependencies...])
+someModule.directive('ngbkFocus', function() {
+			return {
+				link: function(scope, element, attrs, controller) {
+					element[0].focus();
+				}
+			};
+		});
+
+<button ngbk-focus ng-click="clickFocused()">
+		I'm very focused!
+	</button>	
+
+
+
+Working with RESTful Resources:
+
+AngularJS resources allow us to define
+object models, and in a descriptive manner, to specify:
+	• The server-side URL for the resource
+	• The types of parameters that are commonly seen for such requests
+	• Some additional methods (you automatically get get , save , query , remove , and
+	delete for free) that encapsulate specific functionality and business logic for the
+	object model (like charge() for a credit card)
+	• The expected types of responses (an array or an object)
+	• The headers
+
+You should only use Angular resources if your server side behaves in a RESTful manner.
+For the case of a credit card, which we will be using as an example in this part of the
+chapter that entails:
+	1. A GET request to /user/123/card returns a list of credit cards for User 123.
+	2. A GET request to /user/123/card/15 returns the credit card with ID 15 for User 123.
+	3. A POST request to /user/123/card with credit card info in the POST data creates a
+	new credit card for User 123.
+	4. A POST request to /user/123/card/15 with credit card info in the POST data updates
+	the credit card for User 123 with ID 15.
+	5. A DELETE request to /user/123/card/15 deletes the credit card with ID 15 for User
+	123.
+
+In addition to providing objects that allow you to query the server as per your require‐
+ments, $resource also allows you to work with the returned objects as if they were
+persisted data models, make changes, and ask them to be persisted.
+The ngResource is a separate, optional module. To use it, you need to:
+	• Include the angular-resource.js in your script files that are sourced.
+	• Include ngResource in your module dependency declaration (such as, angular.mod
+	ule(‘myModule’, [‘ngResource’]) ).
+	• Use inject $resource where needed.
+
+
+For our credit card resource, we want to be able to get, query, and save credit
+cards, in addition to being able to “charge” a credit card.
+Here’s one possible implementation with $http service:
+	myAppModule.factory('CreditCard', ['$http', function($http) {
+	var baseUrl = '/user/123/card';
+	return {
+	get: function(cardId) {
+	return $http.get(baseUrl + '/' + cardId);
+	},
+	save: function(card) {
+	var url = card.id ? baseUrl + '/' + card.id : baseUrl;
+	return $http.post(url, card);
+	Working with RESTful Resources
+	www.it-ebooks.info
+	|
+	109},
+	query: function() {
+	return $http.get(baseUrl);
+	},
+	charge: function(card) {
+	return $http.post(baseUrl + '/' + card.id, card, {params: {charge: true}});
+	}
+	};
+	}]);
+Instead, you could easily create an Angular service that reflects your resource through‐
+out the app as follows:
+	myAppModule.factory('CreditCard', ['$resource', function($resource) {
+		return $resource('/user/:userId/card/:cardId',
+			{userId: 123, cardId: '@id'},
+			{charge: {method:'POST', params:{charge:true}, isArray:false});
+		}]);
+Now, whenever we ask for a CreditCard from the AngularJS injector, we get an Angular
+resource, which by default gives us a few methods to start off with. Table 5-1 lists what
+the methods are, and how they behave, so you know how the server should be config‐
+ured.
+
+
+Now, whenever we ask for a CreditCard from the AngularJS injector, we get an Angular
+resource, which by default gives us a few methods to start off with. Table 5-1 lists what
+the methods are, and how they behave, so you know how the server should be config‐
+ured.
+
+Resource Function 			Method 		URL 				Expected Return
+-----------------			------		---				---------------
+CreditCard.get({id: 11}) 		GET 		/user/123/card/11 		Single JSON
+CreditCard.save({}, ccard) 		POST 		/user/123/card 			with post data “ccard” Single JSON
+CreditCard.save({id: 11}, ccard) 	POST 		/user/123/card/11 		with post data “ccard” Single JSON
+CreditCard.query() 			GET 		/user/123/card 			JSON Array
+CreditCard.remove({id: 11}) 		DELETE 		/user/123/card/11 		Single JSON
+CreditCard.delete({id: 11}) 		DELETE 		/user/123/card/11 		Single JSON
+
+
+
+
+1. Default angularjs port ? 4200
 
