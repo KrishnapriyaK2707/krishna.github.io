@@ -1,0 +1,122 @@
+* What is Docker?
+
+Docker is a platform used to containerize our software, using which we can easily build our applications and 
+package them, with the dependencies required, into containers, and further these containers are easily shipped to 
+run on other machines.
+
+Docker allows developers to create templates called ‘images’ using which we can create lightweight virtual machines called ‘containers.’ 
+
+In order to create and run containers on our host OS, we require software that enables us to do so.
+This is where Docker comes into the picture!
+
+* Containerization:
+
+Containerization (containers) is a lightweight virtualization technology acting as an alternative to 
+hypervisor virtualization.
+
+Advantages over virtualization:
+
+    *Containers are small and lightweight as they share the same kernel of underlying host OS.
+    *They do not take much time to boot-up (only seconds).
+    *They exhibit high performance with lower resource utilization.
+
+Docker Architecture:
+
+Docker uses a client–server architecture. The Docker client consists of Docker build, Docker pull, and Docker run. 
+The client approaches the Docker daemon that further helps in building, running, and distributing Docke containers. 
+Docker client and Docker daemon can be operated on the same system; otherwise, we can connect the Docker client to the remote Docker daemon. Both communicate with each other using the REST API, over UNIX sockets or a network.
+
+The basic architecture in Docker consists of three parts:
+
+    Docker Client
+    Docker Host
+    Docker Registry
+
+Docker Client
+
+    It is the primary way for many Docker users to interact with Docker.
+    It uses command-line utility or other tools that use Docker API to communicate with the Docker daemon.
+    A Docker client can communicate with more than one Docker daemon.
+
+Docker Host
+
+In Docker host, we have Docker daemon and Docker objects such as containers and images.
+
+ Docker Objects:
+
+   Docker image: A Docker image is a type of recipe/template that can be used for creating Docker containers. 
+   It includes steps for creating the necessary software.
+
+   Docker container: A type of virtual machine created from the instructions found within the Docker image. 
+   It is a running instance of a Docker image that consists of the entire package required to run an application.
+
+ Docker Daemon:
+
+    Docker daemon helps in listening requests for the Docker API and in managing Docker objects such as 
+    images,   containers, volumes, etc. 
+    Daemon issues to build an image based on a user’s input and then saves it in the registry.
+    In case we don’t want to create an image, then we can simply pull an image from the Docker hub 
+    (which might be built by some other user). In case we want to create a running instance of our Docker image, 
+    then we need to issue a run command that would create a Docker container. 
+    A Docker daemon can communicate with other daemons to manage Docker services.
+
+Docker Registry
+
+    Docker registry is a repository for Docker images which is used for creating Docker containers.
+    We can use a local/private registry or the Docker hub, which is the most popular social example of a 
+    Docker repository.
+
+Docker file:
+
+A Dockerfile is a text file that contains a set of instructions to build a Docker image — a lightweight, standalone package that includes everything needed to run an application (code, runtime, system tools, libraries, dependencies).
+
+Key Concepts
+
+What it does:
+
+Defines how to construct a Docker image layer by layer
+Automates the process of creating reproducible, portable containers
+Acts as a blueprint for your application environment
+
+Basic Structure
+
+A Dockerfile consists of commands that build on each other:
+
+dockerfile
+FROM ubuntu:22.04                    # Start from a base image
+WORKDIR /app                         # Set working directory
+COPY . .                             # Copy files from your computer
+RUN apt-get update && apt-get install -y python3  # Install dependencies
+EXPOSE 8000                          # Document which port the app uses
+CMD ["python3", "app.py"]            # Default command to run
+
+Common Dockerfile Instructions
+
+Command		Purpose
+FROM		Specify the base image to build upon
+WORKDIR		Set the working directory inside the container
+COPY / ADD	Copy files from your computer into the image
+RUN		Execute commands during image building
+ENV		Set environment variables
+EXPOSE		Document which ports the app listens on
+CMD		Set the default command when container starts
+ENTRYPOINT	Configure the container as an executable
+
+How It Works
+
+1.Write the Dockerfile with build instructions
+2.Build the image: docker build -t my-app:1.0 .
+3.Run containers from the image: docker run my-app:1.0
+4.Ship the image anywhere — it runs the same way on any system with Docker
+
+
+
+
+
+
+
+krishnapriyak80
+amma12345
+
+https://www.docker.com/blog/build-your-first-docker-windows-server-container/
+

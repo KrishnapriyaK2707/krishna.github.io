@@ -1,0 +1,785 @@
+
+1. What is REST?
+
+
+REST stands for Representational State Transfer. (It is sometimes spelled "ReST".) It relies on a stateless, client-server, cacheable communications protocol 
+-- and in virtually all cases, the HTTP protocol is used.
+
+REST is an architecture style for designing networked applications. The idea is that, rather than using complex mechanisms such as CORBA, RPC or SOAP to connect 
+between machines, simple HTTP is used to make calls between machines.
+
+    In many ways, the World Wide Web itself, based on HTTP, can be viewed as a REST-based architecture.
+
+RESTful applications use HTTP requests to post data (create and/or update), read data (e.g., make queries), and delete data. Thus, REST uses HTTP for all four 
+CRUD (Create/Read/Update/Delete) operations.
+
+REST is a lightweight alternative to mechanisms like RPC (Remote Procedure Calls) and Web Services (SOAP, WSDL, et al.). Later, we will see how much more 
+simple REST is.
+
+    Despite being simple, REST is fully-featured; there's basically nothing you can do in Web Services that can't be done with a RESTful architecture.
+
+REST is not a "standard". There will never be a W3C recommendataion for REST, for example. And while there are REST programming frameworks, working with REST is 
+so simple that you can often "roll your own" with standard library features in languages like Perl, Java, or C#.
+
+
+
+In general: RPC is any mechanism that allows you to execute methods remotely (although some technologies adapted that as a proper name, it's a general name for 
+many such technologies). This includes CORBA, Java RMI, SOAP-based Web Services, and REST. Some of these systems use binary data transfer (CORBA, Java RMI), 
+and others are text-based; some of the text-based ones are actually XML-based.
+
+XMLRPC is a general name for any XML-based RPC system, i.e., a system where the data that passes between client and server is XML data. 
+There are generic XMLRPC systems (Java's JAX-RPC comes to mind) but when discussing XMLRPC, the key technology is SOAP-based Web Services.
+
+Web services is a generic name for web-based RPC. This includes SOAP-based web services, which normally go by the proper name "Web Services"; 
+but now, REST is also considered a web-service architecture.
+
+SOAP is an XMLRPC web service, i.e., a web-based RPC that uses XML for data transfer, and more specifically, it uses the SOAP data format (an XML schema) 
+for the queries and their replies.
+
+REST is a non-XML-based, web-based RPC; but it is also a design philosophy and architecture.  
+
+http://rest.elkstein.org/2008/02/what-is-rest.html
+
+
+Overview:
+
+
+REST stands for Representational State Transfer
+
+REST is an architectural style based on HTTP protocol.
+
+Remember REST is not a protocol rather it’s an architectural style based on web standards and protocol.
+
+In Rest, each and everything is a resource.
+
+Each resource will have a representation, Representation can be any MIME type (pdf,json,xml etc)
+
+What is Rest Service?
+
+Every system will have resources and Rest services provide a way to access these resources.
+
+Rest services provides a way for the clients to access these resources through the channel called API.
+
+Each and every Rest service will be exposed to the clients through URL and HTTP method.
+
+Client makes a request to the service to communicate with the resources.
+
+Communication could be to get the resources in some representation or modify the existing resource or delete the existing resource or add the new resource etc.
+
+Appropriate HTTP methods will be used while communicating with the service.
+
+Client makes a request to the REST service using URL and HTTP method and it will send the content through request body or Payload if required.
+
+Appropriate Rest service will be invoked.
+
+Service will process the request and send the response back to client with status code and response body.
+
+Status code will be used by client to determine whether the response is successful or not.
+
+Client will also use response body to consume the resource and proceed further.
+
+
+When to use Rest services?
+
+We can prefer REST service in the following scenarios
+
+Check whether our requirement is to provide business logic or to return any resource/data.
+If our service needs to return just a data then prefer Rest.
+
+Check if our requirement needs a stateless conversation between client and server, if so prefer REST.
+
+If client expect the response in different formats like JSON,XML,PDF etc then prefer REST. 
+
+
+RESTLET
+-------
+
+Restlet is a comprehensive yet lightweight RESTful web API framework for Java that lets you embrace the architecture style of the Web (REST) and benefit from 
+its simplicity and scalability.
+
+Restlet has a light core but thanks to its pluggable extension, it is also a comprehensive REST framework for Java. 
+It supports all REST concepts (Resource, Representation, Connector, Component, etc.) and is suitable for both client and server Web applications.
+
+It supports major Web standards like HTTP, SMTP, XML, JSON, OData, OAuth, RDF, RSS, WADL, and Atom.
+
+Many extensions are also available to integrate with Servlet, Spring, Jetty, Simple, JAXB, JAX-RS, JiBX, Velocity, FreeMarker, XStream, Jackson, 
+SLF4J, SDC and many more!
+
+	Restlet was an attempt to build a better Servlet API, aligned with the true Web architecture (REST) and standards (HTTP, URI). 
+Therefore the Restlet API has no dependency on the Servlet API, it only depends on the Java SE. However, it is perfectly possible to deploy a 
+Restlet application into Java EE application servers or just Servlet containers. This is possible using an adapter Servlet provided as an extension.
+
+The Restlet framework is composed of two main parts. First, there is the "Restlet API", a neutral API supporting the concepts of REST and 
+facilitating the handling of calls for both client-side and server-side applications. This API is backed by the Restlet Engine and both are now 
+shipped in a single JAR ("org.restlet.jar").
+
+This separation between the API and the implementation is similar to the one between the Servlet API and Web containers like Jetty or Tomcat, 
+or between the JDBC API and concrete JDBC drivers.
+
+
+https://restlet.com/open-source/documentation/user-guide/2.3/introduction/overview
+https://restlet.com/open-source/documentation/tutorials/2.3
+
+
+Authentication
+
+
+CookieAuthenticator:
+
+public class CookieAuthenticator extends ChallengeAuthenticator
+
+Challenge authenticator based on browser cookies. This is useful when the web application requires a finer grained control on the login and logout process
+and can't rely solely on standard schemes such as ChallengeScheme.HTTP_BASIC.
+
+Login can be automatically handled by intercepting HTTP POST calls to the getLoginPath() URI. The request entity should contain an HTML form with two fields,
+the first one named getIdentifierFormName() and the second one named getSecretFormName().
+
+Logout can be automatically handled as well by intercepting HTTP GET or POST calls to the getLogoutPath() URI.
+
+After login or logout, the user's browser can be redirected to the URI provided in a query parameter named by getRedirectQueryName().
+
+When the credentials are missing or stale, the challenge(Response, boolean) method is invoked by the parent class, and its default behavior is to 
+redirect the user's browser to the getLoginFormPath() URI, adding the URI of the target resource as a query parameter of name getRedirectQueryName().
+
+Note that credentials, both identifier and secret, are stored in a cookie in an encrypted manner. The default encryption algorithm is AES but can 
+be changed with setEncryptAlgorithm(String). 
+
+
+Interview questions:
+
+1) Explain what is REST and RESTFUL?
+
+REST represents REpresentational State Transfer; it is a relatively new aspect of writing web API.
+
+RESTFUL is referred for web services written by applying REST architectural concept are called RESTful services, it focuses on system resources and 
+how state of resource should be transported over HTTP protocol to different clients written in different language. In RESTFUL web service HTTP methods like 
+GET, POST, PUT and DELETE can be used to perform CRUD operations.
+
+2) Explain the architectural style for creating web API?
+
+The architectural style for creating web api are
+
+    HTTP for client server communication
+    XML/JSON as formatting language
+    Simple URI as the address for the services
+    Stateless communication
+
+3) Mention what are the HTTP methods supported by REST?
+
+
+HTTP methods supported by REST are:
+
+    GET: It requests a resource at the request URL. It should not contain a request body as it will be discarded. Maybe it can be cached locally or on the server.
+    POST: It submits information to the service for processing; it should typically return the modified or new resource
+    PUT: At the request URL it update the resource
+    DELETE: At the request URL it removes the resource
+    OPTIONS: It indicates which techniques are supported
+    HEAD: About the request URL it returns meta information
+
+4) Mention whether you can use GET request instead of PUT to create a resource?
+
+No, you are not supposed to use PUT for GET. GET operations should only have view rights, while PUT resource is used for updating a data.
+
+5) Mention what are resources in a REST architecture?
+
+Resources are identified by logical URLs; it is the key element of a RESTful design. Unlike, SOAP web services in REST, you view the product data as a resource 
+and this resource should contain all the required information.
+
+6) Mention some key characteristics of REST?
+
+Some key characteristics of REST includes
+
+    REST is stateless, therefore the SERVER has no state (or session data)
+    With a well-applied REST API, the server could be restarted between two calls as every data is passed to the server
+    Web service mostly uses POST method to make operations, whereas REST uses GET to access resources
+
+7) Mention which markup language can be used in restful web api?
+
+JSON and XML are the two markup language that can be used in restful web api
+
+
+8) Mention what is the difference between SOAP and REST?
+
+SOAP:
+
+    SOAP is a protocol through which two computer communicates by sharing XML document
+    SOAP permits only XML
+    SOAP based reads cannot be cached
+    SOAP is like custom desktop application, closely connected to the server
+    SOAP is slower than REST
+    It runs on HTTP but envelopes the message
+
+	
+REST:
+
+    Rest is a service architecture and design for network-based software architectures
+    REST supports many different data formats
+    REST reads can be cached
+    A REST client is more like a browser; it knows how to standardized methods and an application has to fit inside it
+    REST is faster than SOAP
+    It uses the HTTP headers to hold meta information
+
+9) Difference between PUT and POST
+
+
+PUT:
+PUT method is used to update resource available on the server. Typically, it replaces whatever exists at the target URL with something else. 
+You can use it to make a new resource or overwrite an existing one.
+PUT requests that the enclosed entity must be stored under the supplied requested URI (Uniform Resource Identifier). 
+
+Ex: HTTP PUT http://www.google.com/users/234
+    HTTP PUT http://www.google.com/users/234/accounts/567 
+
+POST :
+
+POST is a method that is supported by HTTP and depicts that a web server accepts the data included in the body of the message,
+which is requested. POST is often used by World Wide Web to send user generated data to the web server or when you upload file. 
+
+Ex: HTTP POST http://www.google.com/users
+    HTTP POST http://www.google.com/users/234/accounts 
+
+Difference:
+
+    * PUT method is called when you have to modify a single resource while POST method is called when you have to add a child resource.
+    * PUT method response can be cached but you cannot cache POST method responses.
+    * You can use UPDATE query in PUT whereas you can use create query in POST.
+    * In PUT method, the client decides which URI resource should have, and in POST method, the server decides which URI resource should have.
+    * PUT works as specific while POST work as abstract.
+    * If you send the same PUT request multiple times, the result will remain the same but if you send the same POST request multiple times, 
+      you will receive different results.
+    * PUT method is idempotent whereas POST method is not idempotent. 
+
+10. Which HTTP methods are idempotent ?
+
+Idempotency means that multiple identical requests will have the same outcome. So it does not matter if a request is sent once or multiple times. 
+The following HTTP methods are idempotent: GET, HEAD, OPTIONS, TRACE, PUT and DELETE.
+ All safe HTTP methods are idempotent but PUT and DELETE are idempotent but not safe.
+
+
+11. Why REST is stateless ?
+
+As per the REST (REpresentational “State” Transfer) architecture, the server does not store any state about the client session on the server-side.
+
+Session state is therefore kept entirely on the client. client is responsible for storing and handling all application state-related information on client side.
+Statelessness means that every HTTP request happens in complete isolation. When the client makes an HTTP request, it includes all information necessary for 
+the server to fulfill that request. The server never relies on information from previous requests.
+
+12. Explain various HTTP Status codes.
+
+    1×× Informational
+    100 Continue
+    101 Switching Protocols
+    102 Processing
+
+    2×× Success
+    200 OK
+    201 Created
+    202 Accepted
+    203 Non-authoritative Information
+    204 No Content
+    205 Reset Content
+    206 Partial Content
+    207 Multi-Status
+    208 Already Reported
+    226 IM Used
+
+    3×× Redirection
+    300 Multiple Choices
+    301 Moved Permanently
+    302 Found
+    303 See Other
+    304 Not Modified
+    305 Use Proxy
+    307 Temporary Redirect
+    308 Permanent Redirect
+
+    4×× Client Error
+    400 Bad Request
+    401 Unauthorized
+    402 Payment Required
+    403 Forbidden
+    404 Not Found
+    405 Method Not Allowed
+    406 Not Acceptable
+    407 Proxy Authentication Required
+    408 Request Timeout
+    409 Conflict
+    410 Gone
+    411 Length Required
+    412 Precondition Failed
+    413 Payload Too Large
+    414 Request-URI Too Long
+    415 Unsupported Media Type
+    416 Requested Range Not Satisfiable
+    417 Expectation Failed
+    418 I'm a teapot
+    421 Misdirected Request
+    422 Unprocessable Entity
+    423 Locked
+    424 Failed Dependency
+    426 Upgrade Required
+    428 Precondition Required
+    429 Too Many Requests
+    431 Request Header Fields Too Large
+    444 Connection Closed Without Response
+    451 Unavailable For Legal Reasons
+    499 Client Closed Request
+
+    5×× Server Error
+    500 Internal Server Error
+    501 Not Implemented
+    502 Bad Gateway
+    503 Service Unavailable
+    504 Gateway Timeout
+    505 HTTP Version Not Supported
+    506 Variant Also Negotiates
+    507 Insufficient Storage
+    508 Loop Detected
+    510 Not Extended
+    511 Network Authentication Required
+    599 Network Connect Timeout Error
+
+
+* What is HATEOAS (Hypermedia As The Engine Of Application State)?
+
+It is a constraint of REST where the server's response dynamically provides links to other actions the client can take.
+ This decouples the client from hardcoded URLs. For example, fetching a bank balance might return a payload alongside action links
+ to /withdraw or /deposit.
+
+* What is the purpose of an API Gateway in microservices?
+
+An API Gateway acts as a single entry point for all clients. It centralizes cross-cutting concerns like routing, authentication,
+ rate limiting, logging, and data aggregation.
+
+* What is the Circuit Breaker pattern in REST APIs?
+
+It is a resilience pattern that prevents an API from repeatedly trying to call a failing downstream service.
+ If failure rates cross a threshold, the breaker "trips" (opens), instantly returning a fallback response instead of hanging 
+and exhausting system resources
+
+* What is the difference between PUT and PATCH?
+PUT replaces the entire resource. PATCH applies partial modifications.
+
+# PUT replaces everything
+PUT /users/123
+{"name": "Khalid", "email": "khalid@example.com", "role": "admin"}
+
+# PATCH updates only specified fields
+PATCH /users/123
+{"role": "admin"}
+
+
+* What is idempotency and which HTTP methods are idempotent?
+An operation is idempotent if performing it multiple times produces the same result as performing it once.
+
+Method   Idempotent   Why
+
+GET        Yes        Reading does not change state
+
+PUT        Yes        Replacing with same data yields same result
+
+DELETE     Yes        Deleting twice leaves resource deleted
+
+POST       No        Creating twice creates two resources
+
+PATCH      No*        Depends on the operation
+
+* What is the difference between safe and idempotent methods?
+
+Safe methods do not modify resources (GET, HEAD, OPTIONS).
+
+Idempotent methods can be called multiple times with the same effect (GET, PUT, DELETE).
+
+All safe methods are idempotent, but not all idempotent methods are safe. DELETE is idempotent but not safe because it modifies state.
+
+*When should you use query parameters versus path parameters?
+
+Path parameters identify a specific resource. Query parameters filter, sort, or paginate collections.
+
+Path:   /users/123              (specific user)
+Query:  /users?status=active    (filtered collection)
+        /users?sort=name&limit=10
+
+* What is content negotiation?
+
+Content negotiation allows clients to request different representations of a resource. 
+The client sends an Accept header, and the server responds with the appropriate format.
+
+Accept: application/json    → Server returns JSON
+Accept: application/xml     → Server returns XML
+
+* What is the purpose of the OPTIONS method?
+
+OPTIONS returns the HTTP methods that a server supports for a specific URL. 
+Browsers use it for CORS preflight requests to check if cross-origin requests are allowed.
+
+* When should you use 409 Conflict?
+
+Use 409 when the request conflicts with the current state of the resource:
+
+Optimistic locking failures (ETag mismatch)
+Unique constraint violations (duplicate username)
+Invalid state transitions (canceling an already-shipped order)
+
+
+
+* What authentication methods are used for REST APIs?
+
+The four most common authentication methods are API Keys, Bearer Tokens, OAuth 2.0, and JWT:
+	
+Method    		Use Case  		Pros 		 Cons
+
+API Keys 		Server-to-server	Simple 		No expiration, easy to leak
+
+Bearer Tokens		Session auth		Stateless	Must secure storage
+
+OAuth 2.0		Third-party access	Delegated auth	Complex implementation
+
+JWT			Stateless auth		Self-contained	Cannot revoke without blacklist
+
+
+* What is JWT and how does it work?
+
+JWT (JSON Web Token) consists of three parts: Header, Payload, and Signature.
+
+Header: {"alg": "RS256", "typ": "JWT"}
+Payload: {"sub": "user123", "exp": 1704153600}
+Signature: RSASHA256(base64(header) + "." + base64(payload), privateKey)
+
+The server signs the token; clients send it with requests. The server validates the signature without database lookups.
+
+* What is HATEOAS?
+
+HATEOAS (Hypermedia as the Engine of Application State) means responses include links to related actions and resources.
+
+{
+  "id": 123,
+  "name": "Khalid",
+  "links": [
+    {"rel": "self", "href": "/users/123"},
+    {"rel": "orders", "href": "/users/123/orders"}
+  ]
+}
+
+In practice, most APIs do not implement HATEOAS fully. Know the concept but do not expect to implement it in most jobs.
+Even large tech companies rarely build fully HATEOAS-compliant APIs.
+
+* What is rate limiting and why is it important?
+
+Rate limiting protects your API from abuse and ensures fair usage. Common response:
+
+HTTP/1.1 429 Too Many Requests
+Retry-After: 3600
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 
+
+* What is API pagination?
+
+Pagination breaks large results into smaller pages. It improves response time and reduces server load.
+
+Example:
+
+GET /products?page=2&limit=20
+
+For large datasets, cursor-based pagination is often better.
+
+GET /products?cursor=eyJpZCI6MTAw&limit=20
+
+* Difference between @Controller & @RestController
+
+
+Feature		@Controller			@RestController
+
+Purpose		Web applications (HTML)		REST APIs (JSON/XML)
+Return Type	View name (String)		Java objects (auto-serialized)
+Response	HTML page			JSON/XML data
+View Resolver	Required			Not needed
+@ResponseBody	Manual (if needed)		Automatic on all methods
+Use Case	Traditional MVC			Microservices, APIs
+
+@ResponseBody is a Spring annotation that tells the framework to serialize the method's return value directly 
+into the HTTP response body (as JSON, XML, etc.) instead of treating it as a view name.
+
+Q. How to optimize a Rest API
+
+1. Performance Optimization
+	
+Use Caching:
+-----------
+// Implement caching with Spring Cache
+@Cacheable("users")
+@GetMapping("/users/{id}")
+public User getUser(@PathVariable Long id) {
+    return userService.findById(id);
+}
+
+// Cache eviction
+@CacheEvict("users")
+@DeleteMapping("/users/{id}")
+public void deleteUser(@PathVariable Long id) {
+    userService.deleteById(id);
+}
+
+
+
+Database Query Optimization:
+----------------------------
+
+// ❌ Bad: N+1 Query Problem
+@GetMapping("/users/{id}")
+public User getUser(@PathVariable Long id) {
+    User user = userRepository.findById(id);
+    // This triggers separate queries for each order
+    user.getOrders().forEach(order -> System.out.println(order));
+    return user;
+}
+
+// ✅ Good: Eager loading with JOIN FETCH
+@Query("SELECT u FROM User u JOIN FETCH u.orders WHERE u.id = :id")
+User findUserWithOrders(@Param("id") Long id);
+
+
+2. API Response Optimization
+
+        Pagination:
+	-----------
+
+	@GetMapping("/users")
+	public Page<User> getUsers(
+        	@RequestParam(defaultValue = "0") int page,
+        	@RequestParam(defaultValue = "20") int size) {
+    	return userRepository.findAll(PageRequest.of(page, size));
+	}
+
+ 
+
+       Filtering & Projection:
+       -----------------------
+
+       // Only return required fields
+	@GetMapping("/users")
+	public List<UserDTO> getUsers() {
+    		return userRepository.findAll()
+            	.stream()
+            	.map(user -> new UserDTO(user.getId(), user.getName()))
+            	.collect(Collectors.toList());
+	}
+
+     
+
+
+       Response Compression:
+       ---------------------
+
+       // application.properties
+	server.compression.enabled=true
+	server.compression.min-response-size=1024
+	server.compression.mime-types=application/json,application/xml
+
+
+3. Database Optimization
+
+	Connection Pooling:
+        -------------------
+
+	# application.properties
+	spring.datasource.hikari.maximum-pool-size=20
+	spring.datasource.hikari.minimum-idle=5
+	spring.datasource.hikari.connection-timeout=30000
+	spring.datasource.hikari.idle-timeout=600000
+
+
+  	Indexing:
+        ---------
+	
+	@Entity
+	@Table(indexes = {
+   	 @Index(name = "idx_email", columnList = "email"),
+   	 @Index(name = "idx_created_at", columnList = "created_at")
+	})
+	public class User {
+    		@Id
+    		private Long id;
+    
+    		@Column(unique = true)
+    		private String email;
+    
+   		 private LocalDateTime createdAt;
+	}
+
+ Batch Operations:
+------------------
+
+   // ❌ Inefficient
+for (User user : users) {
+    userRepository.save(user);  // Multiple DB hits
+}
+
+// ✅ Efficient
+userRepository.saveAll(users);  // Single batch operation
+
+
+4. API Design Best Practices
+    
+   Use Appropriate HTTP Methods & Status Codes:
+   --------------------------------------------
+
+    Async Processing for Long Operations:
+    -------------------------------------
+
+@PostMapping("/users/bulk-import")
+public ResponseEntity<String> bulkImport(@RequestBody List<User> users) {
+    asyncService.processUsersAsync(users);
+    return ResponseEntity.accepted().body("Processing started");
+}
+
+@Async
+public void processUsersAsync(List<User> users) {
+    // Long-running operation
+    users.forEach(user -> userRepository.save(user));
+}
+
+
+5. Rate Limiting & Throttling
+
+   @Component
+public class RateLimitingInterceptor implements HandlerInterceptor {
+    private final RateLimiter rateLimiter = RateLimiter.create(100.0); // 100 requests/sec
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, 
+                            HttpServletResponse response, 
+                            Object handler) throws Exception {
+        if (!rateLimiter.tryAcquire()) {
+            response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
+            response.getWriter().write("Rate limit exceeded");
+            return false;
+        }
+        return true;
+    }
+}
+
+// Or use Spring Cloud Gateway for distributed rate limiting
+@Bean
+public RouteLocator routes(RouteLocatorBuilder builder) {
+    return builder.routes()
+            .route("rate_limit", r -> r.path("/api/**")
+                    .filters(f -> f.requestRateLimiter(c -> 
+                        c.setRateLimiter(redisRateLimiter())))
+                    .uri("http://localhost:8080"))
+            .build();
+}
+
+6. Monitoring & Logging
+
+     Health Checks:
+     --------------
+
+@Component
+public class CustomHealthIndicator extends AbstractHealthIndicator {
+    @Override
+    protected void doHealthCheck(Health.Builder builder) {
+        if (isDatabaseConnected()) {
+            builder.up().withDetail("Database", "Connected");
+        } else {
+            builder.down().withDetail("Database", "Disconnected");
+        }
+    }
+}
+
+// Access via /actuator/health
+
+
+Metrics:
+--------
+
+# application.properties
+management.endpoints.web.exposure.include=health,metrics,prometheus
+management.metrics.export.prometheus.enabled=true
+
+// Custom metrics
+@Component
+public class APIMetrics {
+    private final MeterRegistry meterRegistry;
+    
+    public void recordAPICall(String endpoint) {
+        Counter.builder("api.calls")
+                .tag("endpoint", endpoint)
+                .register(meterRegistry)
+                .increment();
+    }
+}
+
+
+
+
+7. Caching Strategy
+
+// HTTP Caching Headers
+@GetMapping("/users/{id}")
+public ResponseEntity<User> getUser(@PathVariable Long id) {
+    User user = userService.getUser(id);
+    
+    return ResponseEntity.ok()
+            .cacheControl(CacheControl.maxAge(5, TimeUnit.MINUTES))
+            .lastModified(user.getLastModified())
+            .eTag(Integer.toString(user.hashCode()))
+            .body(user);
+}
+
+// Redis Caching
+@Configuration
+@EnableCaching
+public class CacheConfig {
+    @Bean
+    public CacheManager cacheManager(RedisConnectionFactory factory) {
+        return RedisCacheManager.create(factory);
+    }
+}
+
+
+8. Security Optimization
+
+
+// JWT Token caching
+@GetMapping("/users/{id}")
+@PreAuthorize("hasRole('ADMIN')")
+public ResponseEntity<User> getUser(@PathVariable Long id) {
+    return ResponseEntity.ok(userService.getUser(id));
+}
+
+// CORS Configuration
+@Configuration
+public class CorsConfig implements WebMvcConfigurer {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedOrigins("https://yourdomain.com")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .maxAge(3600);
+    }
+}
+
+
+
+Optimization Checklist
+______________________
+
+Aspect			Best Practice
+
+Database		Use indexes, connection pooling, batch operations
+Queries			Avoid N+1, use JOIN FETCH, lazy loading
+Response		Pagination, filtering, field projection, compression
+Caching			HTTP cache headers, Redis, application cache
+Async			Long operations as async tasks
+Rate Limit		Implement throttling for API protection
+Monitoring		Health checks, metrics, logging
+Security		HTTPS, JWT, authentication, CORS
+API Design		Proper HTTP methods/status codes, versioning
+Load Testing		Use JMeter, Gatling for performance testing
+
+
+
+    
+
+https://restlet.talend.com/documentation/user-guide/2.4/core/security/authentication

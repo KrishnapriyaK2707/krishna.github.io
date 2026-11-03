@@ -1,0 +1,794 @@
+DevOps CI/CD competency
+------------------------
+
+CI/CD is a s/w development practice for automating build, testing and deployment of applications.
+
+Jenkins is a popular automation tool used to implement ci/cd pipelines.
+
+1. What is CI/CD pipeline?
+
+	CI/CD is a combination of continuous integration (CI) and continuous delivery (usually) or continuous deployment (rarely) in software engineering. Modern DevOps operations are built on the foundation of continuous integration and continuous delivery, or the CI/CD pipeline. You can automate your software delivery process with a CI/CD pipeline. As part of the pipeline, code is built, tests are run (CI), and a new version of the application is safely deployed (CD). By automating pipelines, manual errors are eliminated, developers are provided with standardized feedback loops, and iterating on products is made more efficient. In DevOps, continuous integration and continuous delivery (CI/CD) are best practices that ensure that code changes are delivered regularly and reliably.
+
+2. Explain Docker.
+
+	Docker is a containerization platform that packages applications and their dependencies together in containers to ensure that the applications run seamlessly across multiple environments. Docker containers are entire file systems that contain all the components for running a piece of software: code, system tools, runtime, system libraries, etc. Any software that can be installed on a server can be packaged in a Docker container. It ensures that the software always runs the same in any environment.
+
+3. Trigger for CI/CD pipelines ?
+
+  Code push, pull request, scheduled runs, manual trigger.
+
+4. When does build stage typically ends ?
+
+ The build stage ends when,
+
+ -> Code is compiled
+ -> Resolving dependencies
+ -> Running basic build validation
+ -> Packaging the application
+ -> Publishing/ Storing build artifacts in an artifact repository.
+
+5. Which test verifies individual modules of code ?
+
+ -> Unit tests
+
+6. Which best describrs continuous delivery?
+
+Automatically building, testing, and preparing code changes for release to production,
+while actual production deployment is typically performed with a manual approval or trigger.
+
+Continous delivery -> Production deployment requires manual approval.
+Continous deployment -> Every changes that passes all test is automatically deployed to production.
+
+7. Explain Continuous Integration, Continuous Delivery, and Continuous Deployment.
+
+These three practices form the foundation of modern DevOps. They're often grouped together but represent different stages of automation:
+
+Continuous Integration (CI)
+---------------------------
+What it does: Automatically tests and validates code changes as developers merge them into a shared repository
+
+Process:
+
+Developer commits code to the repository
+Automated pipeline triggers immediately
+Code is built and compiled
+Automated tests run (unit tests, integration tests)
+If all passes, a validated build is produced; if it fails, developer is notified
+
+Goal: Catch bugs and integration issues early by testing constantly
+
+Frequency: Multiple times per day (sometimes dozens of times)
+
+Example: Every time you push to GitHub, tests run automatically and either pass or fail
+
+Continuous Delivery (CD)
+-------------------------
+
+What it does: Extends CI by automating the entire pipeline to make code release-ready, but keeps the final production deployment manual
+
+Process:
+
+CI pipeline completes (build + test passes)
+Code is automatically deployed to staging/test environments
+Additional automated tests run (performance, security, user acceptance)
+Human reviews and approves the release
+With one click, code is deployed to production
+
+Goal: Make releases safe, predictable, and on-demand—so you can release anytime with confidence
+
+Frequency: Release when business decides (daily, weekly, or multiple times per day)
+
+Key trait: Humans control when code goes to production
+
+Example: Your pipeline is fully automated to staging, but a release manager approves production deployment every Friday morning
+
+Continuous Deployment (CDP)
+----------------------------
+
+What it does: Fully automates everything from code commit to production—no manual gates
+
+Process:
+
+CI pipeline completes (build + test passes)
+Code automatically deployed to staging
+All automated tests pass
+Code automatically deployed to production (no approval needed)
+Users see the change immediately
+
+Goal: Get features and fixes to users as fast as possible
+
+Frequency: Multiple times per day, automatically
+
+Key trait: No human approval needed for production release
+
+Example: Code passes tests → automatically goes live to all users within minutes
+
+How They Work Together
+----------------------
+Developer Push
+    ↓
+Continuous Integration (CI)
+├─ Build code
+├─ Run unit tests
+├─ Run integration tests
+    ↓
+Continuous Delivery (CD)
+├─ Deploy to staging
+├─ Run smoke tests
+├─ Manual approval (✓ or ✗)
+    ↓
+Continuous Deployment (CDP)
+├─ Auto-deploy to production
+├─ Monitor for issues
+
+
+8. What is Jenkins?
+
+Jenkins is an open-source automation server used to automate parts of software development like building, testing, and deploying applications. It's one of the most popular tools for implementing Continuous Integration (CI) and Continuous Delivery (CD) pipelines.
+
+In simple terms: Jenkins watches for code changes and automatically runs tests, builds, and deployments without human intervention.
+
+
+How Jenkins Works
+------------------
+
+1. Developer Commits Code
+        ↓
+2. Jenkins Detects Change (via GitHub webhook, polling, etc.)
+        ↓
+3. Jenkins Triggers Pipeline
+        ↓
+4. Pipeline Steps Execute (in order):
+   ├─ Checkout code from repository
+   ├─ Build application
+   ├─ Run unit tests
+   ├─ Run integration tests
+   ├─ Analyze code quality (sonar)
+   ├─ VULNERABILITY SCANNING (Security checks)
+   ├─ Create artifacts
+   ├─ Deploy to staging
+   └─ Notify team of results
+        ↓
+5. Results Reported (Success/Failure)
+
+Jenkins Job
+-----------
+
+Answer: A job is the smallest runnable unit in Jenkins. It defines:
+
+What code to pull (from Git, SVN, etc.)
+When to trigger (on commit, schedule, manual)
+What steps to execute (build, test, deploy)
+What to do with results (reports, notifications)
+
+
+Jenkins Pipeline Example
+-------------------------
+A simple Jenkins pipeline (defined in Jenkinsfile):
+
+groovy
+
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/myapp/repo.git'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                sh 'mvn clean build'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                sh './deploy.sh'
+            }
+        }
+    }
+    
+    post {
+        always {
+            junit 'target/test-results/*.xml'
+        }
+        failure {
+            emailext (
+                subject: 'Build Failed',
+                body: 'Check console output at ${BUILD_URL}',
+                to: 'team@example.com'
+            )
+        }
+    }
+}
+
+What happens:
+------------
+Jenkins checks out latest code
+Builds the application
+Runs all tests
+Deploys if successful
+Sends email notification if it fails
+
+
+9. What are the stages in Jenkins pipeline ?
+
+
+1. Checkout (Source Code Retrieval)
+2. Build
+3. Unit Testing
+4. Code Quality Analysis
+5. Integration Testing
+6. VULNERABILITY SCANNING (Security checks)
+6. Artifact Creation/Packaging
+7. Deploy to Staging
+8. Acceptance/Performance Testing
+9. Approval (Manual Gate)
+10. Deploy to Production
+11. Post-Deployment (Monitoring & Notification)
+
+How Stages Flow
+---------------
+
+Code Push
+   ↓
+1. Checkout (Get code)
+   ↓
+2. Build (Compile)
+   ↓
+3. Unit Test (Run tests)
+   ↓
+4. Code Quality (Analyze)
+   ↓
+5. VULNERABILITY SCANNING (Security checks)
+   ↓
+6. Build Artifact (Package)
+   ↓
+7. Deploy to Staging (Test environment)
+   ↓
+8. Integration Test (Full testing)
+   ↓
+9. Approval (Manual gate) ← If approved, proceed. If rejected, stop.
+   ↓
+10. Deploy to Production (Live)
+   ↓
+11. Notification (Email/Slack)
+
+12. What are the types of Jenkins pipelines?
+
+		Jenkins Pipelines can be either - a Declarative pipeline or a Scripted Pipeline. Declarative pipeline makes use of numerous, generic, predefined build steps/stages (i.e. code snippets) to build our job according to our build/automation needs whereas, with Scripted pipelines, the steps/stages can be custom-defined & used using a groovy syntax which provides better control & fine-tuned execution levels.
+
+11. Explain Jenkins Multibranch Pipeline?
+
+	It is a pipeline job that can be configured to Create a set of Pipeline projects according to the detected branches in one SCM repository. This can be used to configure pipelines for all branches of a single repository e.g. if we maintain different branches (i.e. production code branches) for different configurations like locales, currencies, countries, etc.
+
+
+12. What are the ways to trigger a Jenkins Job/Pipeline?
+
+There are many ways we can trigger a job in Jenkins. Some of the common ways are as below -
+
+Trigger an API (POST) request to the target job URL with the required data.
+Trigger it manually from the Jenkins web application.
+Trigger it using Jenkins CLI from the master/slave nodes.
+Time-based Scheduled Triggers like a cron job.
+Event-based Triggers like SCM Actions (Git Commit, Pull Requests), WebHooks, etc.
+Upstream/Downstream triggers by other Jenkins jobs.
+
+13. What is a Jenkins Webhook?
+
+Answer: A webhook is an automatic trigger that tells Jenkins to run a job when an event happens (like a git push). Instead of polling the repo, GitHub/GitLab pushes notifications to Jenkins.
+
+Example: Push code → GitHub sends webhook → Jenkins automatically starts build
+
+GitHub Callback (GitHub Webhooks)
+----------------------------------
+A GitHub callback (more commonly called a webhook) is a way for GitHub to automatically send HTTP POST requests to your application 
+whenever specific events happen in your repository.
+
+Think of it as: "GitHub calls back to my server whenever something happens"
+
+How it works:
+-------------
+You register a webhook URL with GitHub
+When a specified event occurs (push, pull request, issue, etc.)
+GitHub sends an HTTP POST request to that URL with event data
+Your application receives and processes the data
+
+Setting up a webhook:
+----------------------
+Via GitHub UI:
+
+Go to your repo → Settings → Webhooks
+Click Add webhook
+Enter Payload URL (where GitHub sends the callback)
+Select events to trigger the webhook (push, pull requests, etc.)
+Click Add webhook
+
+
+
+14. What are Jenkins Plugins?
+
+Answer: Plugins extend Jenkins functionality. Examples:
+
+Pipeline Plugin – For scripted pipelines
+Git Plugin – Git repository integration
+Docker Plugin – Docker build/push
+Email Plugin – Email notifications
+Kubernetes Plugin – K8s agent provisioning
+
+15. How do you pass variables between Jenkins Pipeline Stages?
+
+Answer: Use environment variables or stage outputs:
+
+groovy
+pipeline {
+    agent any
+    environment {
+        VERSION = '1.0.0'
+    }
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    env.BUILD_ID = sh(script: 'git rev-parse --short HEAD', 
+                                     returnStdout: true).trim()
+                }
+                echo "Build ID: ${BUILD_ID}"
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo "Version: ${VERSION}, Build: ${BUILD_ID}"
+            }
+        }
+    }
+}
+
+16. What is a Jenkinsfile?
+
+Answer: A Jenkinsfile is a text file that contains the entire pipeline definition (as code). 
+It's stored in your repository and defines how code is built, tested, and deployed.
+
+Benefits:
+
+Version controlled (changes tracked in git)
+Reviewed in pull requests
+Reproducible across teams
+
+17. How do you handle secrets/credentials in Jenkins?
+
+Answer: Use Jenkins Credentials Store:
+
+groovy
+pipeline {
+    agent any
+    environment {
+        DB_PASSWORD = credentials('db-password-id')
+        AWS_CREDS = credentials('aws-credentials')
+    }
+    stages {
+        stage('Deploy') {
+            steps {
+                sh 'aws s3 ls'  // Uses AWS_CREDS automatically
+            }
+        }
+    }
+}
+
+Credentials are:
+
+Encrypted in Jenkins database
+Masked in logs
+Never exposed in console output
+
+18. What triggers can you set for a Jenkins Job?
+
+Answer:
+
+Webhook: GitHub/GitLab push notification
+Poll SCM: Periodically check repo for changes
+Scheduled: Cron-like timing (nightly, weekly)
+Manual: Click "Build Now"
+Upstream: Another job completes
+Parameterized: Trigger with parameters
+
+Example cron: H H * * * (daily at midnight)
+
+19. What are Blue Ocean and what are its benefits?
+
+Answer: Blue Ocean is a modern Jenkins UI that visualizes pipelines.
+
+Benefits:
+
+Visual pipeline representation
+Easier to diagnose failures
+Better UX than classic UI
+Inline pipeline editor
+GitHub integration out-of-box
+
+
+19. Explain Jenkins with Kubernetes Integration
+
+Answer: Use the Kubernetes plugin for dynamic agent provisioning:
+
+pipeline {
+    agent {
+        kubernetes {
+            label 'docker-agent'
+            yaml '''
+                apiVersion: v1
+                kind: Pod
+                spec:
+                  containers:
+                  - name: docker
+                    image: docker:latest
+                    securityContext:
+                      privileged: true
+            '''
+        }
+    }
+    stages {
+        stage('Build') {
+            steps {
+                container('docker') {
+                    sh 'docker build -t myapp .'
+                }
+            }
+        }
+    }
+}
+
+Benefits:
+
+Auto-scale agents
+Ephemeral pods (no cleanup needed)
+Cost efficient
+
+20. What is Jenkins Shared Library and why use it?
+
+Answer: Reusable Groovy code shared across pipelines.
+
+Structure:
+
+my-shared-library/
+├── src/
+│   └── com/company/MyUtils.groovy
+├── vars/
+│   └── deployApp.groovy
+└── resources/
+
+Usage:-
+
+@Library('my-shared-library') _
+
+pipeline {
+    agent any
+    stages {
+        stage('Deploy') {
+            steps {
+                script {
+                    deployApp(environment: 'prod', version: '1.0')
+                }
+            }
+        }
+    }
+}
+
+Benefits:
+
+DRY principle
+Consistency across teams
+Centralized maintenance
+
+22. Jenkins with AWS
+
+Jenkins with AWS Pipeline
+--------------------------
+
+Architecture Overview
+---------------------
+
+Developer
+    ↓ (git push)
+GitHub/GitLab
+    ↓ (webhook)
+Jenkins Pipeline
+    ├─ Build (compile code)
+    ├─ Test (run tests)
+    ├─ Build Docker Image
+    ├─ Push to AWS ECR (Container Registry)
+    ├─ Deploy to AWS ECS/EKS (Container Orchestration)
+    └─ Update AWS RDS, S3, or other AWS services
+        ↓
+AWS (Production Environment)
+
+
+How It Works: Step-by-Step
+
+
+1. Developer pushes code to GitHub
+
+	git push origin main
+
+2. GitHub sends webhook to Jenkins
+
+	Jenkins receives notification automatically (no polling needed)
+
+3. Jenkins starts the pipeline
+
+	Checks out code and runs stages
+
+4. Pipeline stages execute on Jenkins
+	Build application
+	Run tests
+	Create Docker image
+	Push to AWS ECR
+	Deploy to AWS ECS/EKS/Lambda
+	Run smoke tests
+
+5. Application runs on AWS
+
+	Live in production
+
+23. what is ingress and inginix ?
+
+Concept		What is it?
+-------		-----------
+Ingress		Kubernetes resource that manages external HTTP/HTTPS access to services
+Nginx		Web server that can act as an Ingress Controller (routes traffic)
+
+
+Ingress – Kubernetes Resource
+
+What it is: Kubernetes API object that exposes HTTP/HTTPS routes to services within a cluster.
+
+The Problem Ingress Solves
+
+Without Ingress:
+
+Internet
+    ↓ (LoadBalancer Service)
+Kubernetes Cluster
+    ├─ Service 1 (Pod 1, Pod 2)
+    ├─ Service 2 (Pod 3, Pod 4)
+    └─ Service 3 (Pod 5, Pod 6)
+
+Problem: Each service needs its own LoadBalancer = expensive & messy
+
+With Ingress:
+
+Internet
+    ↓ (Single LoadBalancer)
+Ingress Controller (Nginx, HAProxy, etc.)
+    ├─ Route /api → Service 1
+    ├─ Route /auth → Service 2
+    └─ Route /static → Service 3
+
+Solution: One LoadBalancer, multiple routes, cheaper!
+
+Ingress Architecture:
+
+User → Internet → AWS LoadBalancer → Nginx Ingress Controller → Kubernetes Services → Pods
+
+How Ingress Works
+------------------
+
+1. User visits: api.example.com/users
+
+2. DNS resolves to LoadBalancer IP (e.g., 10.20.30.40)
+
+3. LoadBalancer routes to Nginx Ingress Controller
+
+4. Nginx reads Ingress rules:
+   - Host: api.example.com → Route to api-service:3000
+
+5. api-service load balances across its Pods
+
+6. Pod handles request and returns response
+
+
+
+GitHub actions library call - to check
+
+
+21. What is GitHub Actions ?
+
+GitHub Actions is GitHub's built-in automation and CI/CD platform that lets you automatically run code, tests, and deployments based on events in your repository.
+
+The Basics
+
+What it does: Automatically triggers scripts/tasks when something happens in your GitHub repo (like a push, pull request, or scheduled time).
+
+Where it runs: On machines called "runners" that execute your workflow instructions.
+
+Why use it: Automate repetitive tasks—testing, building, deploying—without leaving GitHub.
+
+Key Concepts
+
+1. Workflows
+
+A YAML file (.github/workflows/) that defines when and what to run.
+
+yaml
+name: Test on Push
+on: [push, pull_request]  # When to trigger
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Where to run
+    steps:
+      - uses: actions/checkout@v3  # Check out code
+      - run: npm test  # Run tests
+
+2. Jobs
+
+Separate tasks within a workflow. They run in parallel by default.
+
+yaml
+jobs:
+  test:
+    # runs first
+  build:
+    # runs in parallel with test
+  deploy:
+    needs: [test, build]  # waits for test & build to finish
+
+
+3. Steps
+
+Individual commands or reusable actions within a job.
+
+yaml
+steps:
+  - name: Check out code
+    uses: actions/checkout@v3  # Reusable action from marketplace
+  
+  - name: Install dependencies
+    run: npm install  # Run shell command
+  
+  - name: Run tests
+    run: npm test
+
+
+4. Runners
+
+The machines that execute your workflows.
+
+GitHub-hosted: ubuntu-latest, windows-latest, macos-latest (free with limits)
+Self-hosted: Your own servers (unlimited capacity)
+
+
+Real-World Example
+
+When you push code:
+
+1. GitHub detects the push
+2. Workflow triggers automatically
+3. Runner spins up (Ubuntu machine)
+4. Steps run in sequence:
+   - Checkout the code
+   - Install Node.js
+   - Install dependencies
+   - Run tests
+   - Build the app
+   - Deploy to production
+5. You see results in GitHub (pass/fail)
+
+22. GitHub runners on Kubernetes
+
+Best Approach:-  Actions Runner Controller (ARC)
+
+	actions-runner-controller is GitHub's official Kubernetes solution for running Actions workflows on K8s.
+
+What it is: Running GitHub Actions CI/CD workflows on your Kubernetes cluster using self-hosted runners instead of GitHub's hosted runners.
+
+Why use it:
+
+Cost: Scale to zero when idle; only pay for compute when jobs run
+Control: Custom environments, dependencies, and tools
+Scale: Auto-scale from 0 to hundreds of runners based on demand
+Efficiency: Leverage existing K8s infrastructure
+
+How it works:
+
+Deploy actions-runner-controller (ARC) on your K8s cluster
+Configure GitHub runners as Kubernetes pods
+Enable autoscaling to dynamically spin up/down pods based on job queue
+Your workflows execute on K8s runners instead of GitHub-hosted machines
+
+Quick setup:
+
+bash
+# Install ARC via Helm
+helm install actions-runner-controller actions-runner-controller/actions-runner-controller \
+  --namespace actions-runner-system
+
+# Create a RunnerDeployment (runners as K8s pods)
+# Configure autoscaling (minReplicas: 0, maxReplicas: 10)
+
+# Use in workflows:
+runs-on: [self-hosted, kubernetes]
+
+Key benefits:
+
+✅ Auto-scale to zero (idle = no cost)
+✅ Unlimited job capacity
+✅ Docker support for containerized builds
+✅ Custom images and dependencies
+✅ Better for high-volume CI/CD
+
+Best for: Organizations with heavy CI/CD workloads, variable job traffic, or existing Kubernetes infrastructure.
+
+23. What are cloud functions ?
+
+Cloud Functions are serverless compute services that let you run code without managing servers. 
+You write a function, upload it to the cloud, and it executes automatically in response to events—you only pay for the time it actually runs.
+
+Key characteristics:-
+
+Serverless — No infrastructure to manage
+Event-driven — Triggered by events (HTTP request, database change, file upload, etc.)
+Auto-scaling — Automatically scales from 0 to thousands of instances
+Pay-per-use — Only charged for execution time (typically per 100ms)
+Stateless — Each execution is independent
+Quick startup — Typically milliseconds to seconds
+
+
+Cloud providers offering cloud functions:-
+
+Provider		Service Name
+--------		-------------
+AWS			Lambda
+Google Cloud		Cloud Functions
+Microsoft Azure		Azure Functions
+IBM			Cloud Functions
+Oracle			Functions
+
+Practical examples:-
+--------------------
+
+1. Webhook handler (GitHub → Slack notification)
+
+// AWS Lambda / Google Cloud Function
+exports.githubWebhook = async (req, res) => {
+  const event = req.body;
+  
+  if (event.action === 'opened' && event.pull_request) {
+    const prUrl = event.pull_request.html_url;
+    
+    // Send to Slack
+    await fetch(process.env.SLACK_WEBHOOK, {
+      method: 'POST',
+      body: JSON.stringify({
+        text: `New PR: ${prUrl}`
+      })
+    });
+  }
+  
+  res.status(200).send('OK');
+};
+
+Trigger: GitHub webhook → Cloud function executes → Sends Slack message
+
+24. What is Security and vulnerability check in Jenkins pipeline and what are the tools used ?
+
+Vulnerability checking in Jenkins pipelines is a critical DevSecOps practice that automatically scans code, dependencies, and containers for security vulnerabilities during the CI/CD process
+
+Popular Vulnerability Scanning Tools:
+
+1. OWASP Dependency-Check - Scans project dependencies for known vulnerabilities
+2. SonarQube (Detects code smells, bugs, and security vulnerabilities)
+3. Trivy - Detects vulnerabilities in Docker images
+
+
+
+

@@ -1,0 +1,168 @@
+The four main types of cloud computing services are 
+Infrastructure as a Service (IaaS), Platform as a Service (PaaS), 
+Software as a Service (SaaS), and Serverless Computing (or Function as a Service, FaaS). 
+
+1. Infrastructure as a Service (IaaS)
+
+What it is: The most basic layer, where you rent fundamental IT infrastructure like servers, virtual machines, storage, and networking from a provider.
+
+Who manages what: The provider manages the physical hardware and data centers; you manage the operating system, data, and applications.
+
+Example: Amazon EC2, Microsoft Azure Virtual Machines. 
+
+2. Platform as a Service (PaaS)
+
+What it is: A complete development and deployment environment in the cloud.
+
+Who manages what: It frees you from managing underlying hardware or operating systems, letting you focus entirely on building, testing,
+ and running your software applications.
+
+Example: Google App Engine, AWS Elastic Beanstalk. 
+
+3. Software as a Service (SaaS)
+
+What it is: A way of delivering fully functional software applications over the internet on a subscription basis.
+
+Who manages what: The provider handles everything—the application, data, servers, and maintenance. Users just log in and use the program via a web browser.
+
+Example: Gmail, Microsoft 365, Zoom. 
+
+4. Serverless Computing (FaaS)
+
+What it is: Often overlapping with Function as a Service (FaaS), this model allows developers to build apps without managing servers at all. 
+
+Who manages what: The cloud provider automatically provisions, scales, and manages the infrastructure required to run the code in response to
+ specific events. You only pay for the exact time your code runs. 
+
+
+Example: AWS Lambda, Azure Functions
+
+
+Amazon Web Services (AWS) provides over 200 fully featured cloud services globally through the Cloud Computing Services platform.
+
+Amazon Web Services (AWS) organizes its extensive portfolio into over 20 primary AWS Product Categories based on functionality.
+
+
+Core Service Categories:
+
+1. Compute - Run applications, containers, and code using virtual servers or serverless architectures.
+
+Amazon EC2 (Elastic Compute Cloud): Provides secure, flexible and scalable virtual servers (instances) in the cloud for hosting applications & websites.
+AWS Lambda: A serverless, event-driven compute service that runs your code without requiring server management.
+Amazon ECS (Elastic Container Service): A fully managed container orchestration service to run and scale Docker containers.
+AWS Elastic Beanstalk: An easy-to-use service for deploying and scaling web applications and services. 
+
+
+2. Storage - Scalable object, block, and file storage solutions for data backup and archiving.
+
+Amazon S3 (Simple Storage Service): An object storage service offering industry-leading scalability, data availability, and security.
+Amazon EBS (Elastic Block Store): High-performance block storage volumes designed for use with Amazon EC2.
+Amazon EFS (Elastic File System): A simple, serverless file system for sharing data without managing storage infrastructure.
+Amazon S3 Glacier: A secure, durable, and extremely low-cost storage class for data archiving. 
+
+3. Databases - Fully managed relational, NoSQL, and specialized purpose-built databases.
+
+Amazon RDS (Relational Database Service): A managed service that makes it easy to set up, operate, and scale a relational database (like MySQL or PostgreSQL) in the cloud.
+Amazon DynamoDB: A key-value and document NoSQL database that delivers single-digit millisecond performance at any scale.
+Amazon Aurora: A MySQL and PostgreSQL-compatible relational database built for the cloud with high performance and availability.
+Amazon ElastiCache: A fully managed in-memory data store and cache service for sub-millisecond data retrieval. 
+
+4. Networking & Content Delivery -  Isolate cloud infrastructure and route traffic globally with high security.
+
+Amazon VPC (Virtual Private Cloud): Allows you to provision a logically isolated section of the AWS cloud for your resources.
+Amazon CloudFront: A fast content delivery network (CDN) service that securely delivers data, videos, and APIs globally.
+Amazon Route 53: A highly available and scalable Domain Name System (DNS) web service. 
+
+5. Management, Security & Integration
+
+AWS IAM (Identity and Access Management): Safely manage access to AWS services and resources.
+Amazon CloudWatch: Monitors your cloud resources and applications in real time through metrics and logs.
+AWS CloudFormation: Helps you model and set up your Amazon and third-party resources using infrastructure as code.
+Amazon SNS (Simple Notification Service): A fully managed messaging service for application-to-application and application-to-person communication.
+Amazon SQS (Simple Queue Service): A fully managed message queuing service that decouples microservices and distributed systems. 
+
+Advanced & Specialized Categories:
+
+Analytics: Process, store, and analyze big data streams and queries.
+Examples: 
+Amazon Athena, Amazon Redshift, Amazon Kinesis. 
+
+Machine Learning & AI: Build, train, and deploy smart models and generative AI applications.
+Examples: 
+Amazon Bedrock, Amazon SageMaker, Amazon Rekognition. 
+
+Security, Identity, & Compliance: Protect accounts, manage user access, and encrypt data.
+Examples:
+AWS IAM, Amazon GuardDuty, AWS Shield.
+
+Management & Governance: Monitor performance, track costs, and automate operations.
+Examples: 
+Amazon CloudWatch, AWS Cost Explorer, AWS Systems Manager. 
+
+Internet of Things (IoT): Connect and manage edge devices at scale.
+Examples:
+AWS IoT Core, AWS Greengrass.
+
+Application Integration: Connect decoupled components, microservices, and software systems.
+Examples: 
+Amazon SQS, Amazon SNS, AWS Step Functions. 
+
+Other services:
+
+ELB - Elastic load balancer
+
+ ELB helps to load balance between different EC2 instances.
+
+If we want to create a group of EC2 instances, we use ASG (Auto scaling group)
+
+
+Regoins and zones:
+------------------
+If we want to deploy to multiple data centers, and need to be highly available, we deploy geographically, example Londone, Newyork etc.
+Regions allows to deploy vms in different locations.
+
+ASG distrubutes EC2 instances across multiple regions & zones.
+
+Managed Services:
+
+Elastic Beanstalk - It is used to deploy any application which do the setup without worrying about the instances, load balancer etc.
+
+It deploys container image which contains OS, runtime, vm, code etc and load if only one microservice.
+
+EKS  (Elastic Kubernete Solution)
+
+If there are multiple microservices we go for container orchestration, one of the container orchestration tool is Kubernetes.
+
+If we want to run Kubernetes on AWS, we can use EKS.
+
+AWS also provides its own container orchestration service which is ECS (elastic container service).
+
+In both EKS and ECS - Create cluster and deploy the instances in nodes.
+
+AWS Fargate - Is a serverless container option of ECS. No need to worry about managing cluster.
+
+AWS Datapipeline -> Service to get data from relational db to analytical pipeline.
+
+AWS Quicksight -> For business intelligence solutions.
+
+Amazon Route S3 - To route custom domain to an Amazon S3 bucket, we can use AWS's Domain Name System(DNS) service Amazon Route S3
+
+Amazon CloudFront - Is a fast, globally distributed content delivert network (CDN) service provided by AWS that securely 
+delivers websites, APIs, videos and applications with low latency.
+
+
+Secutrity
+
+Virtual Private Cloud - To sepeate and control traffic going to devices and dbs, we go for VPC.
+It has rules, that can be configured.
+
+
+
+
+
+
+
+
+
+
+

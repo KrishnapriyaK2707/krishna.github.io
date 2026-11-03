@@ -1,0 +1,217 @@
+Maven
+------
+
+   Maven is a build automation tool used primarily for Java projects. Maven addresses two aspects of building software: first, it describes how software is built, 
+   and second, it describes its dependencies. Contrary to preceding tools like Apache Ant, it uses conventions for the build procedure, and only exceptions need 
+   to be written down. An XML file describes the software project being built, its dependencies on other external modules and components, the build order, 
+   directories, and required plug-ins. It comes with pre-defined targets for performing certain well-defined tasks such as compilation of code and its packaging.
+   Maven dynamically downloads Java libraries and Maven plug-ins from one or more repositories such as the Maven 2 Central Repository, and stores them in a 
+   local cache. The Maven project is hosted by the Apache Software Foundation, where it was formerly part of the Jakarta Project.
+
+ Maven projects are configured using a Project Object Model, which is stored in a pom.xml-file.
+
+Here's a minimal example:
+
+<project>
+  <!-- model version is always 4.0.0 for Maven 2.x POMs -->
+  <modelVersion>4.0.0</modelVersion>
+  
+  <!-- project coordinates, i.e. a group of values which
+       uniquely identify this project -->
+  
+  <groupId>com.mycompany.app</groupId>
+  <artifactId>my-app</artifactId>
+  <version>1.0</version>
+
+  <!-- library dependencies -->
+  
+  <dependencies>
+    <dependency>
+    
+      <!-- coordinates of the required library -->
+      
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      
+      <!-- this dependency is only used for running and compiling tests -->
+      
+      <scope>test</scope>
+      
+    </dependency>
+  </dependencies>
+</project>
+
+This POM only defines a unique identifier for the project (coordinates) and its dependency on the Junit framework. However, that is already enough for building the project and running the unit tests associated with the project. Maven accomplishes this by embracing the idea of Convention over Configuration, that is, Maven provides default values for the project's configuration. The directory structure of a normal idiomatic Maven project has the following directory entries:
+
+Directory name 			Purpose
+--------------		-----------------------	
+project home 		Contains the pom.xml and all subdirectories.
+src/main/java 		Contains the deliverable Java sourcecode for the project.
+src/main/resources 	Contains the deliverable resources for the project, such as property files.
+src/test/java 		Contains the testing Java sourcecode (JUnit or TestNG test cases, for example) for the project.
+src/test/resources 	Contains resources necessary for testing.
+
+
+Then the command
+
+ mvn package
+
+will compile all the Java files, run any tests, and package the deliverable code and resources into target/my-app-1.0.jar (assuming the artifactId is my-app and the version is 1.0.)
+   Using Maven, the user provides only configuration for the project, while the configurable plug-ins do the actual work of compiling the project, cleaning target directories, running unit tests, generating API documentation and so on. In general, users should not have to write plugins themselves. Contrast this with Ant and make, in which one writes imperative procedures for doing the aforementioned tasks.
+
+Concepts
+--------
+
+Project Object Model:
+
+	A Project Object Model (POM) provides all the configuration for a single project. General configuration covers the project's name, its owner and its dependencies on other projects. One can also configure individual phases of the build process, which are implemented as plugins. For example, one can configure the compiler-plugin to use Java version 1.5 for compilation, or specify packaging the project even if some unit tests fail.
+
+	Larger projects should be divided into several modules, or sub-projects, each with its own POM. One can then write a root POM through which one can compile all the modules with a single command. POMs can also inherit configuration from other POMs. All POMs inherit from the Super POM[8] by default. The Super POM provides default configuration, such as default source directories, default plugins, and so on.
+
+Plugins:
+
+Most of Maven's functionality is in plugins. A plugin provides a set of goals that can be executed using the following syntax:
+
+ mvn [plugin-name]:[goal-name]
+
+For example, a Java project can be compiled with the compiler-plugin's compile-goal by running mvn compiler:compile.
+
+	There are Maven plugins for building, testing, source control management, running a web server, generating Eclipse project files, and much more. Plugins are introduced and configured in a <plugins>-section of a pom.xml file. Some basic plugins are included in every project by default, and they have sensible default settings.
+
+	However, it would be heavy if the archetypical build sequence of building, testing and packaging a software project required running each respective goal manually:
+
+ mvn compiler:compile
+ mvn surefire:test
+ mvn jar:jar
+
+Maven's lifecycle concept handles this issue.
+
+Build lifecycles:
+
+	Build lifecycle is a list of named phases that can be used to give order to goal execution. One of Maven's standard lifecycles is the default lifecycle, which includes the following phases, in this order.
+
+
+1.  validate
+2.  generate-sources
+3.  process-sources
+4.  generate-resources
+5.  process-resources
+6.  compile
+7.  process-test-sources
+8.  process-test-resources
+9.  test-compile
+10. test
+11. package
+12. install
+13. deploy
+
+
+	Goals provided by plugins can be associated with different phases of the lifecycle. For example, by default, the goal "compiler:compile" is associated with the "compile" phase, while the goal "surefire:test" is associated with the "test" phase. Consider the following command:
+
+mvn test
+
+	When the preceding command is executed, Maven runs all goals associated with each of the phases up to and including the "test" phase. In such a case, Maven runs the "resources:resources" goal associated with the "process-resources" phase, then "compiler:compile", and so on until it finally runs the "surefire:test" goal.
+
+	Maven also has standard phases for cleaning the project and for generating a project site. If cleaning were part of the default lifecycle, the project would be cleaned every time it was built. This is clearly undesirable, so cleaning has been given its own lifecycle.
+
+Standard lifecycles enable users new to a project the ability to accurately build, test and install every Maven project by issuing the single command: mvn install
+
+
+Dependencies:
+
+	A central feature in Maven is dependency management. Maven's dependency-handling mechanism is organized around a coordinate system identifying 
+        individual artifacts such as software libraries or modules. The POM example above references the JUnit coordinates as a direct dependency of the project.
+        A project that needs, say, the Hibernate library simply has to declare Hibernate's project coordinates in its POM.
+        Maven will automatically download the dependency and the dependencies that Hibernate itself needs (called transitive dependencies) and store them in 
+        the user's local repository. Maven 2 Central Repository is used by default to search for libraries, 
+        but one can configure the repositories to be used (e.g., company-private repositories) within the POM.
+
+
+	Projects developed on a single machine can depend on each other through the local repository. The local repository is a simple folder structure 
+        that acts both as a cache for downloaded dependencies and as a centralized storage place for locally built artifacts. 
+        The Maven command mvn install builds a project and places its binaries in the local repository.
+        Then other projects can utilize this project by specifying its coordinates in their POMs.
+
+
+
+Settings.xml:
+
+This is the configuration file for Maven. It can be specified at two levels:
+ |
+ |  1. User Level. This settings.xml file provides configuration for a single user,
+ |                 and is normally provided in ${user.home}/.m2/settings.xml.
+ |
+ |                
+ |  2. Global Level. This settings.xml file provides configuration for all Maven
+ |                 users on a machine (assuming they're all using the same Maven
+ |                 installation). It's normally provided in
+ |                 ${maven.home}/conf/settings.xml.
+ |
+
+ If both files exists, their contents gets merged, with the user-specific settings.xml being dominant.
+
+        <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                              https://maven.apache.org/xsd/settings-1.0.0.xsd">
+          <localRepository/>
+          <interactiveMode/>
+          <usePluginRegistry/>
+          <offline/>
+          <pluginGroups/>
+          <servers/>
+          <mirrors/>
+          <proxies/>
+          <profiles/>
+          <activeProfiles/>
+        </settings>
+
+
+The settings element in the settings.xml file contains elements used to define values which configure Maven execution in various ways, like the pom.xml, but should not be bundled to any specific project, or distributed to an audience. These include values such as the local repository location, alternate remote repository servers, and authentication information.
+
+
+localRepository -> Indicates where is located the local maven repository. By default, this local repository is located under the user home folder 
+in ${user.home}/.m2/repository, but with this property you can define another location. This is useful when you need to share a local repository along several users 
+inside a project or organization.
+
+interactiveMode -> Indicates if maven should interact with the user for input. Is a true/false field. Defaults to true.
+This option can be useful when we want to create an empty and default java project. With this option activated, maven will not ask us anything and the 
+process will be faster.
+
+usePluginRegistry -> There is a file called plugin-registry.xml in ${user.home}/.m2 folder. This field indicates if maven should use that file to manage plugins
+versions. Defaults to false.
+
+offline -> Indicates if maven should work in offline mode, this is, maven can not connect to remote servers. Defaults to false.
+
+pluginGroups -> The puglingGroup accepts multiples values, when a plugin is invoked, maven will search along this element in order to find the groupId for the plugin.
+It makes more easy the maven execution. You can define several plugins groupId, by default, it contains the following ones:
+    org.apache.maven.plugins
+    org.codehaus.mojo
+
+
+servers -> The repositories for download and deployment are defined by the repositories and distributionManagement elements of the POM.
+ However, certain settings such as username and password should not be distributed along with the pom.xml. 
+This type of information should exist on the build server in the settings.xml.
+
+mirrors -> Sometimes a good approach is to create a mirror of a repository, in order to reduce the traffic over the network in a big organization, 
+or to optimize the build operations. The mirror is like a cache of a specific repository. We can define in settings.xml those mirrors, 
+so maven will improve its operations. 
+Some reasons to use a mirror are:
+    There is a synchronized mirror on the internet that is geographically closer and faster
+    You want to replace a particular repository with your own internal repository which you have greater control over
+    You want to run a repository manager to provide a local cache to a mirror and need to use its URL instead
+
+proxies -> We can define a HTTP proxy to allow to maven be able to get access to internet, reaching the needed repositories.
+
+
+profiles -> The profile element in the settings.xml is a truncated version of the pom.xml profile element. 
+It consists of the activation, repositories, pluginRepositories and properties elements. The profile elements only include these four elements because
+they concerns themselves with the build system as a whole (which is the role of the settings.xml file), not about individual project object model settings.
+
+If a profile is active from settings, its values will override any equivalently ID’d profiles in a POM or profiles.xml file.
+
+activeProfiles -> The final piece of the settings.xml puzzle is the activeProfiles element. This contains a set of activeProfile elements, 
+which each have a value of a profile id. Any profile id defined as an activeProfile will be active, reguardless of any environment settings.  
+
+
