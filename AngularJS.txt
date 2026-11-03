@@ -6,5 +6,66 @@ and makes it more responsive to user actions. AngularJS uses MVC (model-view-con
 to create a much needed structure for building webapps. 
   It is a library written in JavaScript. AngularJS is distributed as a JavaScript file, and can be added to a web page with a script tag:
 
+src="...ajax/libs/angularjs/1.4.8/angular.min.js"
 
 AngularJS extends HTML attributes with Directives, and binds data to HTML with Expressions.
+
+Concepts
+--------
+
+Client-Side Templates:
+
+  In AngularJS the template and data get shipped to the browser to be assembled there. The role of the server then becomes only to serve as static resources
+ for the templates and to properly serve the data required by those templates.
+
+Example 1:
+
+<html ng-app>
+	<head>
+		<script src="angular.js"></script>
+		<script src="controllers.js"></script>
+	</head>
+	<body>
+		<div ng-controller='HelloController'>
+		<p>{{greeting.text}}, World</p>
+		</div>
+	</body>
+</html>
+
+And our logic in controllers.js:
+
+function HelloController($scope) {
+$scope.greeting = { text: 'Hello' };
+}
+
+Loading hello.html into any browser will display ->  Hello, World.
+
+• There are no classes or IDs in the HTML to identify where to attach event listeners.
+• When HelloController set the greeting.text to Hello, we didn’t have to register
+any event listeners or write any callbacks.
+• HelloController got the $scope object that it needed without having to create it.
+• We didn’t have to call the HelloController ’s constructor ourselves, or figure out
+when to call it.
+
+
+Model View Controller (MVC):
+
+
+  The core idea behind MVC is that you have clear separation in your code between
+managing its data (model), the application logic (controller), and presenting the data
+to the user (view).
+  The view gets data from the model to display to the user. When a user interacts with the
+application by clicking or typing, the controller responds by changing data in the model.
+Finally, the model notifies the view that a change has occurred so that it can update what
+it displays.
+   In Angular applications, the view is the Document Object Model (DOM), the controllers
+are JavaScript classes, and the model data is stored in object properties.
+
+Databinding :
+
+  Data binding is a style of programming where we can just declare which part of the UI map to which 
+Javascript properties and they will sync automactically, it works great with MVC to eliminate code when writing your
+view and model. Most of the work in moving data from one to the other just happens
+automatically.
+ In Angularjs, part of the DOM can be updated separately, rather than updating the
+whole page.
