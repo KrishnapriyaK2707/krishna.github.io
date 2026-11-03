@@ -1,0 +1,3062 @@
+ 
+    Design patterns are typical solutions to common problems in software design. Each pattern is like a blueprint that you can customize to solve a 
+particular design problem in your code. 
+
+
+
+    * Creational patterns: Provide object creation mechanisms that increase flexibility and reuse of existing code.
+      These design patterns provide a way to create objects while hiding the creation logic, rather than instantiating objects directly using new operator. 
+      Types of creational design patterns - Factory pattern, Abstract Factory pattern,  Singleton pattern, Builder pattern, Prototype pattern. 
+
+    * Structural patterns: Explain how to assemble objects and classes into larger structures, while keeping the structures flexible and efficient.
+      These design patterns concern class and object composition. Concept of inheritance is used to compose interfaces and define ways to compose objects
+      to obtain new functionalities.
+      Types of Structural design patterns - Adapter pattern, Bridge pattern,  Composite pattern, Decorator pattern, Facade pattern, Flyweight pattern,
+      Proxy pattern. 
+
+    * Behavioral patterns: Take care of effective communication and the assignment of responsibilities between objects.
+      These design patterns are specifically concerned with communication between objects.
+      Types of Behavioral design patterns - Chain of Responsibility Pattern, Observer Pattern, Strategy Pattern, Command Pattern, State Pattern, 
+      Visitor Pattern, Interpreter Pattern, Iterator Pattern, Memento Pattern, Template Method Pattern, Mediator Pattern
+       
+
+
+Creational patterns:
+
+1. Factory pattern: 
+	Factory Method is a creational design pattern that provides an interface for creating objects in a superclass, but allows subclasses to alter 
+the type of objects that will be created.
+
+In Factory pattern, we create object without exposing the creation logic to the client and refer to newly created object using a common interface.
+
+The Factory Method pattern suggests that you replace direct object construction calls (using the new operator) with calls to a special factory method.
+
+Advantage of Factory Design Pattern
+
+    a.Factory Method Pattern allows the sub-classes to choose the type of objects to create.
+    b.It promotes the loose-coupling by eliminating the need to bind application-specific classes into the code. 
+    That means the code interacts solely with the resultant interface or abstract class, so that it will work with any classes that implement 
+    that interface or that extends that abstract class.
+
+
+Example:
+
+Step 1
+
+Create an interface.
+
+Shape.java
+
+public interface Shape {
+   void draw();
+}
+
+Step 2
+
+Create concrete classes implementing the same interface.
+
+Rectangle.java
+
+public class Rectangle implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Inside Rectangle::draw() method.");
+   }
+}
+
+Square.java
+
+public class Square implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Inside Square::draw() method.");
+   }
+}
+
+
+Step 3
+
+Create a Factory to generate object of concrete class based on given information.
+
+ShapeFactory.java
+
+public class ShapeFactory {
+	
+   //use getShape method to get object of type shape 
+   public Shape getShape(String shapeType){
+      if(shapeType == null){
+         return null;
+      }		
+       if(shapeType.equalsIgnoreCase("RECTANGLE")){
+         return new Rectangle();
+         
+      } else if(shapeType.equalsIgnoreCase("SQUARE")){
+         return new Square();
+      }
+      
+      return null;
+   }
+}
+	
+Step 4
+
+Use the Factory to get object of concrete class by passing an information such as type.
+
+FactoryPatternDemo.java
+
+public class FactoryPatternDemo {
+
+   public static void main(String[] args) {
+      ShapeFactory shapeFactory = new ShapeFactory();
+
+      //get an object of Rectangle and call its draw method.
+      Shape shape1 = shapeFactory.getShape("RECTANGLE");
+
+      //call draw method of Rectangle
+      shape1.draw();
+
+      //get an object of Square and call its draw method.
+      Shape shape2 = shapeFactory.getShape("SQUARE");
+
+      //call draw method of square
+      shape2.draw();
+   }
+}
+
+Step 5
+
+Verify the output.
+
+Inside Rectangle::draw() method.
+Inside Square::draw() method.
+
+
+
+2. Abstract Factory Method pattern
+
+Abstract Factory is a creational design pattern that lets you produce families of related objects without specifying their concrete classes.
+That means Abstract Factory lets a class returns a factory of classes. So, this is the reason that Abstract Factory Pattern is one level higher than 
+the Factory Pattern.
+
+Advantage of Abstract Factory Pattern
+
+    Abstract Factory Pattern isolates the client code from concrete (implementation) classes.
+    It eases the exchanging of object families.
+    It promotes consistency among objects.
+
+
+
+Ex:
+
+Step 1: Create a Bank interface
+
+import java.io.*;     
+interface Bank{  
+        String getBankName();  
+} 
+
+Step 2: Create concrete classes that implement the Bank interface.
+
+class HDFC implements Bank{  
+             private final String BNAME;  
+             public HDFC(){  
+                    BNAME="HDFC BANK";  
+            }  
+            public String getBankName() {  
+                      return BNAME;  
+            }  
+}  
+
+
+class SBI implements Bank{  
+          private final String BNAME;  
+          public SBI(){  
+                    BNAME="SBI BANK";  
+            }  
+           public String getBankName(){  
+                      return BNAME;  
+           }  
+}  
+
+Step 3: Create the Loan abstract class.
+
+abstract class Loan{  
+   protected double rate;  
+   abstract void getInterestRate(double rate);  
+   public void calculateLoanPayment(double loanamount, int years)  
+   {  
+       
+         double EMI;  
+         int n;  
+  
+         n=years*12;  
+         rate=rate/1200;  
+         EMI=((rate*Math.pow((1+rate),n))/((Math.pow((1+rate),n))-1))*loanamount;  
+  
+System.out.println("your monthly EMI is "+ EMI +" for the amount"+loanamount+" you have borrowed");     
+ }  
+}
+
+Step 4: Create concrete classes that extend the Loan abstract class..
+
+    class HomeLoan extends Loan{  
+         public void getInterestRate(double r){  
+             rate=r;  
+        }  
+    }//End of the HomeLoan class.  
+
+    class EducationLoan extends Loan{  
+         public void getInterestRate(double r){  
+           rate=r;  
+     }  
+    }//End of the EducationLoan class.  
+
+Step 5: Create an abstract class (i.e AbstractFactory) to get the factories for Bank and Loan Objects.
+
+    abstract class AbstractFactory{  
+      public abstract Bank getBank(String bank);  
+      public abstract Loan getLoan(String loan);  
+    }  
+
+Step 6: Create the factory classes that inherit AbstractFactory class to generate the object of concrete class based on given information.
+
+   class BankFactory extends AbstractFactory{  
+   public Bank getBank(String bank){  
+      if(bank == null){  
+         return null;  
+      }  
+      if(bank.equalsIgnoreCase("HDFC")){  
+         return new HDFC();  
+      } else if(bank.equalsIgnoreCase("SBI")){  
+         return new SBI();  
+      }  
+      return null;  
+   }  
+  public Loan getLoan(String loan) {  
+      return null;  
+   }  
+}//End of the BankFactory class. 
+
+    class LoanFactory extends AbstractFactory{  
+               public Bank getBank(String bank){  
+                    return null;  
+              }  
+            
+         public Loan getLoan(String loan){  
+          if(loan == null){  
+             return null;  
+          }  
+          if(loan.equalsIgnoreCase("Home")){  
+             return new HomeLoan();  
+          
+	}else if(loan.equalsIgnoreCase("Education")){  
+             return new EducationLoan();  
+          }  
+          return null;  
+       }  
+         
+    }  
+
+Step 7: Create a FactoryCreator class to get the factories by passing an information such as Bank or Loan.
+
+    class FactoryCreator {  
+         public static AbstractFactory getFactory(String choice){  
+          if(choice.equalsIgnoreCase("Bank")){  
+             return new BankFactory();  
+          } else if(choice.equalsIgnoreCase("Loan")){  
+             return new LoanFactory();  
+          }  
+          return null;  
+       }  
+    }//End of the FactoryCreator.  
+
+Step 8: Use the FactoryCreator to get AbstractFactory in order to get factories of concrete classes by passing an information such as type.
+
+import java.io.*;  
+class AbstractFactoryPatternExample {  
+      public static void main(String args[])throws IOException {  
+       
+      BufferedReader br=new BufferedReader(new InputStreamReader(System.in));  
+  
+      System.out.print("Enter the name of Bank from where you want to take loan amount: ");  
+      String bankName=br.readLine();  
+  
+System.out.print("\n");  
+System.out.print("Enter the type of loan e.g. home loan or education loan : ");  
+  
+String loanName=br.readLine();  
+AbstractFactory bankFactory = FactoryCreator.getFactory("Bank");  
+Bank b=bankFactory.getBank(bankName);  
+  
+System.out.print("\n");  
+System.out.print("Enter the interest rate for "+b.getBankName()+ ": ");  
+  
+double rate=Double.parseDouble(br.readLine());  
+System.out.print("\n");  
+System.out.print("Enter the loan amount you want to take: ");  
+  
+double loanAmount=Double.parseDouble(br.readLine());  
+System.out.print("\n");  
+System.out.print("Enter the number of years to pay your entire loan amount: ");  
+int years=Integer.parseInt(br.readLine());  
+  
+System.out.print("\n");  
+System.out.println("you are taking the loan from "+ b.getBankName());  
+  
+AbstractFactory loanFactory = FactoryCreator.getFactory("Loan");  
+           Loan l=loanFactory.getLoan(loanName);  
+           l.getInterestRate(rate);  
+           l.calculateLoanPayment(loanAmount,years);  
+  }  
+}//End of the  AbstractFactoryPatternExample  
+
+
+3. Builder pattern
+
+Builder is a creational design pattern that lets you construct complex objects step by step. The pattern allows you to produce different types 
+and representations of an object using the same construction code. The process of constructing an object should be generic 
+so that it can be used to create different representations of the same object.
+
+Advantage of Builder Design Pattern
+
+    It provides clear separation between the construction and representation of an object.
+    It provides better control over construction process.
+    It supports to change the internal representation of objects.
+
+
+Example:
+
+
+interface HousePlan 
+{ 
+    public void setBasement(String basement); 
+  
+    public void setStructure(String structure); 
+  
+    public void setRoof(String roof); 
+  
+    public void setInterior(String interior); 
+} 
+  
+class House implements HousePlan 
+{ 
+  
+    private String basement; 
+    private String structure; 
+    private String roof; 
+    private String interior; 
+  
+    public void setBasement(String basement)  
+    { 
+        this.basement = basement; 
+    } 
+  
+    public void setStructure(String structure)  
+    { 
+        this.structure = structure; 
+    } 
+  
+    public void setRoof(String roof)  
+    { 
+        this.roof = roof; 
+    } 
+  
+    public void setInterior(String interior)  
+    { 
+        this.interior = interior; 
+    } 
+  
+} 
+  
+  
+interface HouseBuilder 
+{ 
+  
+    public void buildBasement(); 
+  
+    public void buildStructure(); 
+  
+    public void bulidRoof(); 
+  
+    public void buildInterior(); 
+  
+    public House getHouse(); 
+} 
+  
+class IglooHouseBuilder implements HouseBuilder 
+{ 
+    private House house; 
+  
+    public IglooHouseBuilder()  
+    { 
+        this.house = new House(); 
+    } 
+  
+    public void buildBasement()  
+    { 
+        house.setBasement("Ice Bars"); 
+    } 
+  
+    public void buildStructure()  
+    { 
+        house.setStructure("Ice Blocks"); 
+    } 
+  
+    public void buildInterior()  
+    { 
+        house.setInterior("Ice Carvings"); 
+    } 
+  
+    public void bulidRoof()  
+    { 
+        house.setRoof("Ice Dome"); 
+    } 
+  
+    public House getHouse()  
+    { 
+        return this.house; 
+    } 
+} 
+  
+class TipiHouseBuilder implements HouseBuilder 
+{ 
+    private House house; 
+  
+    public TipiHouseBuilder()  
+    { 
+        this.house = new House(); 
+    } 
+  
+    public void buildBasement()  
+    { 
+        house.setBasement("Wooden Poles"); 
+    } 
+  
+    public void buildStructure()  
+    { 
+        house.setStructure("Wood and Ice"); 
+    } 
+  
+    public void buildInterior()  
+    { 
+        house.setInterior("Fire Wood"); 
+    } 
+  
+    public void bulidRoof()  
+    { 
+        house.setRoof("Wood, caribou and seal skins"); 
+    } 
+  
+    public House getHouse()  
+    { 
+        return this.house; 
+    } 
+  
+} 
+  
+class CivilEngineer  
+{ 
+  
+    private HouseBuilder houseBuilder; 
+  
+    public CivilEngineer(HouseBuilder houseBuilder) 
+    { 
+        this.houseBuilder = houseBuilder; 
+    } 
+  
+    public House getHouse() 
+    { 
+        return this.houseBuilder.getHouse(); 
+    } 
+  
+    public void constructHouse() 
+    { 
+        this.houseBuilder.buildBasement(); 
+        this.houseBuilder.buildStructure(); 
+        this.houseBuilder.bulidRoof(); 
+        this.houseBuilder.buildInterior(); 
+    } 
+} 
+  
+class Builder 
+{ 
+    public static void main(String[] args) 
+    { 
+        HouseBuilder iglooBuilder = new IglooHouseBuilder(); 
+        CivilEngineer engineer = new CivilEngineer(iglooBuilder); 
+  
+        engineer.constructHouse(); 
+  
+        House house = engineer.getHouse(); 
+  
+        System.out.println("Builder constructed: "+ house); 
+    } 
+} 
+
+
+4. Prototype pattern
+
+Prototype is a creational design pattern that lets you copy existing objects without making your code dependent on their classes.
+Prototype Pattern says that cloning of an existing object instead of creating new one and can also be customized as per the requirement. 
+
+
+    *We are going to create an interface Prototype that contains a method getClone() of Prototype type.
+    *Then, we create a concrete class EmployeeRecord which implements Prototype interface that does the cloning of EmployeeRecord object.
+    *PrototypeDemo class will uses this concrete class EmployeeRecord.
+
+
+    interface Prototype {  
+      
+         public Prototype getClone();  
+          
+    }//End of Prototype interface.  
+
+   class EmployeeRecord implements Prototype{  
+          
+       private int id;  
+       private String name, designation;  
+       private double salary;  
+       private String address;  
+          
+       public EmployeeRecord(){  
+                System.out.println("   Employee Records of Oracle Corporation ");  
+                System.out.println("---------------------------------------------");  
+                System.out.println("Eid"+"\t"+"Ename"+"\t"+"Edesignation"+"\t"+"Esalary"+"\t\t"+"Eaddress");  
+          
+       }  
+      
+     public  EmployeeRecord(int id, String name, String designation, double salary, String address) {  
+              
+            this();  
+            this.id = id;  
+            this.name = name;  
+            this.designation = designation;  
+            this.salary = salary;  
+            this.address = address;  
+        }  
+          
+      public void showRecord(){  
+              
+            System.out.println(id+"\t"+name+"\t"+designation+"\t"+salary+"\t"+address);  
+       }  
+      
+        @Override  
+        public Prototype getClone() {  
+              
+            return new EmployeeRecord(id,name,designation,salary,address);  
+        }  
+    }//End of EmployeeRecord class.  
+
+      import java.io.BufferedReader;  
+    import java.io.IOException;  
+    import java.io.InputStreamReader;  
+      
+    class PrototypeDemo{  
+         public static void main(String[] args) throws IOException {  
+              
+            BufferedReader br =new BufferedReader(new InputStreamReader(System.in));  
+            System.out.print("Enter Employee Id: ");  
+            int eid=Integer.parseInt(br.readLine());  
+            System.out.print("\n");  
+              
+            System.out.print("Enter Employee Name: ");  
+            String ename=br.readLine();  
+            System.out.print("\n");  
+              
+            System.out.print("Enter Employee Designation: ");  
+            String edesignation=br.readLine();  
+            System.out.print("\n");  
+              
+            System.out.print("Enter Employee Address: ");  
+            String eaddress=br.readLine();  
+            System.out.print("\n");  
+              
+            System.out.print("Enter Employee Salary: ");  
+            double esalary= Double.parseDouble(br.readLine());  
+            System.out.print("\n");  
+               
+            EmployeeRecord e1=new EmployeeRecord(eid,ename,edesignation,esalary,eaddress);  
+              
+            e1.showRecord();  
+            System.out.println("\n");  
+            EmployeeRecord e2=(EmployeeRecord) e1.getClone();  
+            e2.showRecord();  
+        }     
+    }//End of the ProtoypeDemo class.  
+
+5. Singleton pattern
+
+Singleton is a creational design pattern that lets you ensure that a class has only one instance, while providing a global access point to this instance.
+Sometimes we need to have only one instance of our class for example a single DB connection shared by multiple objects as creating a separate 
+DB connection for every object may be costly.
+
+To create the singleton class, we need to have static member of class, private constructor and static factory method.
+
+    Static member: It gets memory only once because of static, itcontains the instance of the Singleton class.
+    Private constructor: It will prevent to instantiate the Singleton class from outside the class.
+    Static factory method: This provides the global point of access to the Singleton object and returns the instance to the caller.
+
+There are two forms of singleton design pattern
+
+    Early Instantiation: creation of instance at load time.
+
+    Ex:
+      
+	// Java code to create singleton class by  
+	// Eager Initialization 
+	public class GFG  
+	{ 
+ 	 // public instance initialized when loading the class 
+  	private static final GFG instance = new GFG(); 
+  
+  	private GFG() 
+  	{ 
+    	// private constructor 
+ 	 } 
+  	public static GFG getInstance(){ 
+       	  return instance; 
+    	} 
+} 
+
+
+
+    Lazy Instantiation: creation of instance when required.
+
+Ex: 
+
+
+//Java Code to create singleton class 
+// With Lazy initialization 
+public class GFG  
+{ 
+  // private instance, so that it can be 
+  // accessed by only by getInstance() method 
+  private static GFG instance; 
+  
+  private GFG()  
+  { 
+    // private constructor 
+  } 
+  
+  //method to return instance of class 
+  public static GFG getInstance()  
+  { 
+    if (instance == null)  
+    { 
+      // if instance is null, initialize 
+      instance = new GFG(); 
+    } 
+    return instance; 
+  } 
+} 
+
+
+Thread Safe Singleton: A thread safe singleton in created so that singleton property is maintained even in multithreaded environment. 
+	To make a singleton class thread-safe, getInstance() method is made synchronized so that multiple threads can’t access it simultaneously.
+
+// Java program to create Thread Safe 
+// Singleton class 
+public class GFG  
+{ 
+  // private instance, so that it can be 
+  // accessed by only by getInstance() method 
+  private static GFG instance; 
+  
+  private GFG()  
+  { 
+    // private constructor 
+  } 
+  
+ //synchronized method to control simultaneous access 
+  synchronized public static GFG getInstance()  
+  { 
+    if (instance == null)  
+    { 
+      // if instance is null, initialize 
+      instance = new GFG(); 
+    } 
+    return instance; 
+  } 
+} 
+
+Structural patterns: 
+
+	Structural design patterns are concerned with how classes and objects can be composed, to form larger structures.
+The structural design patterns simplifies the structure by identifying the relationships.
+These patterns focus on, how the classes inherit from each other and how they are composed from other classes.
+
+1. Adapter pattern:
+
+An Adapter Pattern says that just "converts the interface of a class into another interface that a client wants".
+
+ In other words, to provide the interface according to client requirement while using the services of a class with a different interface.
+The Adapter Pattern is also known as Wrapper.
+
+Advantage of Adapter Pattern
+
+    It allows two or more previously incompatible objects to interact.
+    It allows reusability of existing functionality.
+
+Example:
+
+public interface MediaPlayer { void play(String filename);}
+
+public interface MediaPackage { void playFile(String filename);}
+
+public class MP3 implements MediaPlayer { 
+@Override
+ public void play(String filename) {
+    System.out.println("Playing MP3 File " + filename);
+ }
+}
+public class MP4 implements MediaPackage { 
+@Override
+ public void playFile(String filename) {
+    System.out.println("Playing MP4 File " + filename);
+ }
+}
+
+public class VLC implements MediaPackage { 
+@Override
+ public void playFile(String filename) {
+    System.out.println("Playing VLC File " + filename);
+ }
+}
+
+Here, we want to use VLC and MP4 instances as MediaPlayer instances. So, we need and adapter. This is the code of the FormatAdapter :
+
+public class FormatAdapter implements MediaPlayer {
+private MediaPackage media; 
+public FormatAdapter(MediaPackage m) {
+    media = m;
+ } 
+@Override
+ public void play(String filename) {
+   System.out.print("Using Adapter --> ");
+   media.playFile(filename);
+ }
+}
+
+Now, we can assemble the puzzle to use the Adapter pattern :
+
+public class Main { 
+public static void main(String[] args) {
+
+    MediaPlayer player = new MP3();
+    player.play("file.mp3");   
+    player = new FormatAdapter(new MP4());
+    player.play("file.mp4");    
+    player = new FormatAdapter(new VLC());
+    player.play("file.avi");
+
+ }
+}
+
+
+2. Bridge Pattern:
+
+Bridge is used when we need to decouple an abstraction from its implementation so that the two can vary independently. 
+This type of design pattern comes under structural pattern as this pattern decouples implementation class and abstract class by providing a 
+bridge structure between them.
+
+Advantage of Bridge Pattern
+
+    It enables the separation of implementation from the interface.
+    It improves the extensibility.
+    It allows the hiding of implementation details from the client.
+
+Step 1
+
+Create bridge implementer interface.
+
+DrawAPI.java
+
+public interface DrawAPI {
+   public void drawCircle(int radius, int x, int y);
+}
+
+Step 2
+
+Create concrete bridge implementer classes implementing the DrawAPI interface.
+
+RedCircle.java
+
+public class RedCircle implements DrawAPI {
+   @Override
+   public void drawCircle(int radius, int x, int y) {
+      System.out.println("Drawing Circle[ color: red, radius: " + radius + ", x: " + x + ", " + y + "]");
+   }
+}
+
+GreenCircle.java
+
+public class GreenCircle implements DrawAPI {
+   @Override
+   public void drawCircle(int radius, int x, int y) {
+      System.out.println("Drawing Circle[ color: green, radius: " + radius + ", x: " + x + ", " + y + "]");
+   }
+}
+
+Step 3
+
+Create an abstract class Shape using the DrawAPI interface.
+
+Shape.java
+
+public abstract class Shape {
+   protected DrawAPI drawAPI;
+   
+   protected Shape(DrawAPI drawAPI){
+      this.drawAPI = drawAPI;
+   }
+   public abstract void draw();	
+}
+
+Step 4
+
+Create concrete class implementing the Shape interface.
+
+Circle.java
+
+public class Circle extends Shape {
+   private int x, y, radius;
+
+   public Circle(int x, int y, int radius, DrawAPI drawAPI) {
+      super(drawAPI);
+      this.x = x;  
+      this.y = y;  
+      this.radius = radius;
+   }
+
+   public void draw() {
+      drawAPI.drawCircle(radius,x,y);
+   }
+}
+
+Step 5
+
+Use the Shape and DrawAPI classes to draw different colored circles.
+
+BridgePatternDemo.java
+
+public class BridgePatternDemo {
+   public static void main(String[] args) {
+      Shape redCircle = new Circle(100,100, 10, new RedCircle());
+      Shape greenCircle = new Circle(100,100, 10, new GreenCircle());
+
+      redCircle.draw();
+      greenCircle.draw();
+   }
+}
+
+Step 6
+
+Verify the output.
+
+Drawing Circle[ color: red, radius: 10, x: 100, 100]
+Drawing Circle[  color: green, radius: 10, x: 100, 100]
+
+
+3. Composite pattern:
+
+Composite pattern is used where we need to treat a group of objects in similar way as a single object. 
+Composite pattern composes objects in term of a tree structure to represent part as well as whole hierarchy. 
+
+This pattern creates a class that contains group of its own objects. This class provides ways to modify its group of same objects.
+
+Advantage of Composite Design Pattern
+
+    It defines class hierarchies that contain primitive and complex objects.
+    It makes easier to you to add new kinds of components.
+    It provides flexibility of structure with manageable class or interface.
+
+Ex:
+
+Step 1
+
+Create Employee class having list of Employee objects.
+
+Employee.java
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Employee {
+   private String name;
+   private String dept;
+   private int salary;
+   private List<Employee> subordinates;
+
+   // constructor
+   public Employee(String name,String dept, int sal) {
+      this.name = name;
+      this.dept = dept;
+      this.salary = sal;
+      subordinates = new ArrayList<Employee>();
+   }
+
+   public void add(Employee e) {
+      subordinates.add(e);
+   }
+
+   public void remove(Employee e) {
+      subordinates.remove(e);
+   }
+
+   public List<Employee> getSubordinates(){
+     return subordinates;
+   }
+
+   public String toString(){
+      return ("Employee :[ Name : " + name + ", dept : " + dept + ", salary :" + salary+" ]");
+   }   
+}
+
+Step 2
+
+Use the Employee class to create and print employee hierarchy.
+
+CompositePatternDemo.java
+
+public class CompositePatternDemo {
+   public static void main(String[] args) {
+   
+      Employee CEO = new Employee("John","CEO", 30000);
+
+      Employee headSales = new Employee("Robert","Head Sales", 20000);
+
+      Employee headMarketing = new Employee("Michel","Head Marketing", 20000);
+
+      Employee clerk1 = new Employee("Laura","Marketing", 10000);
+      Employee clerk2 = new Employee("Bob","Marketing", 10000);
+
+      Employee salesExecutive1 = new Employee("Richard","Sales", 10000);
+      Employee salesExecutive2 = new Employee("Rob","Sales", 10000);
+
+      CEO.add(headSales);
+      CEO.add(headMarketing);
+
+      headSales.add(salesExecutive1);
+      headSales.add(salesExecutive2);
+
+      headMarketing.add(clerk1);
+      headMarketing.add(clerk2);
+
+      //print all employees of the organization
+      System.out.println(CEO); 
+      
+      for (Employee headEmployee : CEO.getSubordinates()) {
+         System.out.println(headEmployee);
+         
+         for (Employee employee : headEmployee.getSubordinates()) {
+            System.out.println(employee);
+         }
+      }		
+   }
+}
+
+Step 3
+
+Verify the output.
+
+Employee :[ Name : John, dept : CEO, salary :30000 ]
+Employee :[ Name : Robert, dept : Head Sales, salary :20000 ]
+Employee :[ Name : Richard, dept : Sales, salary :10000 ]
+Employee :[ Name : Rob, dept : Sales, salary :10000 ]
+Employee :[ Name : Michel, dept : Head Marketing, salary :20000 ]
+Employee :[ Name : Laura, dept : Marketing, salary :10000 ]
+Employee :[ Name : Bob, dept : Marketing, salary :10000 ]
+
+
+
+4. Decorator Pattern:
+
+A Decorator Pattern says that just "attach a flexible additional responsibilities to an object dynamically".
+
+In other words, The Decorator Pattern uses composition instead of inheritance to extend the functionality of an object at runtime.
+
+Advantage of Decorator Pattern
+
+    It provides greater flexibility than static inheritance.
+    It enhances the extensibility of the object, because changes are made by coding new classes.
+    It simplifies the coding by allowing you to develop a series of functionality from targeted classes instead of coding all of the behavior into the object.
+
+Ex:
+
+Step 1
+
+Create an interface.
+
+Shape.java
+
+public interface Shape {
+   void draw();
+}
+
+Step 2
+
+Create concrete classes implementing the same interface.
+
+Rectangle.java
+
+public class Rectangle implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Shape: Rectangle");
+   }
+}
+
+Circle.java
+
+public class Circle implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Shape: Circle");
+   }
+}
+
+Step 3
+
+Create abstract decorator class implementing the Shape interface.
+
+ShapeDecorator.java
+
+public abstract class ShapeDecorator implements Shape {
+   protected Shape decoratedShape;
+
+   public ShapeDecorator(Shape decoratedShape){
+      this.decoratedShape = decoratedShape;
+   }
+
+   public void draw(){
+      decoratedShape.draw();
+   }	
+}
+
+Step 4
+
+Create concrete decorator class extending the ShapeDecorator class.
+
+RedShapeDecorator.java
+
+public class RedShapeDecorator extends ShapeDecorator {
+
+   public RedShapeDecorator(Shape decoratedShape) {
+      super(decoratedShape);		
+   }
+
+   @Override
+   public void draw() {
+      decoratedShape.draw();	       
+      setRedBorder(decoratedShape);
+   }
+
+   private void setRedBorder(Shape decoratedShape){
+      System.out.println("Border Color: Red");
+   }
+}
+
+Step 5
+
+Use the RedShapeDecorator to decorate Shape objects.
+
+DecoratorPatternDemo.java
+
+public class DecoratorPatternDemo {
+   public static void main(String[] args) {
+
+      Shape circle = new Circle();
+
+      Shape redCircle = new RedShapeDecorator(new Circle());
+
+      Shape redRectangle = new RedShapeDecorator(new Rectangle());
+      System.out.println("Circle with normal border");
+      circle.draw();
+
+      System.out.println("\nCircle of red border");
+      redCircle.draw();
+
+      System.out.println("\nRectangle of red border");
+      redRectangle.draw();
+   }
+}
+
+Step 6
+
+Verify the output.
+
+Circle with normal border
+Shape: Circle
+
+Circle of red border
+Shape: Circle
+Border Color: Red
+
+Rectangle of red border
+Shape: Rectangle
+Border Color: Red
+
+5. Facade pattern:
+
+Facade is a structural design pattern that provides a simplified interface to a library, a framework, or any other complex set of classes.
+This pattern adds an interface to existing system to hide its complexities.
+This pattern involves a single class which provides simplified methods required by client and delegates calls to methods of existing system classes.
+
+Advantage of Facade Pattern
+
+    It shields the clients from the complexities of the sub-system components.
+    It promotes loose coupling between subsystems and its clients.
+
+
+Ex:
+
+Step 1
+
+Create an interface.
+
+Shape.java
+
+public interface Shape {
+   void draw();
+}
+
+Step 2
+
+Create concrete classes implementing the same interface.
+
+Rectangle.java
+
+public class Rectangle implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Rectangle::draw()");
+   }
+}
+
+Square.java
+
+public class Square implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Square::draw()");
+   }
+}
+
+Circle.java
+
+public class Circle implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Circle::draw()");
+   }
+}
+
+Step 3
+
+Create a facade class.
+
+ShapeMaker.java
+
+public class ShapeMaker {
+   private Shape circle;
+   private Shape rectangle;
+   private Shape square;
+
+   public ShapeMaker() {
+      circle = new Circle();
+      rectangle = new Rectangle();
+      square = new Square();
+   }
+
+   public void drawCircle(){
+      circle.draw();
+   }
+   public void drawRectangle(){
+      rectangle.draw();
+   }
+   public void drawSquare(){
+      square.draw();
+   }
+}
+
+Step 4
+
+Use the facade to draw various types of shapes.
+
+FacadePatternDemo.java
+
+public class FacadePatternDemo {
+   public static void main(String[] args) {
+      ShapeMaker shapeMaker = new ShapeMaker();
+
+      shapeMaker.drawCircle();
+      shapeMaker.drawRectangle();
+      shapeMaker.drawSquare();		
+   }
+}
+
+Step 5
+
+Verify the output.
+
+Circle::draw()
+Rectangle::draw()
+Square::draw()
+
+
+6. Flyweight Pattern
+
+A Flyweight Pattern says that just "to reuse already existing similar kind of objects by storing them and create new object when no matching object is found". 
+
+Flyweight pattern is primarily used to reduce the number of objects created and to decrease memory footprint and increase performance. 
+Flyweight is a structural design pattern that lets you fit more objects into the available amount of RAM by sharing common parts of state 
+between multiple objects instead of keeping all of the data in each object.
+
+Advantage of Flyweight Pattern
+
+    It reduces the number of objects.
+    It reduces the amount of memory and storage devices required if the objects are persisted
+
+
+Ex:
+
+Step 1
+
+Create an interface.
+
+Shape.java
+
+public interface Shape {
+   void draw();
+}
+
+Step 2
+
+Create concrete class implementing the same interface.
+
+Circle.java
+
+public class Circle implements Shape {
+   private String color;
+   private int x;
+   private int y;
+   private int radius;
+
+   public Circle(String color){
+      this.color = color;		
+   }
+
+   public void setX(int x) {
+      this.x = x;
+   }
+
+   public void setY(int y) {
+      this.y = y;
+   }
+
+   public void setRadius(int radius) {
+      this.radius = radius;
+   }
+
+   @Override
+   public void draw() {
+      System.out.println("Circle: Draw() [Color : " + color + ", x : " + x + ", y :" + y + ", radius :" + radius);
+   }
+}
+
+Step 3
+
+Create a factory to generate object of concrete class based on given information.
+
+ShapeFactory.java
+
+import java.util.HashMap;
+
+public class ShapeFactory {
+
+   // Uncomment the compiler directive line and
+   // javac *.java will compile properly.
+   // @SuppressWarnings("unchecked")
+   private static final HashMap circleMap = new HashMap();
+
+   public static Shape getCircle(String color) {
+      Circle circle = (Circle)circleMap.get(color);
+
+      if(circle == null) {
+         circle = new Circle(color);
+         circleMap.put(color, circle);
+         System.out.println("Creating circle of color : " + color);
+      }
+      return circle;
+   }
+}
+
+Step 4
+
+Use the factory to get object of concrete class by passing an information such as color.
+
+FlyweightPatternDemo.java
+
+public class FlyweightPatternDemo {
+   private static final String colors[] = { "Red", "Green", "Blue", "White", "Black" };
+   public static void main(String[] args) {
+
+      for(int i=0; i < 20; ++i) {
+         Circle circle = (Circle)ShapeFactory.getCircle(getRandomColor());
+         circle.setX(getRandomX());
+         circle.setY(getRandomY());
+         circle.setRadius(100);
+         circle.draw();
+      }
+   }
+   private static String getRandomColor() {
+      return colors[(int)(Math.random()*colors.length)];
+   }
+   private static int getRandomX() {
+      return (int)(Math.random()*100 );
+   }
+   private static int getRandomY() {
+      return (int)(Math.random()*100);
+   }
+}
+
+7. Proxy patten:
+
+Simply, proxy means an object representing another object.
+Proxy is a structural design pattern that lets you provide a substitute or placeholder for another object. 
+A proxy controls access to the original object, allowing you to perform something either before or after the request gets through to the original object.
+
+Proxy pattern is also known as Surrogate or Placeholder.
+
+Advantage of Proxy Pattern
+
+    It provides the protection to the original object from the outside world.
+
+Ex:
+
+We are going to create an Image interface and concrete classes implementing the Image interface. ProxyImage is a a proxy class to reduce memory footprint
+of RealImage object loading.
+ProxyPatternDemo, our demo class, will use ProxyImage to get an Image object to load and display as it needs.
+
+Step 1
+
+Create an interface.
+
+Image.java
+
+public interface Image {
+   void display();
+}
+
+Step 2
+
+Create concrete classes implementing the same interface.
+
+RealImage.java
+
+public class RealImage implements Image {
+
+   private String fileName;
+
+   public RealImage(String fileName){
+      this.fileName = fileName;
+      loadFromDisk(fileName);
+   }
+
+   @Override
+   public void display() {
+      System.out.println("Displaying " + fileName);
+   }
+
+   private void loadFromDisk(String fileName){
+      System.out.println("Loading " + fileName);
+   }
+}
+
+ProxyImage.java
+
+public class ProxyImage implements Image{
+
+   private RealImage realImage;
+   private String fileName;
+
+   public ProxyImage(String fileName){
+      this.fileName = fileName;
+   }
+
+   @Override
+   public void display() {
+      if(realImage == null){
+         realImage = new RealImage(fileName);
+      }
+      realImage.display();
+   }
+}
+
+Step 3
+
+Use the ProxyImage to get object of RealImage class when required.
+
+ProxyPatternDemo.java
+
+public class ProxyPatternDemo {
+	
+   public static void main(String[] args) {
+      Image image = new ProxyImage("test_10mb.jpg");
+
+      //image will be loaded from disk
+      image.display(); 
+      System.out.println("");
+      
+      //image will not be loaded from disk
+      image.display();
+ 	
+   }
+}
+
+Step 4
+
+Verify the output.
+
+Loading test_10mb.jpg
+Displaying test_10mb.jpg
+
+Displaying test_10mb.jpg
+
+
+Behavioral Design Patterns
+
+Behavioral design patterns are concerned with the interaction and responsibility of objects.
+In these design patterns,the interaction between the objects should be in such a way that they can easily talk to each other and still should be loosely coupled.
+That means the implementation and the client should be loosely coupled in order to avoid hard coding and dependencies.
+
+1. Chain of Responsibility
+
+Chain of Responsibility is a behavioral design pattern that lets you pass requests along a chain of handlers.
+Upon receiving a request, each handler decides either to process the request or to pass it to the next handler in the chain.
+
+The Chain of Responsibility pattern is for:
+
+    Decoupling a sender and receiver of a command
+    Picking a processing strategy at processing-time
+
+
+
+In the Java world, we benefit from Chain of Responsibility every day. One such classic example is Servlet Filters in Java that allow multiple filters
+to process an HTTP request. Though in that case, each filter invokes the chain instead of the next filter.
+
+Let's take a look at the code snippet below for better understanding of this pattern in Servlet Filters:
+
+	public class CustomFilter implements Filter {
+	 
+	    public void doFilter(
+	      ServletRequest request,
+	      ServletResponse response,
+	      FilterChain chain)
+	      throws IOException, ServletException {
+	 
+	        // process the request
+	 
+	        // pass the request (i.e. the command) along the filter chain
+	        chain.doFilter(request, response);
+	    }
+	}
+
+As seen in the code snippet above, we need to invoke FilterChain‘s doFilter method in order to pass the request on to next processor in the chain.
+
+2. Command pattern
+
+
+Command pattern is a data driven design pattern and falls under behavioral pattern category. A request is wrapped under an object as command and passed 
+to invoker object. Invoker object looks for the appropriate object which can handle this command and passes the command to the corresponding object which 
+executes the command.
+
+Advantage of command pattern:
+
+    It separates the object that invokes the operation from the object that actually performs the operation.
+    It makes easy to add new commands, because existing classes remain unchanged.
+
+Example:
+
+Step 1
+
+Create a command interface.
+
+Order.java
+
+public interface Order {
+   void execute();
+}
+
+Step 2
+
+Create a request class.
+
+Stock.java
+
+public class Stock {
+	
+   private String name = "ABC";
+   private int quantity = 10;
+
+   public void buy(){
+      System.out.println("Stock [ Name: "+name+", 
+         Quantity: " + quantity +" ] bought");
+   }
+   public void sell(){
+      System.out.println("Stock [ Name: "+name+", 
+         Quantity: " + quantity +" ] sold");
+   }
+}
+
+Step 3
+
+Create concrete classes implementing the Order interface.
+
+BuyStock.java
+
+public class BuyStock implements Order {
+   private Stock abcStock;
+
+   public BuyStock(Stock abcStock){
+      this.abcStock = abcStock;
+   }
+
+   public void execute() {
+      abcStock.buy();
+   }
+}
+
+SellStock.java
+
+public class SellStock implements Order {
+   private Stock abcStock;
+
+   public SellStock(Stock abcStock){
+      this.abcStock = abcStock;
+   }
+
+   public void execute() {
+      abcStock.sell();
+   }
+}
+
+Step 4
+
+Create command invoker class.
+
+Broker.java
+
+import java.util.ArrayList;
+import java.util.List;
+
+   public class Broker {
+   private List<Order> orderList = new ArrayList<Order>(); 
+
+   public void takeOrder(Order order){
+      orderList.add(order);		
+   }
+
+   public void placeOrders(){
+   
+      for (Order order : orderList) {
+         order.execute();
+      }
+      orderList.clear();
+   }
+}
+
+Step 5
+
+Use the Broker class to take and execute commands.
+
+CommandPatternDemo.java
+
+public class CommandPatternDemo {
+   public static void main(String[] args) {
+      Stock abcStock = new Stock();
+
+      BuyStock buyStockOrder = new BuyStock(abcStock);
+      SellStock sellStockOrder = new SellStock(abcStock);
+
+      Broker broker = new Broker();
+      broker.takeOrder(buyStockOrder);
+      broker.takeOrder(sellStockOrder);
+
+      broker.placeOrders();
+   }
+}
+
+Step 6
+
+Verify the output.
+
+Stock [ Name: ABC, Quantity: 10 ] bought
+Stock [ Name: ABC, Quantity: 10 ] sold
+
+
+3. Interpreter pattern 
+
+Interpreter pattern provides a way to evaluate language grammar or expression. This type of pattern comes under behavioral pattern.
+This pattern involves implementing an expression interface which tells to interpret a particular context. 
+This pattern is used in SQL parsing, symbol processing engine etc.
+
+Ex:
+
+Step 1
+
+Create a Pattern interface.
+
+    public interface Pattern {  
+        public String conversion(String exp);  
+    }  
+
+Step 2
+
+Create a InfixToPostfixPattern class that will allow what kind of pattern you want to convert.
+File: InfixToPostfixPattern.java
+
+    import java.util.Stack;  
+    public class InfixToPostfixPattern implements Pattern{  
+        @Override  
+        public String conversion(String exp) {  
+            int priority = 0;// for the priority of operators.  
+           String postfix = "";  
+            Stack<Character> s1 = new Stack<Character>();  
+           for (int i = 0; i < exp.length(); i++)  
+            {  
+               char ch = exp.charAt(i);  
+               if (ch == '+' || ch == '-' || ch == '*' || ch == '/'||ch=='%')  
+               {  
+                  // check the precedence  
+                  if (s1.size() <= 0)  
+                     s1.push(ch);  
+               }  
+               else  
+                  {  
+                     Character chTop = (Character) s1.peek();  
+                     if (chTop == '*' || chTop == '/')  
+                        priority = 1;  
+                     else  
+                        priority = 0;  
+                     if (priority == 1)  
+                     {  
+                        if (ch == '*' || ch == '/'||ch=='%')  
+                        {  
+                           postfix += s1.pop();  
+                                                      i--;  
+                        }  
+                        else  
+                        { // Same  
+                           postfix += s1.pop();  
+                           i--;  
+                        }  
+                     }  
+                     else  
+                     {  
+                        if (ch == '+' || ch == '-')  
+                        {  
+                           postfix += s1.pop();  
+                           s1.push(ch);  
+                        }  
+                        else  
+                           s1.push(ch);  
+                     }  
+                  }  
+               }  
+               else  
+               {               
+                  postfix += ch;  
+               }  
+            }  
+            int len = s1.size();  
+            for (int j = 0; j < len; j++)  
+               postfix += s1.pop();  
+            return postfix;  
+              
+        }   
+    }// End of the InfixToPostfixPattern class.  
+
+Step 3
+
+Create a InterpreterPatternClient class that will use InfixToPostfix Conversion.
+File: InterpreterPatternClient.java
+
+    public class InterpreterPatternClient {  
+         public static void main(String[] args)  
+            {  
+                String infix = "a+b*c";  
+                  
+                InfixToPostfixPattern ip=new InfixToPostfixPattern();  
+                  
+                String postfix = ip.conversion(infix);  
+                System.out.println("Infix:   " + infix);  
+                System.out.println("Postfix: " + postfix);  
+           }  
+    }  
+
+
+Output:
+
+    Infix:   a+b*c  
+    Postfix: abc*+  
+
+4. Iterator Pattern
+
+Iterator is a behavioral design pattern that lets you traverse elements of a collection without exposing its underlying representation (list, stack, tree, etc.).
+
+The Iterator pattern is also known as Cursor.
+
+Advantage of Iterator Pattern:
+
+    It supports variations in the traversal of a collection.
+    It simplifies the interface to the collection.
+
+Example:
+
+Step 1
+
+Create interfaces.
+
+Iterator.java
+
+public interface Iterator {
+   public boolean hasNext();
+   public Object next();
+}
+
+Container.java
+
+public interface Container {
+   public Iterator getIterator();
+}
+
+Step 2
+
+Create concrete class implementing the Container interface. This class has inner class NameIterator implementing the Iterator interface.
+
+NameRepository.java
+
+public class NameRepository implements Container {
+   public String names[] = {"Robert" , "John" ,"Julie" , "Lora"};
+
+   @Override
+   public Iterator getIterator() {
+      return new NameIterator();
+   }
+
+   private class NameIterator implements Iterator {
+
+      int index;
+
+      @Override
+      public boolean hasNext() {
+      
+         if(index < names.length){
+            return true;
+         }
+         return false;
+      }
+
+      @Override
+      public Object next() {
+      
+         if(this.hasNext()){
+            return names[index++];
+         }
+         return null;
+      }		
+   }
+}
+
+Step 3
+
+Use the NameRepository to get iterator and print names.
+
+IteratorPatternDemo.java
+
+public class IteratorPatternDemo {
+	
+   public static void main(String[] args) {
+      NameRepository namesRepository = new NameRepository();
+
+      for(Iterator iter = namesRepository.getIterator(); iter.hasNext();){
+         String name = (String)iter.next();
+         System.out.println("Name : " + name);
+      } 	
+   }
+}
+
+Step 4
+
+Verify the output.
+
+Name : Robert
+Name : John
+Name : Julie
+Name : Lora
+
+5. Mediator Pattern
+
+Mediator pattern is used to reduce communication complexity between multiple objects or classes.
+This pattern provides a mediator class which normally handles all the communications between different classes and supports easy maintenance
+of the code by loose coupling.
+
+Usage:
+
+    It is commonly used in message-based systems likewise chat applications.
+    When the set of objects communicate in complex but in well-defined ways.
+
+Ex:
+
+Step 1
+
+Create mediator class.
+
+ChatRoom.java
+
+import java.util.Date;
+
+public class ChatRoom {
+   public static void showMessage(User user, String message){
+      System.out.println(new Date().toString() + " [" + user.getName() + "] : " + message);
+   }
+}
+
+Step 2
+
+Create user class
+
+User.java
+
+public class User {
+   private String name;
+
+   public String getName() {
+      return name;
+   }
+
+   public void setName(String name) {
+      this.name = name;
+   }
+
+   public User(String name){
+      this.name  = name;
+   }
+
+   public void sendMessage(String message){
+      ChatRoom.showMessage(this,message);
+   }
+}
+
+Step 3
+
+Use the User object to show communications between them.
+
+MediatorPatternDemo.java
+
+public class MediatorPatternDemo {
+   public static void main(String[] args) {
+      User robert = new User("Robert");
+      User john = new User("John");
+
+      robert.sendMessage("Hi! John!");
+      john.sendMessage("Hello! Robert!");
+   }
+}
+
+Step 4
+
+Verify the output.
+
+Thu Jan 31 16:05:46 IST 2013 [Robert] : Hi! John!
+Thu Jan 31 16:05:46 IST 2013 [John] : Hello! Robert!
+
+
+6. Memento Pattern
+
+Memento pattern is used to restore state of an object to a previous state. 
+Memento is a behavioral design pattern that lets you save and restore the previous state of an object without revealing the details of its implementation.
+
+Benefits:
+
+    It preserves encapsulation boundaries.
+    It simplifies the originator.
+
+Usage:
+
+    It is used in Undo and Redo operations in most software.
+    It is also used in database transactions.
+
+Ex:
+
+Step 1
+
+Create Memento class.
+
+Memento.java
+
+public class Memento {
+   private String state;
+
+   public Memento(String state){
+      this.state = state;
+   }
+
+   public String getState(){
+      return state;
+   }	
+}
+
+Step 2
+
+Create Originator class
+
+Originator.java
+
+public class Originator {
+   private String state;
+
+   public void setState(String state){
+      this.state = state;
+   }
+
+   public String getState(){
+      return state;
+   }
+
+   public Memento saveStateToMemento(){
+      return new Memento(state);
+   }
+
+   public void getStateFromMemento(Memento memento){
+      state = memento.getState();
+   }
+}
+
+Step 3
+
+Create CareTaker class
+
+CareTaker.java
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CareTaker {
+   private List<Memento> mementoList = new ArrayList<Memento>();
+
+   public void add(Memento state){
+      mementoList.add(state);
+   }
+
+   public Memento get(int index){
+      return mementoList.get(index);
+   }
+}
+
+Step 4
+
+Use CareTaker and Originator objects.
+
+MementoPatternDemo.java
+
+public class MementoPatternDemo {
+   public static void main(String[] args) {
+   
+      Originator originator = new Originator();
+      CareTaker careTaker = new CareTaker();
+      
+      originator.setState("State #1");
+      originator.setState("State #2");
+      careTaker.add(originator.saveStateToMemento());
+      
+      originator.setState("State #3");
+      careTaker.add(originator.saveStateToMemento());
+      
+      originator.setState("State #4");
+      System.out.println("Current State: " + originator.getState());		
+      
+      originator.getStateFromMemento(careTaker.get(0));
+      System.out.println("First saved State: " + originator.getState());
+      originator.getStateFromMemento(careTaker.get(1));
+      System.out.println("Second saved State: " + originator.getState());
+   }
+}
+
+Step 5
+
+Verify the output.
+
+Current State: State #4
+First saved State: State #2
+Second saved State: State #3
+
+
+7. State Pattern
+
+
+State is a behavioral design pattern that lets an object alter its behavior when its internal state changes. It appears as if the object changed its class.
+
+In State pattern a class behavior changes based on its state.
+In State pattern, we create objects which represent various states and a context object whose behavior varies as its state object changes.
+
+Benefits:
+
+    It keeps the state-specific behavior.
+    It makes any state transitions explicit.
+
+Usage:
+
+    When the behavior of object depends on its state and it must be able to change its behavior at runtime according to the new state.
+    It is used when the operations have large, multipart conditional statements that depend on the state of an object.
+
+
+Ex:
+
+Step 1
+
+Create an interface.
+
+State.java
+
+public interface State {
+   public void doAction(Context context);
+}
+
+Step 2
+
+Create concrete classes implementing the same interface.
+
+StartState.java
+
+public class StartState implements State {
+
+   public void doAction(Context context) {
+      System.out.println("Player is in start state");
+      context.setState(this);	
+   }
+
+   public String toString(){
+      return "Start State";
+   }
+}
+
+StopState.java
+
+public class StopState implements State {
+
+   public void doAction(Context context) {
+      System.out.println("Player is in stop state");
+      context.setState(this);	
+   }
+
+   public String toString(){
+      return "Stop State";
+   }
+}
+
+Step 3
+
+Create Context Class.
+
+Context.java
+
+public class Context {
+   private State state;
+
+   public Context(){
+      state = null;
+   }
+
+   public void setState(State state){
+      this.state = state;		
+   }
+
+   public State getState(){
+      return state;
+   }
+}
+
+Step 4
+
+Use the Context to see change in behaviour when State changes.
+
+StatePatternDemo.java
+
+public class StatePatternDemo {
+   public static void main(String[] args) {
+      Context context = new Context();
+
+      StartState startState = new StartState();
+      startState.doAction(context);
+
+      System.out.println(context.getState().toString());
+
+      StopState stopState = new StopState();
+      stopState.doAction(context);
+
+      System.out.println(context.getState().toString());
+   }
+}
+
+Step 5
+
+Verify the output.
+
+Player is in start state
+Start State
+Player is in stop state
+Stop State
+
+8. Strategy pattern
+
+Strategy pattern is used when we have multiple algorithm for a specific task and client decides the actual implementation to be used at runtime.
+In Strategy pattern, a class behavior or its algorithm can be changed at run time.
+In Strategy pattern, we create objects which represent various strategies and a context object whose behavior varies as per its strategy object. 
+The strategy object changes the executing algorithm of the context object.
+
+The Strategy Pattern is also known as Policy.
+
+Benefits:
+
+
+    It provides a substitute to subclassing.
+    It defines each behavior within its own class, eliminating the need for conditional statements.
+    It makes it easier to extend and incorporate new behavior without changing the application.
+
+Usage:
+
+    When the multiple classes differ only in their behaviors.e.g. Servlet API.
+    It is used when you need different variations of an algorithm.
+
+
+Ex:
+
+Step 1
+
+Create an interface.
+
+Strategy.java
+
+public interface Strategy {
+   public int doOperation(int num1, int num2);
+}
+
+Step 2
+
+Create concrete classes implementing the same interface.
+
+OperationAdd.java
+
+public class OperationAdd implements Strategy{
+   @Override
+   public int doOperation(int num1, int num2) {
+      return num1 + num2;
+   }
+}
+
+OperationSubstract.java
+
+public class OperationSubstract implements Strategy{
+   @Override
+   public int doOperation(int num1, int num2) {
+      return num1 - num2;
+   }
+}
+
+OperationMultiply.java
+
+public class OperationMultiply implements Strategy{
+   @Override
+   public int doOperation(int num1, int num2) {
+      return num1 * num2;
+   }
+}
+
+Step 3
+
+Create Context Class.
+
+Context.java
+
+public class Context {
+   private Strategy strategy;
+
+   public Context(Strategy strategy){
+      this.strategy = strategy;
+   }
+
+   public int executeStrategy(int num1, int num2){
+      return strategy.doOperation(num1, num2);
+   }
+}
+
+Step 4
+
+Use the Context to see change in behaviour when it changes its Strategy.
+
+StrategyPatternDemo.java
+
+public class StrategyPatternDemo {
+   public static void main(String[] args) {
+      Context context = new Context(new OperationAdd());		
+      System.out.println("10 + 5 = " + context.executeStrategy(10, 5));
+
+      context = new Context(new OperationSubstract());		
+      System.out.println("10 - 5 = " + context.executeStrategy(10, 5));
+
+      context = new Context(new OperationMultiply());		
+      System.out.println("10 * 5 = " + context.executeStrategy(10, 5));
+   }
+}
+
+Step 5
+
+Verify the output.
+
+10 + 5 = 15
+10 - 5 = 5
+10 * 5 = 50
+
+
+
+9. Observer Pattern
+
+Observer pattern is used when there is one-to-many relationship between objects such as if one object is modified,
+its depenedent objects are to be notified automatically.
+Observer is a behavioral design pattern that lets you define a subscription mechanism to notify multiple objects about any events that happen 
+to the object they’re observing.
+
+Benefits:
+
+    It describes the coupling between the objects and the observer.
+    It provides the support for broadcast-type communication.
+
+Ex:
+
+Step 1
+
+Create Subject class.
+
+Subject.java
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Subject {
+	
+   private List<Observer> observers = new ArrayList<Observer>();
+   private int state;
+
+   public int getState() {
+      return state;
+   }
+
+   public void setState(int state) {
+      this.state = state;
+      notifyAllObservers();
+   }
+
+   public void attach(Observer observer){
+      observers.add(observer);		
+   }
+
+   public void notifyAllObservers(){
+      for (Observer observer : observers) {
+         observer.update();
+      }
+   } 	
+}
+
+Step 2
+
+Create Observer class.
+
+Observer.java
+
+public abstract class Observer {
+   protected Subject subject;
+   public abstract void update();
+}
+
+Step 3
+
+Create concrete observer classes
+
+BinaryObserver.java
+
+public class BinaryObserver extends Observer{
+
+   public BinaryObserver(Subject subject){
+      this.subject = subject;
+      this.subject.attach(this);
+   }
+
+   @Override
+   public void update() {
+      System.out.println( "Binary String: " + Integer.toBinaryString( subject.getState() ) ); 
+   }
+}
+
+OctalObserver.java
+
+public class OctalObserver extends Observer{
+
+   public OctalObserver(Subject subject){
+      this.subject = subject;
+      this.subject.attach(this);
+   }
+
+   @Override
+   public void update() {
+     System.out.println( "Octal String: " + Integer.toOctalString( subject.getState() ) ); 
+   }
+}
+
+HexaObserver.java
+
+public class HexaObserver extends Observer{
+
+   public HexaObserver(Subject subject){
+      this.subject = subject;
+      this.subject.attach(this);
+   }
+
+   @Override
+   public void update() {
+      System.out.println( "Hex String: " + Integer.toHexString( subject.getState() ).toUpperCase() ); 
+   }
+}
+
+Step 4
+
+Use Subject and concrete observer objects.
+
+ObserverPatternDemo.java
+
+public class ObserverPatternDemo {
+   public static void main(String[] args) {
+      Subject subject = new Subject();
+
+      new HexaObserver(subject);
+      new OctalObserver(subject);
+      new BinaryObserver(subject);
+
+      System.out.println("First state change: 15");	
+      subject.setState(15);
+      System.out.println("Second state change: 10");	
+      subject.setState(10);
+   }
+}
+
+Step 5
+
+Verify the output.
+
+First state change: 15
+Hex String: F
+Octal String: 17
+Binary String: 1111
+Second state change: 10
+Hex String: A
+Octal String: 12
+Binary String: 1010
+
+
+10. Template pattern
+
+Template Method is a behavioral design pattern that defines the skeleton of an algorithm in the superclass
+ but lets subclasses override specific steps of the algorithm without changing its structure.
+
+Benefits:
+    It is very common technique for reusing the code.This is only the main benefit of it.
+
+Usage:
+    It is used when the common behavior among sub-classes should be moved to a single common class by avoiding the duplication.
+
+Ex:
+
+Step 1
+
+Create an abstract class with a template method being final.
+
+Game.java
+
+public abstract class Game {
+   abstract void initialize();
+   abstract void startPlay();
+   abstract void endPlay();
+
+   //template method
+   public final void play(){
+
+      //initialize the game
+      initialize();
+
+      //start game
+      startPlay();
+
+      //end game
+      endPlay();
+   }
+}
+
+Step 2
+
+Create concrete classes extending the above class.
+
+Cricket.java
+
+public class Cricket extends Game {
+
+   @Override
+   void endPlay() {
+      System.out.println("Cricket Game Finished!");
+   }
+
+   @Override
+   void initialize() {
+      System.out.println("Cricket Game Initialized! Start playing.");
+   }
+
+   @Override
+   void startPlay() {
+      System.out.println("Cricket Game Started. Enjoy the game!");
+   }
+}
+
+Football.java
+
+public class Football extends Game {
+
+   @Override
+   void endPlay() {
+      System.out.println("Football Game Finished!");
+   }
+
+   @Override
+   void initialize() {
+      System.out.println("Football Game Initialized! Start playing.");
+   }
+
+   @Override
+   void startPlay() {
+      System.out.println("Football Game Started. Enjoy the game!");
+   }
+}
+
+Step 3
+
+Use the Game's template method play() to demonstrate a defined way of playing game.
+
+TemplatePatternDemo.java
+
+public class TemplatePatternDemo {
+   public static void main(String[] args) {
+
+      Game game = new Cricket();
+      game.play();
+      System.out.println();
+      game = new Football();
+      game.play();		
+   }
+}
+
+Step 4
+
+Verify the output.
+
+Cricket Game Initialized! Start playing.
+Cricket Game Started. Enjoy the game!
+Cricket Game Finished!
+
+Football Game Initialized! Start playing.
+Football Game Started. Enjoy the game!
+Football Game Finished!
+
+11. Visitor Pattern
+
+Visitor pattern is used when we have to perform an operation on a group of similar kind of Objects. With the help of visitor pattern, 
+we can move the operational logic from the objects to another class.
+Visitor is a behavioral design pattern that lets you separate algorithms from the objects on which they operate.
+In Visitor pattern, we use a visitor class which changes the executing algorithm of an element class. By this way, 
+execution algorithm of element can vary as and when visitor varies.
+
+Ex:
+
+Step 1
+
+Define an interface to represent element.
+
+ComputerPart.java
+
+public interface ComputerPart {
+   public void accept(ComputerPartVisitor computerPartVisitor);
+}
+
+Step 2
+
+Create concrete classes extending the above class.
+
+Keyboard.java
+
+public class Keyboard implements ComputerPart {
+
+   @Override
+   public void accept(ComputerPartVisitor computerPartVisitor) {
+      computerPartVisitor.visit(this);
+   }
+}
+
+Monitor.java
+
+public class Monitor implements ComputerPart {
+
+   @Override
+   public void accept(ComputerPartVisitor computerPartVisitor) {
+      computerPartVisitor.visit(this);
+   }
+}
+
+Mouse.java
+
+public class Mouse implements ComputerPart {
+
+   @Override
+   public void accept(ComputerPartVisitor computerPartVisitor) {
+      computerPartVisitor.visit(this);
+   }
+}
+
+Computer.java
+
+public class Computer implements ComputerPart {
+	
+   ComputerPart[] parts;
+
+   public Computer(){
+      parts = new ComputerPart[] {new Mouse(), new Keyboard(), new Monitor()};		
+   } 
+
+
+   @Override
+   public void accept(ComputerPartVisitor computerPartVisitor) {
+      for (int i = 0; i < parts.length; i++) {
+         parts[i].accept(computerPartVisitor);
+      }
+      computerPartVisitor.visit(this);
+   }
+}
+
+Step 3
+
+Define an interface to represent visitor.
+
+ComputerPartVisitor.java
+
+public interface ComputerPartVisitor {
+	public void visit(Computer computer);
+	public void visit(Mouse mouse);
+	public void visit(Keyboard keyboard);
+	public void visit(Monitor monitor);
+}
+
+Step 4
+
+Create concrete visitor implementing the above class.
+
+ComputerPartDisplayVisitor.java
+
+public class ComputerPartDisplayVisitor implements ComputerPartVisitor {
+
+   @Override
+   public void visit(Computer computer) {
+      System.out.println("Displaying Computer.");
+   }
+
+   @Override
+   public void visit(Mouse mouse) {
+      System.out.println("Displaying Mouse.");
+   }
+
+   @Override
+   public void visit(Keyboard keyboard) {
+      System.out.println("Displaying Keyboard.");
+   }
+
+   @Override
+   public void visit(Monitor monitor) {
+      System.out.println("Displaying Monitor.");
+   }
+}
+
+Step 5
+
+Use the ComputerPartDisplayVisitor to display parts of Computer.
+
+VisitorPatternDemo.java
+
+public class VisitorPatternDemo {
+   public static void main(String[] args) {
+
+      ComputerPart computer = new Computer();
+      computer.accept(new ComputerPartDisplayVisitor());
+   }
+}
+
+Step 6
+
+Verify the output.
+
+Displaying Mouse.
+Displaying Keyboard.
+Displaying Monitor.
+Displaying Computer.
+
+
+
+Interview Questions:
+
+1. Explain the advantages of Java design pattern?
+
+    The Design Patterns are reusable in multiple projects.
+    The Design Patterns provide a solution that helps to define the system architecture.
+    The Design Patterns capture software engineering experiences.
+    The Design Patterns provide transparency to the design of an application.
+    They are testified and well-proved since they have been built upon the knowledge and experience of expert software developers
+
+2. What Is Factory Pattern?
+
+    It is the most used design pattern in Java.
+    These design patterns belong to the Creational Pattern as this pattern provides one of the best ways to create an object.
+    In the Factory pattern, we don't expose the creation logic to the client and refer the created object using a standard interface.
+    Factory Pattern allows the sub-classes to choose the type of objects to create.
+    The Factory Pattern is also known as Virtual Constructor.
+
+3. What Is Abstract Factory Pattern?
+
+   Abstract Factory Pattern states that define an abstract class or interface for creating families of related objects but without specifying their concrete sub-classes.
+   That means Abstract Factory allowed a class to return a factory of classes. That is why the Abstract Factory Pattern is one level higher than the Factory Pattern.
+
+    Abstract Factory patterns work around superclasses, which creates other classes.
+    The Abstract Factory Pattern comes under Creational Pattern as this pattern provides one of the best ways to create an object.
+    In the Abstract Factory pattern, an interface is liable for creating a factory of related objects without explicitly identifying their classes.
+    Each generated factory can give the objects according to the Factory pattern.
+
+4. Explain Structural Patterns in Java?
+
+Structural patterns are used to provide solutions and efficient standards regarding class compositions and object structures. 
+They depend on the concept of inheritance and interfaces to allow multiple objects or classes to work together and form a single working whole.
+
+Structural design patterns are responsible for how classes and objects can be composed to form larger structures. 
+
+5.  Explain the Singleton pattern?
+
+Singleton pattern in Java is a pattern which allows a single instance within an application. One good example of the singleton pattern is java.lang.Runtime.
+
+Singleton Pattern states that define a class that has only one instance and provides a global point of access to it.
+
+In other words, it is the responsibility of the class that only a single instance should be created, and all other classes can use a single object. 
+
+6. Describe in how many ways can you create a singleton pattern?
+
+There are two ways of creating a Singleton pattern.
+
+1. Early Instantiation
+
+It is responsible for the creation of instance at load time.
+
+2. Lazy Instantiation
+
+It is responsible for the creation of instance when required.
+
+7. What are the Adapter patterns?
+
+Adapter pattern converts the interface of a class into another interface based on the requirement.
+
+In other words, it let you convert the interface according to requirement while using the class service with a different interface.
+
+It is also known as Wrapper. 
+
+8. What is the decorator pattern in Java explain it with an example?
+
+The decorator pattern is one of the popular Java design patterns. It is common because of its heavy usage in java.io (package). 
+The Decorator Pattern uses composition in place of inheritance to extend the functionality of an object at runtime.
+
+BufferedReader and BufferedWriter are some excellent examples of decorator pattern in Java. 
+
+9. Difference between Strategy and State design Pattern in Java?
+
+This question is a commonly asked Java design pattern interview question as both Strategy and State pattern has the same structure.
+The UML class diagram of both patterns looks precisely the same, but their intent is different.
+
+The state design pattern is used to manage and define the state of an object, while the Strategy pattern is used to describe a set of an interchangeable algorithm.
+
+10. What are the advantages of Composite design Pattern in Java?
+
+Composite design pattern allows clients to operate collectively on objects that may or may not represent a hierarchy of objects.
+
+Advantage of composite design patterns is as follows.
+
+    It describes the class hierarchy that contains primitive and complex objects.
+    It makes it easy to add new kinds of the component.
+    It facilitates with the flexibility of structure with a manageable class or interface.
+
+11. What are Some Design Patterns which are used in the JDK library?
+
+Some of the design patterns which are used in the JDK library are as follows.
+
+    The decorator pattern is used by Wrapper classes.
+    Singleton pattern is used by Calendar classes (Runtime).
+    The Wrapper classes use factory pattern like Integer.valueOf.
+    Event handling frameworks use observer pattern like swing, awt.
+
+12. Mention advantage of Builder design pattern in Java?
+
+Advantages of builder design patterns are as follows.
+
+    It facilitates with a clear separation between the construction and representation of an object.
+    It provides improved control over the construction process.
+    The constructor parameter is reduced and is provided in highly readable method calls.
+    In design Pattern, the object is always instantiated in a complete state.
+    In the Builder design pattern, Immutable objects can be quickly built in the object building process.
+
+12. Can you write Thread-safe Singleton in Java?
+
+There are many ways to write a Thread-safe singleton in Java.
+
+    Thread-safe Singleton can be written by writing singleton using double-checked locking.
+    Another way is, by using static Singleton instance initialized during class loading.
+    By using Java enum to create a thread-safe singleton, this is the most straightforward way.
+
+13. Is it possible to create a clone of a singleton object?
+
+Yes, it is possible to create a clone of a singleton object.
+
+14. What is the proxy pattern, and what does it do?
+
+The term Proxy stands for an object representing another object. The proxy pattern provides a substitute or placeholder for another purpose to control access to it.
+
+According to Gangs of four, a Proxy Pattern "provides control for accessing the original object."
+
+We can perform many security operations like hiding the information of the original object, on-demand loading, etc.
+
+It is also called as placeholder or surrogates.
+
+15. How is Bridge pattern is different from the Adapter pattern?
+
+The motive of the Adapter pattern is to make interfaces of one or more classes to look similar.
+
+The Bridge pattern is designed to isolate a class's interface from its implementation so we can vary or substitute the implementation without changing the client code.
+
+
+*****************************************************
+
+Summary:
+
+Creational Design patterns:
+---------------------------
+
+1. Factory Method Pattern
+
+   Factory Method Pattern allows the sub-classes to choose the type of objects to create.
+The Factory Method pattern suggests that you replace direct object construction calls (using the new operator) with calls to a special factory method.
+
+2. Abstract Factory Pattern:
+
+    Abstract Factory Pattern is one level higher than the Factory Pattern. Abstract Factory lets a class returns a factory of classes.
+
+3. Builder :
+
+    Builder is a creational design pattern that lets you construct complex objects step by step. The pattern allows you to produce different types 
+and representations of an object using the same construction code.
+
+4. Prototype:
+
+    Prototype is a creational design pattern that lets you copy existing objects without making your code dependent on their classes.
+Prototype Pattern says that cloning of an existing object instead of creating new one and can also be customized as per the requirement. 
+
+5. Singleton:
+
+    Singleton is a creational design pattern that lets you ensure that a class has only one instance.Sometimes we need to have only one instance of our class 
+   for example a single DB connection shared by multiple objects as creating a separate DB connection for every object may be costly.
+
+   There are two forms of singleton design pattern - Early Instantiation , Lazy Instantiation.
+
+To create the singleton class, we need to have static member of class, private constructor and static factory method.
+
+    Static member: It gets memory only once because of static, itcontains the instance of the Singleton class.
+    Private constructor: It will prevent to instantiate the Singleton class from outside the class.
+    Static factory method: This provides the global point of access to the Singleton object and returns the instance to the caller.
+
+Structural patterns: 
+--------------------
+
+1. Adapter Pattern:
+
+     An Adapter Pattern says that just "converts the interface of a class into another interface that a client wants". In other words, to provide the interface 
+   according to client requirement while using the services of a class with a different interface. The Adapter Pattern is also known as Wrapper.
+
+2. Bridge:
+
+    Bridge is used when we need to decouple an abstraction from its implementation so that the two can vary independently.This type of design pattern comes 
+  under structural pattern as this pattern decouples implementation class and abstract class by providing a bridge structure between them. 
+
+3. Composite:
+
+      Composite pattern is used where we need to treat a group of objects in similar way as a single object. Composite pattern composes objects in term of a 
+  tree structure to represent part as well as whole hierarchy.  
+
+4. Decorator:
+       A Decorator Pattern says that just "attach a flexible additional responsibilities to an object dynamically". In other words, The Decorator Pattern uses 
+   composition instead of inheritance to extend the functionality of an object at runtime.
+
+5. Facade:
+
+     Facade is a structural design pattern that provides a simplified interface to a library, a framework, or any other complex set of classes.
+   This pattern adds an interface to existing system to hide its complexities.
+
+6. Flyweight:
+       A Flyweight Pattern says that just "to reuse already existing similar kind of objects by storing them and create new object when no matching object is found". 
+   Flyweight pattern is primarily used to reduce the number of objects created and to decrease memory footprint and increase performance. 
+
+7. Proxy:
+     Proxy is a structural design pattern that lets you provide a substitute or placeholder for another object. 
+     A proxy controls access to the original object, allowing you to perform something either before or after the request gets through to the original object.
+     Proxy pattern is also known as Surrogate or Placeholder.
+
+Behavioral Design Patterns:
+---------------------------
+
+1.  Chain of Responsibility:
+
+    Chain of Responsibility is a behavioral design pattern that lets you pass requests along a chain of handlers.
+ Upon receiving a request, each handler decides either to process the request or to pass it to the next handler in the chain.
+ One such classic example is Servlet Filters in Java that allow multiple filters
+ to process an HTTP request. 
+
+2. Command:
+
+   Command pattern is a data driven design pattern and falls under behavioral pattern category. A request is wrapped under an object as command and passed 
+to invoker object. Invoker object looks for the appropriate object which can handle this command and passes the command to the corresponding object which 
+executes the command.
+
+3. Interpreter:
+
+   Interpreter pattern provides a way to evaluate language grammar or expression.
+This pattern involves implementing an expression interface which tells to interpret a particular context. 
+This pattern is used in SQL parsing, symbol processing engine etc.
+
+4. Iterator:
+
+    Iterator is a behavioral design pattern that lets you traverse elements of a collection without exposing its underlying representation (list, stack, tree, etc.).
+
+The Iterator pattern is also known as Cursor.
+
+5. Mediator:
+
+    Mediator pattern is used to reduce communication complexity between multiple objects or classes.
+This pattern provides a mediator class which normally handles all the communications between different classes and supports easy maintenance
+of the code by loose coupling.
+
+6. Memento:
+
+    Memento pattern is used to restore state of an object to a previous state. 
+   Memento is a behavioral design pattern that lets you save and restore the previous state of an object without revealing the details of its implementation.
+
+7. State:
+
+     State is a behavioral design pattern that lets an object alter its behavior when its internal state changes. In State pattern, we create objects which represent 
+   various states and a context object whose behavior varies as its state object changes.
+   Usage: When the behavior of object depends on its state and it must be able to change its behavior at runtime according to the new state.
+
+8. Strategy:
+
+      Strategy pattern is used when we have multiple algorithm for a specific task and client decides the actual implementation to be used at runtime.
+   In Strategy pattern, we create objects which represent various strategies and a context object whose behavior varies as per its strategy object. 
+   The strategy object changes the executing algorithm of the context object.
+
+9. Observer:
+
+    Observer pattern is used when there is one-to-many relationship between objects such as if one object is modified,
+   its depenedent objects are to be notified automatically. 
+   Observer is a behavioral design pattern that lets you define a subscription mechanism to notify multiple objects about any events that happen 
+   to the object they’re observing.
+   It provides the support for broadcast-type communication.
+
+10. Template:
+
+     Template Method is a behavioral design pattern that defines the skeleton of an algorithm in the superclass but lets subclasses override 
+    specific steps of the algorithm without changing its structure.
+
+11. Visitor:
+
+     Visitor pattern is used when we have to perform an operation on a group of similar kind of Objects. With the help of visitor pattern, 
+we can move the operational logic from the objects to another class.
+In Visitor pattern, we use a visitor class which changes the executing algorithm of an element class. By this way, execution algorithm of element can
+vary as and when visitor varies.
+
+
+
+SOLID principles
+****************
+
+SOLID principles are object-oriented design concepts relevant to software development. 
+SOLID is an acronym for five other class-design principles: Single Responsibility Principle, Open-Closed Principle, Liskov Substitution Principle, 
+Interface Segregation Principle, and Dependency Inversion Principle.
+
+a)Single Responsibility Principle: - Every class in Java should have a single job to do. To be precise, there should only be one reason to change a class.
+Ex:
+a Java class that does not follow the single responsibility principle (SRP):
+public class Vehicle {
+    public void printDetails() {}
+    public double calculateValue() {}
+    public void addVehicleToDB() {}
+}
+The Vehicle class has three separate responsibilities: reporting, calculation, and database. 
+By applying SRP, we can separate the above class into three classes with separate responsibilities.
+
+
+b) Open-closed principle: - Software entities (e.g., classes, modules, functions) should be open for an extension, but closed for modification.
+Ex:
+
+public class VehicleCalculations {
+    public double calculateValue(Vehicle v) {
+        if (v instanceof Car) {
+            return v.getValue() * 0.8;
+        if (v instanceof Bike) {
+            return v.getValue() * 0.5;
+
+    }
+}
+
+Suppose we now want to add another subclass called Truck. We would have to modify the above class by adding another if statement,
+which goes against the Open-Closed Principle.
+A better approach would be for the subclasses Car and Truck to override the calculateValue method:
+
+public class Vehicle {
+    public double calculateValue() {...}
+}
+public class Car extends Vehicle {
+    public double calculateValue() {
+        return this.getValue() * 0.8;
+}
+public class Car extends Truck {
+    public double calculateValue() {
+        return this.getValue() * 0.9;
+}
+
+Adding another Vehicle type is as simple as making another subclass and extending from the Vehicle class.
+
+
+
+c) Liskov Substitution Principle: - The Liskov Substitution Principle (LSP) applies to inheritance hierarchies such that derived classes must be 
+completely substitutable for their base classes.
+
+Ex:
+
+Consider a typical example of a Square derived class and Rectangle base class:
+
+public class Rectangle {
+    private double height;
+    private double width;
+    public void setHeight(double h) { height = h; }
+    public void setWidht(double w) { width = w; }
+    ...
+}
+public class Square extends Rectangle {
+    public void setHeight(double h) {
+        super.setHeight(h);
+        super.setWidth(w);
+    }
+    public void setWidth(double h) {
+        super.setHeight(h);
+        super.setWidth(w);
+    }
+}
+
+The above classes do not obey LSP because you cannot replace the Rectangle base class with its derived class Square.
+The Square class has extra constraints, i.e., the height and width must be the same.
+Therefore, substituting Rectangle with Square class may result in unexpected behavior.
+
+d) Interface Segregation Principle: - The Interface Segregation Principle (ISP) states that clients should not be forced to depend upon interface members
+   they do not use. In other words, do not force any client to implement an interface that is irrelevant to them.
+
+Ex:
+Suppose there’s an interface for vehicle and a Bike class:
+
+public interface Vehicle {
+    public void drive();
+    public void stop();
+    public void refuel();
+    public void openDoors();
+}
+public class Bike implements Vehicle {
+
+    // Can be implemented
+    public void drive() {...}
+    public void stop() {...}
+    public void refuel() {...}
+    
+    // Can not be implemented
+    public void openDoors() {...}
+}
+
+As you can see, it does not make sense for a Bike class to implement the openDoors() method as a bike does not have any doors! 
+To fix this, ISP proposes that the interfaces be broken down into multiple, small cohesive interfaces so that no class is forced to implement any interface, 
+and therefore methods, that it does not need.
+
+d) Dependency inversion principle:- The Dependency Inversion Principle (DIP) states that we should depend on abstractions (interfaces and abstract classes) 
+instead of concrete implementations (classes). The abstractions should not depend on details; instead, the details should depend on abstractions.
+
+Ex:
+Consider the example below. We have a Car class that depends on the concrete Engine class; therefore, it is not obeying DIP.
+
+public class Car {
+    private Engine engine;
+    public Car(Engine e) {
+        engine = e;
+    }
+    public void start() {
+        engine.start();
+    }
+}
+public class Engine {
+   public void start() {...}
+}
+
+The code will work, for now, but what if we wanted to add another engine type, let’s say a diesel engine? This will require refactoring the Car class.
+However, we can solve this by introducing a layer of abstraction. Instead of Car depending directly on Engine, let’s add an interface:
+
+public interface EngineInterface {
+    public void start();
+}
+
+Now we can connect any type of Engine that implements the Engine interface to the Car class:
+
+public class Car {
+    private EngineInterface engine;
+    public Car(EngineInterface e) {
+        engine = e;
+    }
+    public void start() {
+        engine.start();
+    }
+}
+public class PetrolEngine implements EngineInterface {
+   public void start() {...}
+}
+public class DieselEngine implements EngineInterface {
+   public void start() {...}
+}
+
+
+Amrita Technologies| AIMS, Amrita Lane| AIMS Ponekkara P.O| Kochi| Kerala| India
