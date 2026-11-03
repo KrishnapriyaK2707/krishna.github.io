@@ -94,3 +94,66 @@ In our controller, we could make a request to our server, get the response, and 
 $scope.greeting.text to equal what it returns. Angular would automatically update
 both the input and the text in the curly braces to that value.
 
+Dependency Injection:
+
+	Dependency injection lets us follow a development style in which, instead of creating dependencies,
+our classes just ask for what they need. 
+For example, the $scope object that does our
+data binding is passed to us automatically; we didn’t have to create it by calling any
+function. We just asked for it by putting it in HelloController ’s constructor.
+	$scope isn’t the only thing we can ask for. If we want
+to data bind to the location URL in the user’s browser, we can ask for an object that
+manages this by putting $location in our constructor, like so:
+
+function HelloController($scope, $location) {
+$scope.greeting = { text: 'Hello' };
+// use $location for something good here...
+}
+ 
+Directives:
+
+	One of the best parts of Angular is that you can write your templates as HTML. You can
+do this because at the core of the framework we’ve included a powerful DOM trans‐
+formation engine that lets you extend HTML’s syntax.
+    	We’ve already seen several new attributes in our templates that aren’t part of the HTML
+specification. Examples include the double-curly notation for data binding, ng-
+controller for specifying which controller oversees which part of the view, and ng-
+model , which binds an input to part of the model. We call these HTML extension
+directives.
+	Angular comes with many directives that help you define the view for your app. 
+These directives can define what we commonly view as the template.
+They can declaratively set up how your application works or be used to create reusable components.
+	And you’re not limited to the directives that Angular comes with. You can write your
+own to extend HTML’s template abilities to do anything you can dream of.
+
+
+Invoking Angular
+----------------
+Any application must do two things to start Angular:
+1. Load the angular.js library
+2. Tell Angular which part of the DOM it should manage with the ng-app directive
+
+The controllers are classes or types you write to tell Angular which objects or primitives
+make up your model by assigning them to the $scope object passed into your controller:
+
+function TextController($scope) {
+$scope.someText = someText;
+}
+
+Bringing it all together, we have:
+
+<html ng-app>
+<body ng-controller="TextController">
+<p>{{someText}}</p>
+<script
+src="...../ajax/libs/angularjs/1.0.1/angular.min.js">
+</script>
+<script>
+function TextController($scope) {
+$scope.someText = 'You have started your journey.';
+}
+</script>
+</body>
+</html>
+
+
