@@ -1,5 +1,7 @@
 1. Centersuite project
 
+The CentreSuite app is designed for commercial cardholders and program administrators,
+providing access to various features for managing cards, statements, and expenses.
 This system centralizes commercial card administration in a single easy-to-use browser-based application.
 This allows your users and card account holders to:
 1.check statements
@@ -58,7 +60,7 @@ Key components:
 
 EKS Control Panel - Managed by AWS; handles Kubernetes API, scheduling etc
 
-Worker Notes - Run your application containers
+Worker Nodes - Run your application containers
 
 Pods - Smallest deployable Kubernetes units
 
