@@ -1,0 +1,105 @@
+1) What is BPM?
+
+BPM stands for Business Process Management. It is a set of activities which follows the number of steps in a specific order to fulfill the organizational goals. 
+The order of these goals is depicted using a flowchart.
+
+It involves:
+
+
+    Understanding the values which the organization delivers.
+    How those are achieved by analyzing, documenting and improving the way that people and systems work together.
+
+  
+2. what is a bpmn event and what are the three types?
+
+Events, represented with circles, describe something that happens during the course of a process. 
+There are three main events within business process modeling: start events, intermediate events, and end events. 
+These three types are also defined as either catching events (which react to a trigger) or throwing events (which the process triggers). 
+
+Start events: Each process must begin with an initiating event, called the start event. All start events catch information (such as receiving an email),
+and you can add a line that proceeds from the start events to continue the process. Many start events contain an icon in the middle to define the event's trigger. 
+For example, a start event that contains an envelope icon indicates that a message arrives and triggers the start of the process.
+
+Intermediate events: An intermediate event is any event that occurs between a start and an end event. The intermediate event circle has a double line,
+ and the event can catch or throw information. Connecting objects indicate the directional flow, determining whether the event is catching or throwing.
+
+End events: Finally, end events are styled with a single thick black line. End events are always thrown because there is no process to catch after the final event.
+
+4. What is the gateway? or How do you converge or diverge the process flows? What are different gateways available and when do you use each?
+
+Gateways control the divergence and convergence of a sequence flow, determining branching and merging of the paths that a runtime process can take.
+You can model the following types of gateways in your process diagram:
+
+Parallel (AND): Use a parallel, diverging gateway when you want the process to follow all available paths.
+Use a parallel, converging gateway when you want to converge all available paths.
+
+Inclusive (OR): Use inclusive, diverging gateway when you want to follow one or more available paths based on conditions that you specify.
+
+Exclusive (XOR): Use to model a point in the process execution where only one of several paths can be followed, depending on a condition, 
+or to model a point in process execution when the token for one of several incoming paths is passed through the gateway.
+
+Event: Use to model a point in the process execution where only one of several paths can be followed, depending on events that occur. 
+A specific event, such as the receipt of a message or timer event, determines the path to be taken. 
+An event gateway must be modelled a certain way as described in Modeling event gateways.
+
+5. What are different task types?
+
+User Task:
+User tasks must be completed by process participants and are associated with Human services by default.
+System Task:
+System tasks must be completed by an automated system or service and are automatically run without a need for user initiation regardless 
+of the type of lane in which they are defined in a BPD diagram.
+Decision Task:
+Decision tasks are useful when you want a decision or condition in a business rule to determine which process implementation is started.
+
+6. What is sub-process?
+
+A subprocess represents a collection of logically related steps contained within a parent process. You can view a subprocess as a single activity,
+providing a simplified, high-level view of the parent process, or you can drill into the subprocess for a more detailed view of its contents.
+Subprocesses can contain swimlanes that are distinct from the parent process. For example, activities in your subprocess can be carried out by a set of participants
+that is different from the set of participants that carry out the activities in the parent process.
+Like other activities, subprocesses can be configured to run multiple times within the execution of the parent process by configuring looping behaviour 
+on the subprocess activity element in the parent process.
+
+7.What are different from the subprocess types?
+
+There are three types of subprocesses that you can model in a BPD. 
+
+Subprocess
+A non-reusable subprocess that exists only within the parent process
+
+Linked process
+A call to another reusable process.
+
+Event subprocess
+A specialized type of non-reusable subprocess that is not part of the normal sequence flow of its parent process, 
+and which might occur zero or many times during the execution of the parent process.
+
+8. What is pool and lane ?
+
+A pool represents a participant who takes part in a process. It is a rectangular container that can contain flow objects vertically or horizontally, 
+such as task and activity.  
+On the other hand, a lane is a graphical sub-division in a pool. It is often used to organize and categorize activities within a pool according to function or role.
+
+A pool is usually used to represent a process in an organization, a lane, on the other hand, represents an activity of a department within that organization.
+By using pool and lane, you can identify how a process is done and which department performs that activity.
+
+9. What is process engine in Camunda ?
+
+ The process engine is a java library responsible for executing BPMN 2.0  processes  and  workflows.  It  has  a  lightweight  POJO  core  and  uses  a 
+ relational database   for   persistence.   ORM   mapping   is   provided   by the   mybatis mapping framework. 
+
+
+10. Can you have multiple start and end events in BPMN? 
+
+The BPMN standard allows for multiple start and end events to be used at the same process level.  
+There a few reasons why the business analyst may use multiple start or end events, but caution must be used to avoid mistakes.
+
+Multiple start events are also used when the trigger for the events are different and when once triggered they initiate the process at
+different points (initiate different starting tasks).  
+
+11. What are three types of BPMN flow elements?
+
+Events, Activities and Gateways 
+
+12. 
