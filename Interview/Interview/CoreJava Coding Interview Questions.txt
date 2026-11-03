@@ -1,0 +1,14 @@
+
+CoreJava Coding Interview Questions
+
+Stream Api
+
+1) Convert a list of strings to uppercase, sort them and print
+2) Get the list of strings where the length of each element is > 5 and get the count.
+3) Remove Duplicates from a list.
+4) Get the list of string having a particular word.
+5) Write a java program to remove strings that starts with a specific word from a list using streams.
+6) find the first element in a list that start with a  particular letter.
+7) get the length of each element in a list .
+8) Java program to find an index in array where left side elements sum is equal to right side sum
+

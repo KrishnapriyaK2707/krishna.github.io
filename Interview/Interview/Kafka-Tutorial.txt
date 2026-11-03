@@ -1,0 +1,11 @@
+
+
+  Ref Site 
+  
+    a) https://www.youtube.com/watch?v=inrQUHLPFd4&list=PLGRDMO4rOGcNLwoack4ZiTyewUcF6y6BU
+
+
+  1) Kafka Cluster
+   
+  2) Kafka Broker - It is the name for a Kafka Server 
+ 

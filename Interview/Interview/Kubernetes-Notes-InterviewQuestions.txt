@@ -1,0 +1,37 @@
+
+
+
+1) What is Kubernetes? Ans: Kubernetes (K8s) is an open-source container orchestration platform that automates the deployment, scaling, and management
+ of containerized applications.  Google originally developed it and later donated it to the Cloud Native Computing Foundation (CNCF). Kubernetes 
+ became the industry standard for managing microservices-based applications in cloud environments.
+
+ It brings the following features:
+
+Automated container orchestration: No more manual container management.
+Self-healing capabilities: Automatically restarts failed containers, replaces unresponsive nodes, and reschedules workloads dynamically.
+Load balancing and service discovery: Ensures traffic is efficiently distributed between Pods.
+Declarative configuration management: Everything is configured via YAML code.
+Horizontal and vertical scaling: Can automatically scale applications based on CPU usage, memory usage, or custom metrics. 
+Multi-cloud and hybrid-cloud support: Works with AWS, Azure, GCP, on-premises, and hybrid environments.
+
+What is a Pod in Kubernetes? Ans: A Pod is the smallest deployable unit in Kubernetes. It represents one or more containers running in a shared 
+environment. Containers inside a Pod share networking and storage resources. 
+
+What is the purpose of kubectl? Ans: Kubectl is the primary CLI tool for managing Kubernetes resources and interacting with the cluster. Here are a 
+few common kubectl commands you should be familiar with:
+kubectl get pods 				 # list all Pods
+kubectl get services 			 # list all Services
+kubectl logs <pod-name> 	  	 # view logs of a Pod
+kubectl exec -it <pod-name> – /bin/sh # open a shell inside a Pod
+
+What is the role of ConfigMaps and secrets in Kubernetes? Ans: ConfigMaps stores non-sensitive configuration data, while secrets stores sensitive data
+like API keys and passwords. Using secrets allows you to avoid putting secret information into your application code. In contrast, ConfigMaps will 
+enable you to make your applications more configurable, as these values can be easily edited, and you don’t need to persist them in your application 
+code.
+
+Why do we need container orchestration? Ans: Container orchestration is a process that involves managing and coordinating the deployment, scaling,
+ and operation of multiple containers that run on a single server or across multiple servers. It automates container provisioning, networking,
+ resource allocation, load balancing, availability, and lifecycle management tasks. Container orchestration tools, such as Kubernetes, Docker Swarm, 
+ and Apache Mesos, help ensure that containers work together seamlessly and efficiently to deliver the desired applications or services.
+ 
+ 

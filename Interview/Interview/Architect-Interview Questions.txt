@@ -1,0 +1,191 @@
+
+1) Architecture & Design (Spring + Microservices)
+
+How do you structure a large Spring Boot monorepo vs. multi-repo microservices?
+Discuss modular boundaries, shared libraries, versioning strategy, release trains, backward compatibility, and CI/CD implications.
+What are the key differences between layered, hexagonal, and clean architecture in Spring Boot?
+Ports/adapters, domain isolation, testability, DTO vs domain, dependency direction.
+How do you manage cross-cutting concerns (logging, tracing, auth) across dozens of services?
+Spring AOP, filters/interceptors, shared starter modules, platform governance, API gateway vs sidecars.
+When would you choose Spring MVC over Spring WebFlux?
+Thread-per-request vs reactive, I/O bound workloads, back pressure, ecosystem maturity, operational complexity.
+How do you design backward/forward compatible APIs in Spring?
+Versioning (URI/header), tolerant readers, additive changes, deprecation, consumer-driven contracts.
+
+
+2) Resilience & Reliability
+
+Circuit breaking and bulkheading—how to implement and tune with Spring Boot?
+Resilience4j, timeouts, retries, thread pools, adaptive policies, observability for tuning.
+Idempotency design in write APIs
+Idempotency keys, deduplication, database constraints, outbox pattern, exactly-once semantics (what’s realistic).
+Eventual consistency patterns you’ve used
+Sagas/choreography vs orchestration, compensations, transactional outbox, read models.
+Handling partial failures in distributed transactions
+SAGA design, compensating actions, human-in-the-loop, DLQs, replay strategies.
+Fallback strategies without hiding systemic issues
+Meaningful degraded modes, feature flags, clear error budgets, SLO-driven decisions.
+
+
+3) Security & Compliance
+
+Spring Security: authentication vs authorization at scale
+OAuth2/OIDC (Keycloak/Okta/Cognito), resource servers, method security, ABAC/RBAC.
+Token design and key rotation
+JWT vs opaque tokens, JWKs, kid headers, cache invalidation, session revocation approach.
+Protecting PII/PCI/PHI in Spring Boot
+Field-level encryption, envelope keys, masking/redaction in logs, data minimization, audit trails.
+Zero-trust inside the cluster
+mTLS (service mesh or gateway), SPIFFE/SPIRE, policy-as-code (OPA) integration with Spring APIs.
+Security testing pipeline
+SAST, DAST, dependency scanning (OWASP), SBOM, supply chain protection, build provenance.
+
+
+4) Data Architecture
+
+Choosing between JPA, jOOQ, MyBatis, and plain JDBC
+Query complexity, performance, type-safety, maintainability, database portability.
+Schema evolution in prod
+Flyway/Liquibase strategies, blue/green with schema compatibility, backward-compatible migrations.
+Multi-tenant design
+Schema-per-tenant vs row-level, data isolation, routing, performance implications.
+Caching strategy
+Spring Cache vs Redis, cache-aside vs write-through/write-behind, eviction, stampede mitigation.
+CQRS in Spring Boot
+Separate write/read models, projections, messaging integration, consistency guarantees.
+
+
+5) Messaging & Streaming
+
+Kafka with Spring Boot
+Consumer groups, partitions, keys, exactly-once-ish semantics with transactions, schema registry.
+Dead-letter handling & retries
+Backoff strategies, poison pill handling, DLQ metrics, replay tools/ops runbooks.
+Outbox pattern implementation
+CDC (Debezium), transactional outbox tables, delivery guarantees, idempotent consumers.
+Event versioning & schema evolution
+Avro/Protobuf, compatibility modes, consumers’ tolerance for unknown fields.
+When to choose messaging vs REST vs GraphQL
+Use case fit, temporal coupling, discoverability, observability, back pressure.
+
+
+6) Observability & Operations
+
+End-to-end tracing strategy
+OpenTelemetry with Spring, W3C trace-context, baggage propagation, sampling, dashboards.
+Metrics you track for microservices
+RED/USE methods, JVM metrics, thread pool saturation, queues, SLOs and error budgets.
+Log enrichment & correlation
+Trace IDs, user context, PII redaction, JSON logging, log routing patterns.
+Capacity planning for a new service
+Load estimation, perf tests, SLOs, concurrency models, scaling strategies.
+Runbook design
+Standardize alerts, actionable steps, rollback plans, incident command routines.
+
+
+7) Performance & Scalability
+
+Thread pool tuning in Spring Boot
+Tomcat/Netty pools, async executors, blocking vs non-blocking calls.
+Database performance in high throughput APIs
+Connection pooling (HikariCP), N+1 detection, query plans, indexes, batching, pagination.
+Cold start and JVM tuning
+Class data sharing, container-aware JVM flags, memory layout, G1/ZGC considerations.
+Latency budgets and tail latency reduction
+Timeouts per hop, hedged requests (where applicable), prefetching, caching layers.
+Profiling & flamegraphs
+Async stacks, allocation hotspots, CPU vs IO bottlenecks, sampling profilers.
+
+
+8) API Strategy & Governance
+
+API gateway vs service mesh responsibilities
+AuthN/Z, rate limiting, routing, mTLS termination, retries/circuit breaking placement.
+Versioning and deprecation governance
+Contract testing, sunset headers, compat windows, consumer communication plan.
+Consumer-driven contract testing
+Pact/Spring Cloud Contract, avoiding shared DTOs, pipeline integration and drift detection.
+Schema-first development
+OpenAPI-first, codegen pros/cons, schema review, governance boards.
+Rate limiting & quota policies
+Token buckets, sliding windows, per-tenant/per-user rules, fairness, bypass for internal traffic.
+
+
+9) Cloud & Deployment
+
+12-Factor and Spring Boot alignment
+Externalized config, disposability, logs/stdout, statelessness, health endpoints.
+Kubernetes readiness/liveness with Spring Actuator
+Custom health indicators, graceful shutdowns, preStop hooks, draining requests.
+Blue/green vs canary rollouts
+Feature flags, Env splitting, traffic shaping, automated rollback triggers.
+Config & secret management
+Spring Cloud Config, Vault/Secrets Manager, encryption, rotation, bootstrap phase gotchas.
+Container best practices for Spring Boot
+Slim JVM base images, layered jars, non-root user, read-only FS, distroless.
+
+
+10) Testing & Quality
+
+Test strategy for distributed systems
+Unit vs slice tests (@WebMvcTest, @DataJpaTest), Testcontainers, contract tests, synthetic tests in staging.
+Performance testing methodology
+Workload modeling, warm-up, coordinated omission, P95/P99 tracking, regression budgets.
+Chaos testing
+Network partitions, pod kills, dependency timeouts, blast radius control, learnings feeding into design.
+Security testing
+Automated scans, negative tests, auth bypass attempts, misconfiguration tests.
+Data consistency verification
+Replay tests, invariants, checksums, audit trails validation.
+
+
+11) Patterns & Anti-Patterns
+
+Decomposition strategy: when not to split a service
+Hotspot analysis, team topology, transactional boundaries, domain cohesion.
+Handling shared libraries/version drift
+Platform team, BOMs, dependency constraints, release cadences.
+DTO explosion & mapping
+MapStruct vs manual mapping; maintaining boundary models vs domain leakage.
+Pagination and consistency
+Offset vs cursor-based pagination, consistency vs performance trade-offs.
+Avoiding “golden hammer” with WebFlux
+Choose reactive only for IO-bound reactive chains & back pressure, otherwise keep it simple.
+
+
+12) Real-World Scenarios (Ask-Me-How)
+
+Design a resilient outbound integration to a flaky third-party API
+Client timeouts, retries with jitter, circuit breakers, idempotency, DLQ for undelivered work, observability.
+Blueprint for file upload to S3 with virus scanning and audit
+Pre-signed URLs, async scanning, quarantine buckets, audit events, PII controls, eventual consistency to DB.
+Global rate limiting for a public API with multi-region failover
+Gateway-side limits, region-local counters vs global consistency, failover and token sync strategy.
+Rolling out a breaking schema change across dozens of consumers
+Expand–migrate–contract, versioned topics, shadow traffic, kill switches and comms plan.
+Migrating a legacy monolith to Spring Boot microservices
+Strangler fig, anti-corruption layers, domain slicing, migration KPIs, interim integration patterns.
+
+
+13) Hands-On/Whiteboard Prompts
+
+Build a Spring Boot service exposing POST /orders with idempotency and outbox to Kafka—draw the flow and DB schema.
+Add OpenTelemetry tracing and show how a trace flows across gateway → service A → Kafka → service B → DB.
+Implement SAGA for “book flight + hotel + payment” with compensation and discuss failure modes.
+Show rate limiting at gateway and circuit breaking at client; justify default values and tuning signals.
+
+
+14) Leadership & Platform Thinking
+
+How do you standardize service templates/starters in a large org?
+What metrics define success of the platform (lead time, MTTR, change failure rate, SLO adherence)?
+How do you drive secure-by-default practices in Spring Boot across teams?
+What is your approach to design reviews and post-incident learning?
+
+
+Quick Tips for Answering
+
+Use specifics: libs (Resilience4j, Spring Cloud Gateway, OpenTelemetry), patterns (outbox, saga), and numbers (timeouts, concurrency sizes).
+Tie design choices to SLOs, error budgets, and business constraints.
+Show trade-offs and migration paths, not only the happy path.
+

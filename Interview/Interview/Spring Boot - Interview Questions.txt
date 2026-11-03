@@ -1,0 +1,1796 @@
+
+ What happened when the run() in the Spring Boot called 
+ 
+ The run() method creates this application context and starts managing the beans for your app. From this run method, the application 
+ context of IOC (Inversion Of Control) searches the class annotated with @Configuration annotation which calls all the beans in the 
+ classpath and initializes those classes. Beans are stored inside a particular space in JVM (Java Virtual Machine). That particular
+ space is known as the IOC Container. After beans are created the requests will go to the dispatcher servlet and the dispatcher servlet
+ will distribute all the requests among the appropriate controllers. ApplicationContext represents the Spring IoC container that holds all
+ the beans created by the application. It is responsible for instantiating, configuring, and creating the beans. Additionally, it gets the 
+ beans' information from configuration metadata provided in XML or Java.
+ 
+What is Http patch method
+
+Ans : The HTTP PATCH method is used for partial updates of a resource, allowing clients to modify specific fields without replacing the entire 
+resource, unlike the PUT method which replaces the entire resource. It allows you to send only the data that needs to be updated, rather than
+sending the entire resource.
+ 
+ What's OAuth and JWT and what is the main difference between OAuth and JWT? // https://supertokens.com/blog/oauth-vs-jwt
+ 
+ OAuth, short for “Open Authorization,” is an open standard protocol that allows secure authorization in a simple and standardized way for web, 
+ mobile, and desktop applications. JWT stands for JSON Web Token. It’s an open standard (RFC 7519) that defines a compact and self-contained way for
+ securely transmitting information between parties as a JSON object. In other words JWT (JSON Web Token) is a compact, digitally signed token used to
+ securely transmit information between a client and a server.A JWT consists of three parts: a header, a payload, and a signature. Header:
+ Contains metadata about the token, including the type of token and the hashing algorithm used. Payload: Contains claims (statements about the user)
+ and additional data. payload Contains user data, such as:
+{
+  "sub": "1234567890",
+  "name": "Swaminathan",
+  "role": "admin",
+  "exp": 1735689600
+}
+ Signature: This is the most critical part for security. Ensures that the token hasn’t been altered. The signature is used to verify that the sender of the JWT is 
+ who it says it is and to ensure that the message wasn't changed along the way. o create the signature, you take the encoded header, the encoded payload, a secret
+(or private key), and the algorithm specified in the header.
+ 
+ 
+ JWT Real‑World Example
+
+a) User logs in with username and password
+b)Server validates credentials
+c)Server returns a JWT token
+d)User sends this token on every request
+e)Server validates token signature and grants access
+ 
+ Difference 1 - Use Cases and Purpose
+ 
+ OAuth: Primarily used for authorization and delegating access. It’s great when you need to grant third-party applications limited access to user 
+ resources without sharing credentials.
+ 
+ JWT: Used for secure information exchange and authentication. It’s perfect for stateless authentication in web applications,especially in microservices 
+ architectures.
+ 
+ Difference 2 - Implementation and Complexity
+ 
+ OAuth: Involves a multi-step process with different roles (client, resource owner, authorization server, resource server). It’s more complex but offers
+ more flexibility.
+ 
+ JWT: Simpler to implement as it’s self-contained. The token itself carries all necessary information, making it easier to use in stateless applications.
+ 
+ Difference 3 - Security and Management
+ 
+ OAuth: Offers fine-grained access control through scopes. Tokens can be easily revoked, enhancing security.
+ JWT: Relies on cryptographic signatures for security. Once issued, JWTs are valid until they expire, which can be a security concern if not managed
+ properly.
+
+What is the difference between constructor injection and setter injection 
+
+In constructor injection dependencies are passed as a parameter to the class's constructor. This ensures that all the dependencies are injected upon the instantiation of an object.
+We utilise the @Autowired Annotation on top of the constructors to achieve this. Setter injection  is another way to inject dependencies, done by using setter methods. We annotate a
+setter method with @Autowired and it will work. A key point here  setter injection  is that dependencies will only be injected when the setter methods are called.
+
+What is the purpose of the @Scheduled annotation in Spring Boot?
+
+The @Scheduled annotation is used to configure scheduled tasks in a Spring Boot application. Applying this annotation to a method enables
+you to specify the schedule at which the method should be executed
+ 
+  What is the purpose of the @ModelAttribute annotation in Spring Boot?
+  
+  The @ModelAttribute annotation is used in Spring Boot to bind request parameters or form data to method parameters or model attributes.
+  It can be applied to method parameters or method return values. When applied to method parameters, the @ModelAttribute annotation binds
+  the incoming request parameters or form data to the corresponding method parameters. When applied to method return values, it binds the method's
+  return value to a model attribute, making it available in the view for rendering.
+  
+  
+Describe the purpose and usage of the @EntityScan annotation in Spring Boot.
+
+The @EntityScan annotation is used to specify the base packages to scan for entity classes in a Spring Boot application. When using JPA
+(Java Persistence API) with Spring Boot, @EntityScan helps the JPA provider locate and manage entity classes.
+
+
+What is a feign client ?
+
+What is Caching ?
+
+Cache is a part of temporary memory (RAM). It lies between the application and the persistent database. Caching is a mechanism used to increase the 
+performance of a system. It is a process to store and access data from the cache. It stores the recently used data. This helps to reduces the number 
+of database hits as much as possible.
+
+Can you explain the caching mechanism avaialble in Spring Boot
+
+A Cache is any temporary storage location that lies between the application and persistence database or a third-party application that stores the most
+ frequently or recently accessed data so that future requests for that data can be served faster. It increases data retrieval performance by reducing 
+ the need to access the underlying slower storage layer. Data access from memory is always faster in comparison to fetching data from the database.
+ Caching keeps frequently accessed objects, images, and data closer to where you need them, speeding up access by not hitting the database or any 
+ third-party application multiple times for the same data and saving monetary costs. Data that does not change frequently can be cached.
+ 
+There are mainly 4 types of Caching :
+
+CDN Caching
+Database Caching
+In-Memory Caching
+Web server Caching
+
+1. CDN Caching
+
+A content delivery network (CDN) is a group of distributed servers that speed up the delivery of web content by bringing it closer to where users are. Data centers across the globe use
+ caching, to deliver internet content to a web-enabled device or browser more quickly through a server near you, reducing the load on an application origin and improving the user 
+ experience. CDNs cache content like web pages, images, and video in proxy servers near your physical
+ 
+ 2. Database Caching
+
+Database caching improves scalability by distributing query workload from the backend to multiple front-end systems. It allows flexibility in the processing of data. It can significantly 
+reduce latency and increase throughput for read-heavy application workloads by avoiding, querying a database too much.
+
+3. In-Memory Caching 
+
+In-Memory Caching increases the performance of the application. An in-memory cache is a common query store, therefore, relieves databases of reading workloads. Redis cache is one of the
+ examples of an in-memory cache. Redis is distributed, and advanced caching tool that allows backup and restores facilities. In-memory Cache provides query functionality on top of caching.
+ 
+ 4. Web server Caching
+
+Web server caching stores data, such as a copy of a web page served by a web server. It is cached or stored the first time a user visits the page and when the next time a user requests 
+the same page, the content will be delivered from the cache, which helps keep the origin server from getting overloaded. It enhances page delivery speed significantly and reduces the work
+needed to be done by the backend server.
+ 
+Spring Boot Caching
+
+Spring boot provides a Cache Abstraction API that allow us to use different cache providers to cache objects. When the caching is enabled then the application first
+looks for required object in the cache instead of fetching from database. If it does not find that object in cache then only it access from database.
+
+The cache abstraction works on two things :
+
+Cache Declaration : It identifies the methods that need to be
+
+Cache Configuration : The backing cache where data is stored and read from.
+
+Spring Boot Caching Annotations
+
+@EnableCaching
+It is a class level annotation. It is used to enable caching in spring boot application. By default it setup a CacheManager and creates in-memory cache using one concurrent HashMap.
+
+If you are using the default CacheManager and you do not want to customize it then there is no need to create separate class to apply @EnableCaching.
+
+@Cacheable
+It is a method level annotation. It is used in the method whose response is to be cached. The Spring boot manages the request and response of the method to the cache that is specified in 
+the annotation attribute.
+
+This annotation has the following attributes :
+
+1. cacheNames / value :
+The cacheNames is used to specify the name of the cache while value specifies the alias for the cacheNames.
+
+@CachePut
+It is a method level annotation. It is used to update the cache before invoking the method. By doing this, the result is put in the cache and the method is executed. It has same 
+attributes of @Cacheable annotation.
+
+@CacheEvict
+It is a method level annotation. It is used to remove the data from the cache. When the method is annotated with this annotation then the method is executed and the cache will be removed
+evicted.
+
+ @CachePut
+
+@CachePut annotation can update the content of the cache without interfering with the method execution. @CachePut selectively updates the entries whenever we alter them to avoid the 
+removal of too much data out of the cache. One of the key differences between @Cacheable and @CachePut annotation is that the @Cacheable skips the method execution while the @CachePut 
+runs the method and puts the result into the cache.
+
+@Caching
+
+@Caching is used in the case we want to use multiple annotations of the same type on the same method.
+
+
+
+How does Spring Security implemets method level security 
+
+Method-level security allows for fine-grained access control over specific methods within your application. We’ll dive into annotations  like `@PreAuthorize` and
+`@PostAuthorize`, the usage of Spring Expression Language (SpEL) expressions for access control, and how to combine method security with global configuration. This
+ level of security granularity enables developers to ensure that critical  methods are only accessible by authorized users, bolstering the overall security of the 
+ application.
+
+What is the purpose of @Async annotation in Spring Boot
+
+@Async annotation is used when you wanted to make any method asynchronize. Annotating a method of a bean with @Async will make it execute in a separate 
+thread. In other words, the caller will not wait for the completion of the called method.
+
+Describe the Role of application context initializer in spring boot ?
+
+ApplicationContext represents the Spring IoC container that holds all the beans created by the application. It is responsible for instantiating,
+configuring, and creating the beans. Additionally, it gets the beans' information from configuration metadata provided in XML or Java.
+
+Explain the purpose of	@ConditionalOnProperty annotation in Spring boot ?
+
+The primary purpose of @ConditionalOnProperty is to conditionally create a bean based on a particular property's value in the application's properties
+ or YAML files. For instance, consider a situation where an application has a feature that should be activated only if a specific property is set
+
+How do you handle the File upload in Spring Boot
+
+Ans : The most common way to handle an upload is using the @RequestParam annotation with a MultipartFile object. In Spring Boot, file uploads are handled using the 
+MultipartFile interface within a controller method mapped to a POST request, allowing files to be sent as multipart/form-data. By default, Spring Boot limits file
+sizes to 1MB per file and 10MB per request. You’ll almost certainly want to increase these in your application.properties or application.yml:
+Steps :
+1) Create a Spring Boot project using the Spring Initializr and include the Spring Web dependency.
+2) Configure Application Properties (Optional but Recommended): You can set file size limits in application.properties to prevent security issues.
+3) Create a Controller: Develop a REST controller with a method that takes a MultipartFile object, typically using the @RequestParam annotation.
+ This method will contain the logic to handle the uploaded file, such as saving it to a specified directory
+
+
+How do you implement Pagination and Sorting in Spring Data JPA
+
+Ans: When dealing with large datasets, retrieving all records at once is inefficient and can affect application performance. To handle such cases effectively,
+ pagination (retrieving data in smaller chunks) and sorting (ordering records by specific fields) are essential. Pagination divides large datasets into smaller,
+ manageable pages that can be fetched one at a time. For example, instead of loading 1,000 records, you can retrieve 10 records per page. Sorting arranges
+ records based on one or more fields, such as ordering products by name or price. It helps improve data presentation and retrieval efficiency. Pagination can 
+ easily attained by using  PagingAndSortingRepository (or JpaRepository) and the Pageable interface with LIMIT and OFFSET.
+ Steps  :
+ 1) The repository should extend JpaRepository (which already includes paging and sorting capabilities) or PagingAndSortingRepository.
+ 2) In your service, you create a Pageable object using the PageRequest.of() factory method. This is where you define the page number, page size, and sorting logic.
+    Example : Pageable pageable = PageRequest.of(page, size, sort);
+ 3) The controller receives the parameters from the URL (e.g., ?page=0&size=10&sortBy=price).	
+ 
+ Core Types: Pageable, Page, Slice, and Sort
+
+Pageable: encodes page, size, and Sort. Zero-based page index.
+Page<T>: includes content and total elements/pages (runs a COUNT(*)).
+Slice<T>: content plus “hasNext”/“hasPrevious” without total count (no extra count query).
+Sort: sort by one or multiple properties, with direction.
+
+
+
+What is the purpose of @ConfigurationProperties annotation 
+
+In Spring Boot, @ConfigurationProperties Annotation allows the developer to map the entire content of the properties file to a POJO  (Plain Old Java Object). A property file can be either
+ application.properties or application.yml. This annotation is useful when we have a large set of explicit configurations defined in the properties file. It provides an organized and
+ Java-specific approach to defining the properties. We can cluster similar sets or properties to multiple POJOs.
+
+How do you implement custom validation in Spring Boot ?
+
+For implementing custom validation do the following steps
+ 1) Add the validation starter
+    
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
+2) Basic usage with @Valid and @Validated
+
+On request bodies (@RequestBody): use @Valid to trigger validation.
+On service methods/parameters: use @Validated at class level to enable method validation.
+
+Explain Transaction in Spring Boot
+Ans: A transaction is a unit of work that must be executed completely or not at all. In Spring Boot, transactions ensure data consistency across operations like 
+insert, update, delete—especially when multiple DB operations must succeed together. Spring manages transactions using the Spring Transaction Management Framework, 
+usually with @Transactional.
+
+Transactional propagation level in Spring Boot
+
+Spring Transactions Propagation Levels define how transactions should be handled when multiple transactional methods are invoked within a single  transactional
+context. These levels allow you to control the behavior of transactional methods, such as whether they should join an existing transaction or create a new one.
+Propagation controls what happens to a transactional context when a @Transactional method calls another @Transactional method: Should they share the same 
+transaction?. Should the callee start a new transaction? .Should it run without any transaction?
+
+ The Propagation Types
+ 
+ 1) REQUIRED (Default)
+
+Behavior: Join existing transaction if present; otherwise start a new one.
+Use when: Most business services; you’re fine with a single unit of work across nested calls.
+Rollback: If the outer tx rolls back, all inner work rolls back.
+
+2) REQUIRES_NEW
+
+Behavior: Always starts a new transaction; suspends any existing one.
+
+
+3) SUPPORTS
+
+Behavior: If a transaction exists, join it; else run non-transactionally.
+
+4) MANDATORY
+
+Behavior: Must run inside a transaction; throws IllegalTransactionStateException if none.
+
+5) NOT_SUPPORTED
+
+Behavior: Suspends any existing transaction; runs non-transactionally.
+
+6) NEVER
+
+Behavior: Must run without a transaction; throws IllegalTransactionStateException if one exists.
+
+7) NESTED
+
+Behavior: Start a nested transaction using a savepoint under the existing transaction. If nested part fails, it rolls back to the savepoint, outer tx can still commit.
+
+
+Your Spring boot application is experiencing performance issue under high load. How  would you identify and address this issue.
+
+What are the best practices for versioning REST API in a spring boot application.
+
+The best practices for versioning a REST API in a Spring Boot application involve choosing an appropriate versioning strategy, planning for backward compatibility and deprecation, and 
+ensuring clear communication a
+
+ The Propagation Types
+ 
+ 1) REQUIRED (Default)
+
+Behavior: Join existing transaction if present; otherwise start a new one. Use when: Most business services; you’re fine with a single unit of work across nested calls. Rollback: If the 
+outer tx rolls back, all inner work rolls back.nd documentation for clients.
+
+ 
+
+What are conditional annotations and exaplain the purpose of conditional annotation.
+
+Conditional annotations in Spring Boot allow us to conditionally apply certain configurations or beans based on the evaluation of specified  conditions at runtime.
+These annotations  help in creating flexible and customizable application setups. It helps us create beans or configurations only if certain conditions are met 
+@ConditionalOnProperty: This annotation allows us to conditionally enable a bean or configuration based on the value of a specified property in the 
+application's configuration files.
+@ConditionalOnClass: It enables a bean or configuration if specified classes are present in the classpath.
+@ConditionalOnMissingBean: This annotation allows us to define a bean only if another bean of the same type is not already registered in the 
+application context.
+@ConditionalOnExpression: It enables a bean or configuration based on the evaluation of a SpEL expression.
+@ConditionalOnWebApplication: It enables a bean or configuration if the application is running in a web environment.
+@Conditional: This annotation provides a general-purpose mechanism to define custom conditions for bean registration.
+
+How does spring boot achieve autoconfiguration internally ?
+
+Internally, Spring Boot auto-configuration works by scanning the classpath for specific libraries and dependencies commonly used in Spring  applications. It then
+automatically configures  beans and components based on the presence of these libraries and the current environment.
+
+
+Can you explain the concept of HATEOAS and it's role in Restful Api
+
+The term HATEOAS stands for the phrase Hypermedia As The Engine Of Application State. 
+
+ 
+ If you want to scale a spring appliction, which feature of spring boot application you used.
+ 
+ Scaling a Spring Boot microservice involves deploying multiple instances, using container orchestration, configuring auto-scaling, externalizing  configurations,
+ optimizing database access, implementing caching, using message queues, setting up service discovery, and ensuring robust  monitoring and resilience mechanisms
+ 
+ If you are tasked with high availability for a Spring Boot E-Commerce application during peak hors what architectureal decision you choose
+ 
+ Ans: For high availability of a Spring Boot E-Commerce application during peak hours, you need an architecture that ensures scalability, fault tolerance, and 
+ resilience.
+ 
+ 
+ How do you secure the the security of high level sesitive data(PII fields) in a spring boot application.
+ 
+ Ans: Securing highly sensitive data (PII fields) in a Spring Boot application requires a multi-layered approach covering data at rest, data in transit, and 
+ application-level controls.
+
+ 1. Encrypt Data at Rest : Use column-level encryption for PII fields (e.g., SSN, credit card numbers).
+ 2. Secure Data in Transit :Enforce HTTPS/TLS for all communication. 
+ 3. Mask or Tokenize PII. Never expose raw PII in logs or API responses. Use data masking for display (e.g., ****1234 for SSN). For payment data, use tokenization (store tokens instead 
+ of actual card numbers).
+ 4. Access Control & Least Privilege. Implement Role-Based Access Control (RBAC) using Spring Security. Restrict access to PII endpoints to authorized roles only. Use method-level
+  security:
+ 5. Secure Storage of Keys & Secrets. Never hardcode encryption keys. Use Spring Cloud Config + Vault or AWS Secrets Manager for key management. Rotate keys periodically. 
+ 6. Logging & Auditing. avoid logging PII. Use structured logging with sensitive fields redacted. Implement audit trails for access to sensitive data.
+ 7. Database & Backup Security. Enable Transparent Data Encryption (TDE) at DB level. Encrypt backups and restrict access. 
+ 
+ How can we implemented Redis cache in Spring Boot : Implementing Redis cache in a Spring Boot application involves adding dependencies, configuring the connection,
+ enabling caching,and using specific annotations to manage caching behavior. 
+ 
+
+ 
+ Your Spring boot application is deployed in a cloud environment. How would you handle configuration management to maintain consistency across systems
+ 
+
+ what is spring cloud config
+ 
+ Spring Cloud Config provides a way to decouple application code from its runtime configuration. The Spring Cloud Config configuration server can 
+ read configuration files from Git repositories, the local filesystem. pring Cloud Config provides tooling for centralized external configuration
+ management backed by various types of external repositories like Git, Subversion, or file system.
+ 
+ What is the purpose of @SpringBootApplication annotation?
+ 
+ The SpringBootApplication annotation is a meta-annotation in Spring Boot that combines Configuration, EnableAutoConfiguration, and ComponentScan.
+ It simplifies application setup by configuring Spring Beans, enabling auto-configuration, and scanning for components in the specified package
+ 
+
+ 
+ You can also change the API response content type for a specific request by adding the Accept header in the request headers, and specifying 
+ the desired format. For example, if you want to request JSON data from an API that supports both JSON and XML, you can add the header
+ Accept: application/json in your request.
+ 
+ 
+ What is the difference between returning Response Entity Vs Simple object through RestApi
+ 
+ ResponseEntity is containing the entire HTTP response that returns as a response which gives the flexibility to add headers,
+ change status code and do similar things to the response. But the ability to change headers, status codes is not available if
+ you return PJO directly. It is good to use ResponseEntity over PJO when there is a scenario you need to change the headers or you
+ need to change status according to the result.
+ 
+ 
+How do you implement custom validation in Spring Boot?
+
+Creating custom validation in a Spring Boot application can be a powerful tool to ensure that the data flowing through your application meets 
+specific requirements.While Spring Boot gives us handy validation annotations like @Min for basic checks, they might not cover all our needs.
+ Imagine we are registering users, and we want to make sure they are eligible to attend a meeting based on their age. The challenge arises 
+ when we are dealing with birthdates, which are of type LocalDate and not directly supported by built-in annotations like@Min. This is where custom
+ validation steps in. It allows us to create our own rules for handling the unique aspects of our application.
+ For Example - https://medium.com/@bereketberhe27/spring-boot-custom-validation-7af89a64f805
+ 
+ How data is saved in Redis Cache
+
+Redis is an in-memory data store. It stores data primarily in RAM, allowing extremely fast read and write operations. The data is 
+organized using key-value pairs, where keys are unique identifiers, and values can be of different types, including strings, lists,
+ sets, sorted sets, hashes, bitmaps, and more. Data in Redis is accessed by keys, making it a highly efficient and simple data store.
+ By storing frequently accessed data in memory, Redis Cache dramatically reduces response times and database load, resulting in faster 
+ and more scalable applications.
+ 
+ why Redis is in-memeory cache ?
+ 
+ In-memory caching is a technique where frequently accessed data is stored in memory instead of being retrieved from disk or remote 
+ storage. This technique improves application performance by reducing the time needed to fetch data from slow storage devices. Data 
+ can be cached in memory by caching systems like Redis.
+ 
+ Jenkins 
+ 
+ Jenkins is a powerful application that allows continuous integration and continuous delivery of projects, regardless of the platform 
+ you are working on. It is a free source that can handle any kind of build or continuous integration. You can integrate Jenkins with 
+ a number of testing and deployment technologies. Jenkins is an open source automation tool written in Java programming language that 
+ allows continuous integration.
+ 
+ Docker
+
+Docker is an open-source platform that allows developers to automate the deployment, scaling, and management of applications using containers.
+Containers package applications and their dependencies together, ensuring they run consistently across different environments.
+
+What is API versioning?
+
+ Ans : API versioning is the process of managing and tracking changes to an API. It also involves communicating those changes to the API's consumers.
+ Change is a natural part of API development. Sometimes, developers have to update their API's code to fix security vulnerabilities, while other 
+ changes introduce new features or functionality. Some changes do not affect consumers at all, while others, which are known as “breaking changes,” 
+ lead to backward-compatibility issues, such as unexpected errors and data corruption. API versioning ensures that these changes are rolled out 
+ successfully in order to preserve consumer trust while keeping the API secure, bug-free, and highly performant.
+ You should version your API whenever you make a change that will require consumers to modify their codebase in order to continue using the API. 
+API Versioning is a defined process of making or managing changes to an API. These changes can be made transparently without
+interrupting the clients. When users have permission to decide whether they can conveniently upgrade to the latest version of API and clearly state the changes made is known as a Good 
+API Versioning Strategy. 
+ 
+ There are several types of strategies to versioning REST API using Spring Boot.
+
+URI Path Versioning : The process of adding the different version numbers like v1,v2, etc. to the API's URL is known as URI Versioning.
+Query Parameters Versioning : The process in which version number is passed as a query or request parameter.
+Custom Header Versioning : The procedure of adding a custom header to the client HTTP request with version number is known as Custom Header Versioning. This approach keeps the URI Path
+clear, but custom header must be included.
+Content Negotiation Versioning : Content Negotiation Versioning uses the HTTP Accept header to define the API version. In this method, version is a part of content Negotiation.
+ 
+ Can we interchange @Service annotation and @Repository annotation in Spring Boot ?
+ 
+  Ans: Technically, yes, you can use @Service instead of @Repository (or vice versa) because both are detected as beans.
+  Practically, no, because: Using @Repository provides automatic exception translation for database operations.exception translation feature 
+  in spring boot Provides additional exception translation for database-related exceptions (Spring converts JDBC exceptions into Spring's 
+  DataAccessException). @Service does not have this exception translation feature.It goes against the convention and best practices.
+  When Would It Matter?
+  If you're working with a class that interacts with the database, you should use @Repository to benefit from exception translation. Otherwise, 
+  if the class contains business logic, use @Service.
+ 
+ what is the difference between JPA repository and CRUD repository in Spring Boot
+ 
+  Ans: CRUD Repository is the Basic repository interface for CRUD (Create, Read, Update, Delete) operations.Suitable for simple data access operations.
+  JpaRepository Extends CrudRepository and PagingAndSortingRepository, adding more advanced features such as Pagination & Sorting (findAll(Pageable pageable)),
+  Batch operations (saveAll(Iterable<S> entities)),Flush & Delete in batch (flush(), deleteInBatch()). Suitable for more complex operations and performance 
+  optimizations.
+  
+  Different type of Jdbc template ?
+  
+   In Spring Boot, JdbcTemplate is a central class for interacting with relational databases using JDBC. Spring provides different types of JDBC 
+   templates for various use cases:
+   a) JdbcTemplate (Core Template) - Simplifies interactions with the database. Requires manual mapping of result sets.
+   b) NamedParameterJdbcTemplate - An extension of JdbcTemplate that allows named parameters instead of positional parameters (?). 
+  
+  
+  What is the use @ConditionalOnMissingBean  annotation.
+  
+  Ans: To create a bean conditionally using @ConditionalOnMissingBean, you annotate a method or configuration class with @Bean and 
+  @ConditionalOnMissingBean. If a bean of the specified type is not already present in the context, the annotated bean will be created
+  and registered. The @ConditionalOnMissingBean annotation is a spring conditional annotation for registering beans only when they are
+  not already in the application context.
+  
+  What is @Configuration annotation in Spring Boot ?
+  
+  Ans: The @Configuration annotation in Spring Boot indicates that a class is a configuration class that contains bean definitions. The Spring
+  framework manages these beans. Spring Configuration annotation indicates that the class has @Bean definition methods. @Configuration classes
+  declare beans through @Bean-annotated methods. It indicates that a class contains @Bean definition methods, which the Spring container can process 
+  to generate Spring Beans for use in the application.
+ 
+ The @ComponentScan Annotation
+ Ans : The @ComponentScan annotation is used to specify the base packages to scan for annotated components (such as @Component, @Service, @Repository,
+ @Controller). This annotation directs Spring to detect and register beans within the specified packages.
+ 
+ @Bean Annotation : @Bean annotation which is applied on a method to specify that it returns a bean to be managed by Spring context. Spring Bean 
+ annotation is usually declared in Configuration classes methods
+ Docker
+
+Docker is an open-source platform that allows developers to automate the deployment, scaling, and management of applications using containers.
+Containers package applications and their dependencies together, ensuring they run consistently across different environments.
+
+ Docker Basic Command
+ 
+Following are the some of the docker basic commands
+
+docker images: Docker images will list all the images which are pulled or build in that docker host.
+docker pull: Docker pull will the docker images from the dockerhub.
+docker run: Docker run will run the docker image as an container.
+docker ps: Docker run will list all the containers which are running in the docker host.
+docker stop: Docker stop will stop the docker container which are already running.
+docker rm: Docker rm command will remove the containers which are in the stop condition.
+ 
+Git Comands
+
+ a) git init -The command git init is used to create an empty Git repository. 
+ b) git add - Add command is used after checking the status of the files, to add those files to the staging area.
+ c) git commit - The commit command makes sure that the changes are saved to the local repository.  "git commit –m <message>" allows
+    you to describe everyone
+ d) git status -The git status command tells the current state of the repository.	
+ e) git config - The git config command is used initially to configure the user.name and user.email. 
+ f) git branch - The git branch command is used to determine what branch the local repository is on.
+ g) git checkout -The git checkout command is used to switch branches, whenever the work is to be started on a different branch.
+ h) git merge - The git merge command is used to integrate the branches together. The command combines the changes from one branch to another branch. 
+ i) git clone - The git clone command is used to create a local working copy of an existing remote repository
+ k git pull  - The git pull command is used to fetch and merge changes from the remote repository to the local repository.
+ l) git push - The command git push is used to transfer the commits or pushing the content from the local repository to the remote repository.
+ m) git log - The git log command shows the order of the commit history for a repository. 
+ Explain Transaction in Spring Boot
+ 
+ 
+ Ensuring scalability and maintainability in a RESTful API requires thoughtful design, best practices, and the right tools. Here’s how you can 
+ achieve both
+ 
+Scalability
+
+Scalability ensures that the API can handle increased loads without performance degradation.
+
+1. Efficient Database Design
+
+Indexing & Query Optimization: Properly index database tables to speed up queries
+Pagination: Return a limited number of records instead of all (e.g., ?limit=50&page=2).
+Caching: Use Redis or Memcached for frequently accessed data.
+Replication & Sharding: Distribute database load across multiple instances.
+
+2. Load Balancing & Horizontal Scaling
+
+ Use a Load Balancer (Nginx, HAProxy, AWS ALB) to distribute traffic.
+ Deploy multiple instances of the API behind a load balancer.
+ Containerization & Orchestration with Docker & Kubernetes for auto-scaling.
+ 
+3. Asynchronous Processing 
+
+  Offload heavy tasks (e.g., sending emails, processing large data) to message queues like RabbitMQ, Kafka, or AWS SQS.
+  Use background workers like Celery (Python) or Bull (Node.js)
+  
+4. Rate Limiting & Throttling
+   Prevent abuse using API Gateway policies or middleware (e.g., Express-rate-limit, Flask-Limiter).
+   Implement JWT-based authentication to control user access.
+   
+5. CDN & Edge Computing
+   Use CDN (Cloudflare, AWS CloudFront) to serve static files closer to users.
+   Utilize Edge Functions (e.g., AWS Lambda@Edge) to process API requests before they hit your server.
+
+Maintainability
+
+  Maintainability ensures the API remains easy to modify, debug, and extend.
+1. Modular Code Structure
+  Follow MVC (Model-View-Controller) or Service-Oriented Architecture.
+  Separate concerns (auth, business logic, database handling, etc.).
+2. API Documentation
+  Use Swagger/OpenAPI or Postman Collections for documentation.
+  Clearly define endpoints, request/response schemas, and error codes.
+3. Versioning
+  Maintain backward compatibility using URL versioning
+  Deprecate old versions gracefully with proper warnings.
+4. Logging & Monitoring
+   Use structured logging with tools like Winston (Node.js), Log4j (Java), or Bunyan.
+   Monitor API performance with Prometheus + Grafana or Datadog.
+   Capture errors using Sentry or New Relic.
+5. Automated Testing & CI/CD
+   Write unit tests (Jest, Mocha, PyTest).
+   Implement integration tests with tools like Postman.
+   Automate deployments with GitHub Actions, Jenkins, or GitLab CI/CD.
+6. Security Best Practices
+   Use HTTPS to encrypt data.
+   Implement OAuth 2.0, JWT, API keys for authentication.
+   Sanitize user input to prevent SQL Injection & XSS attacks.
+   CORS Policies: Restrict API access to trusted origins.   
+   
+   
+What are the methods to improve API Performance in spring boot
+
+Improving API performance in Spring Boot involves optimizing various aspects such as database interactions, caching, concurrency, and network
+ efficiency. Here are some key methods to enhance API performance:
+ 
+ 1. Optimize Database Performance
+ 
+ Use Indexing: Ensure proper indexing in your database tables to speed up queries.
+ Optimize Queries: Use efficient queries and avoid SELECT * in SQL.
+ Connection Pooling: Use HikariCP (default in Spring Boot) for efficient connection pooling.
+ Batch Processing: Use batch updates/inserts for bulk operations
+ 
+ 2. Enable Caching
+   
+Spring Cache: Use caching with @Cacheable to store frequently accessed data.
+Redis or EhCache: Use external caches like Redis or EhCache to reduce database calls.
+   
+ 3. Use Asynchronous Processing
+
+ @Async Annotation: Execute long-running tasks asynchronously.
+CompletableFuture: Improve response time by executing tasks in parallel.
+Reactive Programming (WebFlux): Use WebFlux for non-blocking I/O.
+
+4. Reduce Payload Size
+
+ Use GZIP Compression: Enable compression in application.properties
+ Optimize JSON Serialization: Use Jackson’s @JsonIgnore and @JsonInclude to exclude unnecessary fields.
+ 
+5. Enable HTTP/2 and Connection Pooling
+
+ HTTP/2 reduces latency by multiplexing multiple requests over a single connection.
+ Use a thread pool for better request handling. 
+ 
+  ----------------------------------------------------------------------------------------------------------------------------------------
+ 
+ 
+ How does Spring Boot support asynchronous processing?
+ 
+ Ans : Spring Boot supports asynchronous processing using the @Async annotation. To enable it, you need to add @EnableAsync in a configuration class. Methods
+ annotated with @Async run in a separate thread pool and return a Future or CompletableFuture.
+ 
+  What is CSRF(Cross-Site Request Forgery) protection in Spring Security and how can you disable it 
+  
+  Ans: CSRF (Cross-Site Request Forgery) is an attack where a user is tricked into performing unintended actions on a web application they are authenticated to. 
+  Spring Security provides protection against CSRF attacks by requiring a CSRF token for sensitive requests (like POST, PUT, DELETE), which ensures the request 
+  is coming from the legitimate user.
+
+   How CSRF Protection Works:
+   
+   Spring Security generates a CSRF token for each session.
+   The client must send this token in each sensitive request.
+   If the token doesn't match the server's stored token, the request is rejected.
+   
+ What is the purpose of the SecurityContextHolder in Spring Security?
+
+ Ans : SecurityContextHolder holds the security context of the current user, which contains the authentication information. This context is typically stored in a
+ thread-local variable and is accessible throughout the request cycle. It provides access to the Authentication object, which contains details about the authenticated
+ user. 
+ 
+ What is the purpose of @DataJpaTest in Spring Boot?
+ 
+ Ans: @DataJpaTest is used for testing the JPA repository layer. It configures an in-memory database and loads the repository beans but excludes other Spring
+ components like the service or controller layer. It is primarily used for testing database interactions in isolation.
+ 
+ What are the different scopes of Spring Beans?
+ 
+ singleton (default):
+A single shared instance of the bean is created and used throughout the Spring IoC container. This is the default scope if no scope is specified.
+Every request for this bean will return the same instance.
+prototype:
+A new instance of the bean is created each time it is requested from the Spring container.
+This scope is suitable for beans that need to be stateless or have a short lifecycle.
+request (Web applications only):
+A new instance is created for each HTTP request.
+The bean is only available during the lifecycle of the HTTP request and is discarded after the request is completed.
+session (Web applications only):
+A new instance is created for each HTTP session.
+The bean is tied to the HTTP session and remains active for the duration of that session.
+application (Web applications only):
+A single instance of the bean is created for the entire ServletContext (the entire web application).
+The bean is shared across all HTTP requests and sessions in the application.
+websocket (Web applications only):
+A new instance is created for each WebSocket connection.
+The bean is tied to the lifecycle of a WebSocket connection and is discarded once the connection is closed.
+
+ 
+ Maven life cycles and phases 
+ 
+ How can we secure the actuator end points
+ 
+ Ans: To secure Spring Boot Actuator endpoints, you need to apply a combination of exposure control, authentication/authorization, and network restrictions. Below
+ is a clean, production-ready guide with example configurations. a) Expose Only What You Need. By default, never expose all actuator endpoints. b) Secure Actuator
+ with Spring Security. Add Spring Security and restrict access. c) Run Actuator on a Separate Port. This is a best practice for production. d) Restrict Network Access. 
+ Allow actuator port only from internal IPs. Block it from the public internet. se Kubernetes NetworkPolicy or firewall rules e) Use HTTPS Only. Never expose
+ actuator endpoints over HTTP.
+   
+
+When a consumer reads data from a Kafka topic what happened to that data.
+
+Ans : In Kafka, reading (consuming) a message does NOT remove it from the topic. The data remains in the topic. Messages stay in the topic until: The retention period
+expires (default: 7 days) or The topic reaches its configured size limit or An admin manually deletes the topic/data. So consumption does not affect message storage.
+Kafka only updates the consumer offset. Each consumer group maintains a pointer called an offset.When a consumer reads a message: When a consumer reads a message: 
+Kafka only records the latest offset the consumer has read. ther consumer groups can still read the same data. Since the data remains intact: Multiple consumer groups
+can read the same message independently. A new consumer group will start from  offset 0 or latest depending on config
+ 
+Can we  run a spring Boot Application without and embeded server ?
+
+Ans : Yes. You can run a Spring Boot application without an embedded web server. This is common for console apps, batch jobs, schedulers, Kafka consumers, ETL tools,
+CLI utilities,  or any service that doesn’t expose HTTP endpoints. Set this in application.properties (or application.yml): spring.main.web-application-type=NONE
+
+What happened if we have multiple application.properties file in Spring Boot :
+
+Ans : Spring Boot allows multiple application.properties files, and it loads them in a well-defined order. When the same property appears more than once, the one with
+higher priority wins. Spring Boot commonly uses multiple property files for: different environments (dev, test, prod). externalized configuration. modular
+configuration. Property loading order (priority matters) Spring Boot loads properties from multiple locations. Later sources override earlier ones. Highest priority
+value wins Simplified priority order (low → high)
+
+application.properties inside the JAR
+src/main/resources/application.properties
+
+Profile-specific files
+
+application-dev.properties
+
+application-prod.properties
+
+External files
+
+./config/application.properties
+
+./application.properties
+
+What happened if @SpringBootApplication is used on an interface ?
+
+Ans : The app may compile… but won’t start correctly.  Java allows annotations on interfaces, so no compile error.	
+
+what happened if we send a post request to a GET mapping ?
+
+Ans: You’ll get HTTP 405 – Method Not Allowed.
+
+What happened if we don't use an @Id field ina JPA Entity ?
+
+Ans : You must have an identifier for every JPA @Entity. If you omit @Id (or a composite ID via @EmbeddedId/@IdClass), the app will fail at startup with an exception
+like: org.hibernate.AnnotationException: No identifier specified for entity com.example.MyEntity
+
+what should we do if we don't want to save a property/instance variable in the database 
+
+Ans : Use @Transient (JPA annotation — recommended). This tells JPA not to persist the field. The column will not be created, and Hibernate will ignore the field 
+completely.
+
+How to store a list  of String values in database using DataJpa ?
+
+Ans : Use the annotation @ElementCollection. Stores the strings in a separate join table. Pure JPA, portable across DBs.
+
+How to save the child entity automatically while saving the parent in Spring DataJpa ?
+
+Ans : Use the annotation @oneToOne(casacde=CascadeType.ALL)
+
+How do you convert Spring Boot Application in to an executable JAR using maven
+
+Ans : mvn package (by using this command)
+
+
+What happened if we use @RequestMapping on a method without specifying  a path ?
+
+Ans: If you write @GetMapping without a value/path, it maps to the empty path relative to the class-level mapping (or / if none).
+
+How do we can upload a file to AWS S3 bucket ?
+
+Ans: 1. Add Dependencies
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>s3</artifactId>
+    <version>2.20.0</version> 
+</dependency>
+
+2. Configure Your Credentials : Use your application.properties (or .yml) to store your bucket details. For local development, you can use these properties. In 
+ production, it’s safer to use IAM Roles so you don't have to manage secret keys manually. 
+ 
+ aws.s3.bucket-name=your-unique-bucket-name
+aws.region=us-east-1
+aws.access-key=YOUR_ACCESS_KEY
+aws.secret-key=YOUR_SECRET_KEY
+
+3. Create the S3 Client Configuration
+@Configuration
+public class S3Config {
+
+    @Value("${aws.access-key}")
+    private String accessKey;
+
+    @Value("${aws.secret-key}")
+    private String secretKey;
+
+    @Value("${aws.region}")
+    private String region;
+
+    @Bean
+    public S3Client s3Client() {
+        return S3Client.builder()
+                .region(Region.of(region))
+                .credentialsProvider(StaticCredentialsProvider.create(
+                        AwsBasicCredentials.create(accessKey, secretKey)))
+                .build();
+    }
+}
+
+4. Build the Upload Service Service class
+
+@Service
+public class StorageService {
+
+    private final S3Client s3Client;
+    
+    @Value("${aws.s3.bucket-name}")
+    private String bucketName;
+
+    public StorageService(S3Client s3Client) {
+        this.s3Client = s3Client;
+    }
+
+    public String uploadFile(MultipartFile file) throws IOException {
+        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+        
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                .bucket(bucketName)
+                .key(fileName)
+                .contentType(file.getContentType())
+                .build();
+
+        s3Client.putObject(putObjectRequest, 
+                RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+
+        return "File uploaded: " + fileName;
+    }
+}
+
+5. The REST Controller 
+
+@RestController
+@RequestMapping("/api/storage")
+public class StorageController {
+
+    @Autowired
+    private StorageService storageService;
+
+    @PostMapping("/upload")
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+        try {
+            return ResponseEntity.ok(storageService.uploadFile(file));
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Upload failed");
+        }
+    }
+}
+
+Moving files from a Spring Boot app to AWS S3 is a classic move for building scalable applications. It keeps your server lightweight and your storage durable.
+
+To get this running, we’ll use the AWS SDK for Java 2.x (the modern standard) and follow a clean, service-oriented approach.
+
+1. Add Dependencies
+First, grab the S3 software development kit. Add this to your pom.xml:
+
+XML
+
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>s3</artifactId>
+    <version>2.20.0</version> 
+</dependency>
+2. Configure Your Credentials
+Don't hardcode your keys! Use your application.properties (or .yml) to store your bucket details.
+
+Pro-tip: For local development, you can use these properties. In production, it’s safer to use IAM Roles so you don't have to manage secret keys manually.
+
+Properties
+
+aws.s3.bucket-name=your-unique-bucket-name
+aws.region=us-east-1
+aws.access-key=YOUR_ACCESS_KEY
+aws.secret-key=YOUR_SECRET_KEY
+3. Create the S3 Client Configuration
+We need to tell Spring how to build the S3Client bean so we can inject it wherever we need it.
+
+Java
+
+@Configuration
+public class S3Config {
+
+    @Value("${aws.access-key}")
+    private String accessKey;
+
+    @Value("${aws.secret-key}")
+    private String secretKey;
+
+    @Value("${aws.region}")
+    private String region;
+
+    @Bean
+    public S3Client s3Client() {
+        return S3Client.builder()
+                .region(Region.of(region))
+                .credentialsProvider(StaticCredentialsProvider.create(
+                        AwsBasicCredentials.create(accessKey, secretKey)))
+                .build();
+    }
+}
+4. Build the Upload Service
+This is where the magic happens. We convert the MultipartFile from your REST controller into a format S3 understands.
+
+Java
+
+@Service
+public class StorageService {
+
+    private final S3Client s3Client;
+    
+    @Value("${aws.s3.bucket-name}")
+    private String bucketName;
+
+    public StorageService(S3Client s3Client) {
+        this.s3Client = s3Client;
+    }
+
+    public String uploadFile(MultipartFile file) throws IOException {
+        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+        
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                .bucket(bucketName)
+                .key(fileName)
+                .contentType(file.getContentType())
+                .build();
+
+        s3Client.putObject(putObjectRequest, 
+                RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+
+        return "File uploaded: " + fileName;
+    }
+}
+5. The REST Controller
+Finally, create an endpoint to receive the file from your frontend or Postman.
+
+Java
+
+@RestController
+@RequestMapping("/api/storage")
+public class StorageController {
+
+    @Autowired
+    private StorageService storageService;
+
+    @PostMapping("/upload")
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+        try {
+            return ResponseEntity.ok(storageService.uploadFile(file));
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Upload failed");
+        }
+    }
+}
+Important Considerations:
+File Size: By default, Spring limits uploads to 1MB. If you're uploading larger files, update your properties:
+
+spring.servlet.multipart.max-file-size=10MB
+
+spring.servlet.multipart.max-request-size=10MB
+
+Error Handling: Always wrap your S3 calls in try-catch blocks to handle S3Exception (e.g., bucket not found or permission denied).
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+ What happened when the run() in the Spring Boot called 
+ 
+ The run() method creates this application context and starts managing the beans for your app. From this run method, the application 
+ context of IOC (Inversion Of Control) searches the class annotated with @Configuration annotation which calls all the beans in the 
+ classpath and initializes those classes. Beans are stored inside a particular space in JVM (Java Virtual Machine). That particular
+ space is known as the IOC Container.After beans are created the requests will go to the dispatcher servlet and the dispatcher servlet
+ will distribute all the requests among the appropriate controllers.
+ 
+What is Http pach method
+
+Ans : The HTTP PATCH method is used for partial updates of a resource, allowing clients to modify specific fields without replacing the entire 
+resource, unlike the PUT method which replaces the entire resource. It allows you to send only the data that needs to be updated, rather than
+ sending the entire resource.
+ 
+ What's OAuth and JWT and what is the main difference between OAuth and JWT? // https://supertokens.com/blog/oauth-vs-jwt
+ 
+ OAuth, short for “Open Authorization,” is an open standard protocol that allows secure authorization in a simple and standardized way for web, 
+ mobile, and desktop applications. JWT stands for JSON Web Token. It’s an open standard (RFC 7519) that defines a compact and self-contained way for
+ securely transmitting information between parties as a JSON object. A JWT consists of three parts: a header, a payload, and a signature. Header:
+ Contains metadata about the token, including the type of token and the hashing algorithm used. Payload: Contains claims (statements about the user)
+ and additional data. Signature: Ensures that the token hasn’t been altered.
+ 
+ Difference 1 - Use Cases and Purpose
+ 
+ OAuth: Primarily used for authorization and delegating access. It’s great when you need to grant third-party applications limited access to user 
+ resources without sharing credentials.
+ 
+ JWT: Used for secure information exchange and authentication. It’s perfect for stateless authentication in web applications,especially in microservices 
+ architectures.
+ 
+ Difference 2 - Implementation and Complexity
+ 
+ OAuth: Involves a multi-step process with different roles (client, resource owner, authorization server, resource server). It’s more complex but offers
+ more flexibility.
+ JWT: Simpler to implement as it’s self-contained. The token itself carries all necessary information, making it easier to use in stateless applications.
+ 
+ Difference 3 - Security and Management
+ 
+ OAuth: Offers fine-grained access control through scopes. Tokens can be easily revoked, enhancing security.
+ JWT: Relies on cryptographic signatures for security. Once issued, JWTs are valid until they expire, which can be a security concern if not managed
+ properly.
+
+What is the difference between constructor injection and setter injection 
+
+In constructor injection dependencies are passed as a parameter to the class's constructor. This ensures that all the dependencies are injected upon
+the instantiation of an object. We utilise the @Autowired Annotation on top of the constructors to achieve this.
+is another way to inject dependencies, done by using setter methods. We annotate a setter method with @Autowired and it will work. A key point here 
+setter injection  is that dependencies will only be injected when the setter methods are called.
+
+What is the purpose of the @Scheduled annotation in Spring Boot?
+
+The @Scheduled annotation is used to configure scheduled tasks in a Spring Boot application. Applying this annotation to a method enables
+ you to specify the schedule at which the method should be executed
+ 
+  What is the purpose of the @ModelAttribute annotation in Spring Boot?
+  
+  The @ModelAttribute annotation is used in Spring Boot to bind request parameters or form data to method parameters or model attributes.
+  It can be applied to method parameters or method return values. When applied to method parameters, the @ModelAttribute annotation binds
+  the incoming request parameters or form data to the corresponding method parameters. When applied to method return values, it binds the method's
+  return value to a model attribute, making it available in the view for rendering.
+  
+  
+Describe the purpose and usage of the @EntityScan annotation in Spring Boot.
+
+The @EntityScan annotation is used to specify the base packages to scan for entity classes in a Spring Boot application. When using JPA
+(Java Persistence API) with Spring Boot, @EntityScan helps the JPA provider locate and manage entity classes.
+
+
+What is a feign client ?
+
+What is Caching ?
+
+Cache is a part of temporary memory (RAM). It lies between the application and the persistent database. Caching is a mechanism used to increase the 
+performance of a system. It is a process to store and access data from the cache. It stores the recently used data. This helps to reduces the number 
+of database hits as much as possible.
+
+
+
+  How does Spring Security implemets method level security 
+
+   Method-level security allows for fine-grained access control over specific methods within your application. We’ll dive into annotations 
+   like `@PreAuthorize` and `@PostAuthorize`, the usage of Spring Expression Language (SpEL) expressions for access control, and how to 
+   combine method security with global configuration. This level of security granularity enables developers to ensure that critical 
+   methods are only accessible by authorized users, bolstering the overall security of the application.
+
+What is the purpose of @Async annotation in Spring Boot
+
+@Async annotation is used when you wanted to make any method asynchronize. Annotating a method of a bean with @Async will make it execute in a separate 
+thread. In other words, the caller will not wait for the completion of the called method.
+
+Describe the Role of application context initializer in spring boot ?
+
+ApplicationContext represents the Spring IoC container that holds all the beans created by the application. It is responsible for instantiating,
+configuring, and creating the beans. Additionally, it gets the beans' information from configuration metadata provided in XML or Java.
+
+Explain the purpose of	@ConditionalOnProperty annotation in Spring boot ?
+
+The primary purpose of @ConditionalOnProperty is to conditionally create a bean based on a particular property's value in the application's properties
+ or YAML files. For instance, consider a situation where an application has a feature that should be activated only if a specific property is set
+
+How do you handle the File upload in Spring Boot
+
+How do you implement Pagination and Sorting in Spring Data JPA ?
+
+Ans :Spring Data JPA uses the Pageable interface for pagination. No need to write any SQL—just use Pageable. findAll(Pageable pageable) already exists in 
+JpaRepository.To paginate a request, you use the Pageable interface and the PageRequest implementation. Pageable: The interface defining the pagination request.
+PageRequest: The object you create to specify the page index (starting at 0) and the size. Page<T>: The return type that contains the data plus metadata
+(total elements, total pages, etc.). Sorting can be done independently or combined with pagination using the Sort class.     
+
+What is the purpose of @ConfigurationProperties annotation 
+
+In Spring Boot, @ConfigurationProperties Annotation allows the developer to map the entire content of the properties file to a POJO 
+(Plain Old Java Object). A property file can be either application.properties or application.yml. This annotation is useful when we
+ have a large set of explicit configurations defined in the properties file. It provides an organized and Java-specific approach to 
+ defining the properties. We can cluster similar sets or properties to multiple POJOs.
+
+
+Conditional annotations in Spring Boot 
+
+Conditional annotations in Spring Boot allow us to conditionally apply certain configurations or beans based on the evaluation of specified 
+conditions at runtime. These annotations help in creating flexible and customizable application setups.
+@ConditionalOnProperty: This annotation allows us to conditionally enable a bean or configuration based on the value of a specified property in the 
+application's configuration files.
+@ConditionalOnClass: It enables a bean or configuration if specified classes are present in the classpath.
+@ConditionalOnMissingBean: This annotation allows us to define a bean only if another bean of the same type is not already registered in the 
+application context.
+@ConditionalOnExpression: It enables a bean or configuration based on the evaluation of a SpEL expression.
+@ConditionalOnWebApplication: It enables a bean or configuration if the application is running in a web environment.
+@Conditional: This annotation provides a general-purpose mechanism to define custom conditions for bean registration.
+
+How does spring boot achieve autoconfiguration internally ?
+
+Internally, Spring Boot auto-configuration works by scanning the classpath for specific libraries and dependencies commonly used in Spring 
+applications. It then automatically configures beans and components based on the presence of these libraries and the current environment.
+
+
+Can you explain the concept of HATEOAS and it's role in Restful Api
+
+The term HATEOAS stands for the phrase Hypermedia As The Engine Of Application State. 
+
+ 
+ If you want to scale a spring appliction, which feature of spring boot application you used.
+ 
+ Scaling a Spring Boot microservice involves deploying multiple instances, using container orchestration, configuring auto-scaling, externalizing 
+ configurations, optimizing database access, implementing caching, using message queues, setting up service discovery, and ensuring robust 
+ monitoring and resilience mechanisms
+ 
+ If you are tasked with high availability for a Spring Boot E-Commerce application during peak hors what architectureal decision you choose
+ 
+ How do you secure the the security of high level sesitive data(PII fields) in a spring boot application.
+ 
+ Ans : 1. Field-Level Encryption (Application Layer) - The most robust way to protect PII is to encrypt it before it reaches the database. This ensures that even a 
+ Database Administrator (DBA) or a hacker with DB access cannot read the data. Implementation: JPA Attribute Converters. You can use a JPA AttributeConverter to 
+ automatically encrypt fields when saving and decrypt them when fetching. Use Secure Secret & Key Management : Hardcoding encryption keys in application.properties
+ is a major security risk. You should use a dedicated Secret Manager. HashiCorp Vault: The gold standard for open-source secret management. Use Spring Cloud Vault 
+ to inject secrets directly into your environment.	Cloud KMS (AWS KMS / Azure Key Vault / Google KMS): Use these for "Envelope Encryption," where your application
+ uses a local key to encrypt data, and that local key is itself encrypted by the Cloud provider's master key. Use Data Masking in API Responses : Even if data is
+ encrypted in the DB, your API might accidentally leak it to users or logs. Use masking to show only part of the data (e.g., ****-****-1234). 
+ Audit Logging & Access Control : 
+ 
+ How can we implemented Redis cache in Spring Boot
+ 
+ Suppose you have a spring boot microservice that need to communicate with mutiple external system. How would you design a resilient and fault
+ tolerent communication strategy.
+ 
+ Your Spring boot application is deployed in a cloud environment. How would you handle configuration management to maintain consistency across systems
+ 
+
+ what is spring cloud config
+ 
+ Spring Cloud Config provides a way to decouple application code from its runtime configuration. The Spring Cloud Config configuration server can 
+ read configuration files from Git repositories, the local filesystem. pring Cloud Config provides tooling for centralized external configuration
+ management backed by various types of external repositories like Git, Subversion, or file system.
+ 
+ What is the purpose of @SpringBootApplication annotation?
+ 
+ The SpringBootApplication annotation is a meta-annotation in Spring Boot that combines Configuration, EnableAutoConfiguration, and ComponentScan.
+ It simplifies application setup by configuring Spring Beans, enabling auto-configuration, and scanning for components in the specified package
+ 
+ 
+ What is the difference between returning Response Entity Vs Simple object through RestApi
+ 
+ ResponseEntity is containing the entire HTTP response that returns as a response which gives the flexibility to add headers,
+ change status code and do similar things to the response. But the ability to change headers, status codes is not available if
+ you return PJO directly. It is good to use ResponseEntity over PJO when there is a scenario you need to change the headers or you
+ need to change status according to the result.
+ 
+ 
+  Redis Cache 
+
+ Redis is an in-memory data store. It stores data primarily in RAM, allowing extremely fast read and write operations. The data is 
+ organized using key-value pairs, where keys are unique identifiers, and values can be of different types, including strings, lists,
+ sets, sorted sets, hashes, bitmaps, and more. Data in Redis is accessed by keys, making it a highly efficient and simple data store.
+ By storing frequently accessed data in memory, Redis Cache dramatically reduces response times and database load, resulting in faster 
+ and more scalable applications.
+ 
+ why Redis is in-memeory cache ?
+ 
+ In-memory caching is a technique where frequently accessed data is stored in memory instead of being retrieved from disk or remote 
+ storage. This technique improves application performance by reducing the time needed to fetch data from slow storage devices. Data 
+ can be cached in memory by caching systems like Redis.
+ 
+ Jenkins 
+ 
+ Jenkins is a powerful application that allows continuous integration and continuous delivery of projects, regardless of the platform 
+ you are working on. It is a free source that can handle any kind of build or continuous integration. You can integrate Jenkins with 
+ a number of testing and deployment technologies. Jenkins is an open source automation tool written in Java programming language that 
+ allows continuous integration.
+ 
+ Docker
+
+Docker is an open-source platform that allows developers to automate the deployment, scaling, and management of applications using containers.
+Containers package applications and their dependencies together, ensuring they run consistently across different environments.
+
+What is API versioning?
+
+ Ans : API versioning is the process of managing and tracking changes to an API. It also involves communicating those changes to the API's consumers.
+ Change is a natural part of API development. Sometimes, developers have to update their API's code to fix security vulnerabilities, while other 
+ changes introduce new features or functionality. Some changes do not affect consumers at all, while others, which are known as “breaking changes,” 
+ lead to backward-compatibility issues, such as unexpected errors and data corruption. API versioning ensures that these changes are rolled out 
+ successfully in order to preserve consumer trust while keeping the API secure, bug-free, and highly performant.
+ You should version your API whenever you make a change that will require consumers to modify their codebase in order to continue using the API. 
+ This type of change is known as a “breaking change,” and it can be made to an API's input and output data structures, success and error feedback, 
+ and security mechanisms. Some common examples of breaking changes include:
+ 
+ A) Renaming a property or endpoint: You might sometimes want to rename a property or method so that its meaning is clearer.
+ b) Modifying a data format or type: You may sometimes realize that several properties, such as firstName and lastName, should instead exist
+   within a user object
+ c) Modifying a property's characteristics: You may occasionally be tempted to change the rules for certain properties. For instance, a description 
+    property of type: string may have a maxLength rule that you discover is too low or too high.   
+	
+ What are some types of API versioning?
+ 
+ a) URL versioning: With this approach, the version number is included in the URL of the API endpoint.
+ b) Query parameter versioning: This strategy requires users to include the version number as a query parameter in the API request.
+ c) Header versioning: This approach allows consumers to pass the version number as a header in the API request
+ d) Consumer-based versioning: This versioning strategy allows consumers to choose the appropriate version based on their needs.
+ 
+ Can we interchange @Service annotation and @Repository annotation in Spring Boot ?
+ 
+  Ans: Technically, yes, you can use @Service instead of @Repository (or vice versa) because both are detected as beans.
+  Practically, no, because: Using @Repository provides automatic exception translation for database operations.exception translation feature 
+  in spring boot Provides additional exception translation for database-related exceptions (Spring converts JDBC exceptions into Spring's 
+  DataAccessException). @Service does not have this exception translation feature.It goes against the convention and best practices.
+  When Would It Matter?
+  If you're working with a class that interacts with the database, you should use @Repository to benefit from exception translation. Otherwise, 
+  if the class contains business logic, use @Service.
+ 
+ what is the difference between JPA repository and CRUD repository in Spring Boot
+ 
+  Ans: CRUD Repository is the Basic repository interface for CRUD (Create, Read, Update, Delete) operations.Suitable for simple data access operations.
+  JpaRepository Extends CrudRepository and PagingAndSortingRepository, adding more advanced features such as Pagination & Sorting (findAll(Pageable pageable)),
+  Batch operations (saveAll(Iterable<S> entities)),Flush & Delete in batch (flush(), deleteInBatch()). Suitable for more complex operations and performance 
+  optimizations.
+  
+  Different type of Jdbc template ?
+  
+   In Spring Boot, JdbcTemplate is a central class for interacting with relational databases using JDBC. Spring provides different types of JDBC 
+   templates for various use cases:
+   a) JdbcTemplate (Core Template) - Simplifies interactions with the database. Requires manual mapping of result sets.
+   b) NamedParameterJdbcTemplate - An extension of JdbcTemplate that allows named parameters instead of positional parameters (?). 
+  
+  
+  What is the use @ConditionalOnMissingBean  annotation.
+  
+  Ans: To create a bean conditionally using @ConditionalOnMissingBean, you annotate a method or configuration class with @Bean and 
+  @ConditionalOnMissingBean. If a bean of the specified type is not already present in the context, the annotated bean will be created
+  and registered. The @ConditionalOnMissingBean annotation is a spring conditional annotation for registering beans only when they are
+  not already in the application context.
+  
+  What is @Configuration annotation in Spring Boot ?
+  
+  Ans: The @Configuration annotation in Spring Boot indicates that a class is a configuration class that contains bean definitions. The Spring
+  framework manages these beans. Spring Configuration annotation indicates that the class has @Bean definition methods. @Configuration classes
+  declare beans through @Bean-annotated methods
+ 
+ The @ComponentScan Annotation
+ Ans : The @ComponentScan annotation is used to specify the base packages to scan for annotated components (such as @Component, @Service, @Repository,
+ @Controller). This annotation directs Spring to detect and register beans within the specified packages.
+ 
+ @Bean Annotation : @Bean annotation which is applied on a method to specify that it returns a bean to be managed by Spring context. Spring Bean 
+ annotation is usually declared in Configuration classes methods
+ 
+ 
+ Docker
+
+Docker is an open-source platform that allows developers to automate the deployment, scaling, and management of applications using containers.
+Containers package applications and their dependencies together, ensuring they run consistently across different environments.
+
+ Docker Basic Command
+ 
+Following are the some of the docker basic commands
+
+docker images: Docker images will list all the images which are pulled or build in that docker host.
+docker pull: Docker pull will the docker images from the dockerhub.
+docker run: Docker run will run the docker image as an container.
+docker ps: Docker run will list all the containers which are running in the docker host.
+docker stop: Docker stop will stop the docker container which are already running.
+docker rm: Docker rm command will remove the containers which are in the stop condition.
+ 
+Git Comands
+
+ a) git init -The command git init is used to create an empty Git repository. 
+ b) git add - Add command is used after checking the status of the files, to add those files to the staging area.
+ c) git commit - The commit command makes sure that the changes are saved to the local repository.  "git commit –m <message>" allows
+    you to describe everyone
+ d) git status -The git status command tells the current state of the repository.	
+ e) git config - The git config command is used initially to configure the user.name and user.email. 
+ f) git branch - The git branch command is used to determine what branch the local repository is on.
+ g) git checkout -The git checkout command is used to switch branches, whenever the work is to be started on a different branch.
+ h) git merge - The git merge command is used to integrate the branches together. The command combines the changes from one branch to another branch. 
+ i) git clone - The git clone command is used to create a local working copy of an existing remote repository
+ k git pull  - The git pull command is used to fetch and merge changes from the remote repository to the local repository.
+ l) git push - The command git push is used to transfer the commits or pushing the content from the local repository to the remote repository.
+ m) git log - The git log command shows the order of the commit history for a repository. 
+ Explain Transaction in Spring Boot
+ 
+ 
+ Ensuring scalability and maintainability in a RESTful API requires thoughtful design, best practices, and the right tools. Here’s how you can 
+ achieve both
+ 
+Scalability
+
+Scalability ensures that the API can handle increased loads without performance degradation.
+
+1. Efficient Database Design
+
+Indexing & Query Optimization: Properly index database tables to speed up queries
+Pagination: Return a limited number of records instead of all (e.g., ?limit=50&page=2).
+Caching: Use Redis or Memcached for frequently accessed data.
+Replication & Sharding: Distribute database load across multiple instances.
+
+2. Load Balancing & Horizontal Scaling
+
+ Use a Load Balancer (Nginx, HAProxy, AWS ALB) to distribute traffic.
+ Deploy multiple instances of the API behind a load balancer.
+ Containerization & Orchestration with Docker & Kubernetes for auto-scaling.
+ 
+3. Asynchronous Processing 
+
+  Offload heavy tasks (e.g., sending emails, processing large data) to message queues like RabbitMQ, Kafka, or AWS SQS.
+  Use background workers like Celery (Python) or Bull (Node.js)
+  
+4. Rate Limiting & Throttling
+   Prevent abuse using API Gateway policies or middleware (e.g., Express-rate-limit, Flask-Limiter).
+   Implement JWT-based authentication to control user access.
+   
+5. CDN & Edge Computing
+   Use CDN (Cloudflare, AWS CloudFront) to serve static files closer to users.
+   Utilize Edge Functions (e.g., AWS Lambda@Edge) to process API requests before they hit your server.
+
+Maintainability
+
+  Maintainability ensures the API remains easy to modify, debug, and extend.
+  
+1. Modular Code Structure
+  Follow MVC (Model-View-Controller) or Service-Oriented Architecture.
+  Separate concerns (auth, business logic, database handling, etc.).
+2. API Documentation
+  Use Swagger/OpenAPI or Postman Collections for documentation.
+  Clearly define endpoints, request/response schemas, and error codes.
+3. Versioning
+  Maintain backward compatibility using URL versioning
+  Deprecate old versions gracefully with proper warnings.
+4. Logging & Monitoring
+   Use structured logging with tools like Winston (Node.js), Log4j (Java), or Bunyan.
+   Monitor API performance with Prometheus + Grafana or Datadog.
+   Capture errors using Sentry or New Relic.
+5. Automated Testing & CI/CD
+   Write unit tests (Jest, Mocha, PyTest).
+   Implement integration tests with tools like Postman.
+   Automate deployments with GitHub Actions, Jenkins, or GitLab CI/CD.
+6. Security Best Practices
+   Use HTTPS to encrypt data.
+   Implement OAuth 2.0, JWT, API keys for authentication.
+   Sanitize user input to prevent SQL Injection & XSS attacks.
+   CORS Policies: Restrict API access to trusted origins.   
+   
+   
+What are the methods to improve API Performance in spring boot
+
+Improving API performance in Spring Boot involves optimizing various aspects such as database interactions, caching, concurrency, and network
+ efficiency. Here are some key methods to enhance API performance:
+ 
+ 1. Optimize Database Performance
+ 
+ Use Indexing: Ensure proper indexing in your database tables to speed up queries.
+ Optimize Queries: Use efficient queries and avoid SELECT * in SQL.
+ Connection Pooling: Use HikariCP (default in Spring Boot) for efficient connection pooling.
+ Batch Processing: Use batch updates/inserts for bulk operations
+ 
+ 2. Enable Caching
+   
+Spring Cache: Use caching with @Cacheable to store frequently accessed data.
+Redis or EhCache: Use external caches like Redis or EhCache to reduce database calls.
+   
+ 3. Use Asynchronous Processing
+
+ @Async Annotation: Execute long-running tasks asynchronously.
+CompletableFuture: Improve response time by executing tasks in parallel.
+Reactive Programming (WebFlux): Use WebFlux for non-blocking I/O.
+
+4. Reduce Payload Size
+
+ Use GZIP Compression: Enable compression in application.properties
+ Optimize JSON Serialization: Use Jackson’s @JsonIgnore and @JsonInclude to exclude unnecessary fields.
+ 
+5. Enable HTTP/2 and Connection Pooling
+
+ HTTP/2 reduces latency by multiplexing multiple requests over a single connection.
+ Use a thread pool for better request handling. 
+ 
+  ----------------------------------------------------------------------------------------------------------------------------------------
+ How can we pass tokens in microservice in a secure manner
+ 
+ 
+ How does Spring Boot support asynchronous processing?
+ 
+ Ans : Spring Boot supports asynchronous processing using the @Async annotation. To enable it, you need to add @EnableAsync in a configuration class. Methods annotated with @Async run 
+ in a separate thread pool and return a Future or CompletableFuture.
+ 
+  What is CSRF(Cross-Site Request Forgery) protection in Spring Security and how can you disable it 
+  
+  Ans: CSRF (Cross-Site Request Forgery) is an attack where a user is tricked into performing unintended actions on a web application they are authenticated to. Spring Security provides 
+  protection against CSRF attacks by requiring a CSRF token for sensitive requests (like POST, PUT, DELETE), which ensures the request is coming from the legitimate user.
+
+   How CSRF Protection Works:
+   
+   Spring Security generates a CSRF token for each session.
+   The client must send this token in each sensitive request.
+   If the token doesn't match the server's stored token, the request is rejected.
+   
+ What is the purpose of the SecurityContextHolder in Spring Security?
+
+ Ans : SecurityContextHolder holds the security context of the current user, which contains the authentication information. This context is typically stored in a thread-local variable
+ and is accessible throughout the request cycle. It provides access to the Authentication object, which contains details about the authenticated user. 
+ 
+ What is the purpose of @DataJpaTest in Spring Boot?
+ 
+ Ans: @DataJpaTest is used for testing the JPA repository layer. It configures an in-memory database and loads the repository beans but excludes other Spring components like the service 
+ or controller layer. It is primarily used for testing database interactions in isolation.
+ 
+ What are the different scopes of Spring Beans?
+ 
+ singleton (default):
+A single shared instance of the bean is created and used throughout the Spring IoC container. This is the default scope if no scope is specified.
+Every request for this bean will return the same instance.
+prototype:
+A new instance of the bean is created each time it is requested from the Spring container.
+This scope is suitable for beans that need to be stateless or have a short lifecycle.
+request (Web applications only):
+A new instance is created for each HTTP request.
+The bean is only available during the lifecycle of the HTTP request and is discarded after the request is completed.
+session (Web applications only):
+A new instance is created for each HTTP session.
+The bean is tied to the HTTP session and remains active for the duration of that session.
+application (Web applications only):
+A single instance of the bean is created for the entire ServletContext (the entire web application).
+The bean is shared across all HTTP requests and sessions in the application.
+websocket (Web applications only):
+A new instance is created for each WebSocket connection.
+The bean is tied to the lifecycle of a WebSocket connection and is discarded once the connection is closed.
+
+Can you explain connection pooling
+
+Ans : onnection pooling keeps a small, reusable set of database connections “ready” instead of opening a new network connection for every request. Opening/closing 
+DB connections is expensive (network handshake, auth, allocation)—a pool amortizes this cost and lets your app serve more requests with lower latency and CPU usage.
+By default, since Spring Boot 2.0, the framework uses HikariCP as the default connection pool. It is widely considered the fastest and most lightweight pooling 
+library available for Java.
+
+The Lifecycle
+
+Startup: Spring Boot initializes the pool with a set number of idle connections.
+
+Request: When your code needs to talk to the database (e.g., via Repository or JdbcTemplate), it asks the pool for a connection.
+
+Active Use: The application performs the SQL work.
+
+Release: Once the transaction is finished, the connection isn't closed; it’s simply returned to the pool to be reused by another request.
+
+Key Configuration Properties : You can fine-tune how HikariCP behaves in your application.properties or application.yml file. Here are the heavy hitters:
+
+maximum-pool-size,Max number of connections the pool can hold.,10
+minimum-idle,Minimum number of idle connections Hikari maintains.,Same as max
+idle-timeout,How long a connection can sit idle before being retired.,600000ms (10m)
+connection-timeout,Max time a dev waits for a connection before an error.,30000ms (30s)
+
+
+How to handle exceptions that occur in a controller layer ?
+
+Ans : Add a method annotated with @ExceptionHandler in controller  Example 
+
+   @RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(UserNotFoundException ex) {
+        ErrorResponse error = new ErrorResponse(
+            HttpStatus.NOT_FOUND.value(),
+            ex.getMessage()
+        );
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleGlobal(Exception ex) {
+        // Log the actual error for debugging
+        log.error("Internal Error: ", ex); 
+        
+        ErrorResponse error = new ErrorResponse(500, "An unexpected error occurred.");
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
+
+How to control concurrent updates in rest api
+
+Ans : Concurrency control can be an important part of a REST API, especially if you expect concurrent update requests for the same resource.
+While autowiring if two beans of the same type exit, What will the Spring do. One of the biggest API-scaling challenges facing developers is
+concurrency control. APIs that are subject to a high volume of unsafe requests must be designed with control strategies that can gracefully
+handle situations when multiple requests attempt to update a single resource. 
+API clients commonly perform updates by retrieving a copy of a resource, manipulating it locally, and posting the updated resource to its
+associated endpoint. This pattern is fine for low volumes of requests but things can become more complicated when multiple clients retrieve
+the same version of the resource. In that case, both clients make their respective changes locally and post the resource. Whichever request
+is written last overwrites the other request’s version of the resource, causing changes to be lost.
+Example if User1 and User2 gets a ressouce at the same time. Firtsly User1 update it. In a few seconds if User2 also update the resource, the
+change of User1 lost. 
+ 
+To deat with thisn issue we can use Etag(tokens) : In a pessimistic locking scheme, the client locks a resource for exclusive use until it 
+is finished updating the resource. Pessimistic locking is generally undesirable for REST API development. It forces the server to maintain 
+state, a big REST no-no. It also complicates the design of the client and raises the possibility of deadlocking. 
+In a pessimistic locking scheme, the client locks a resource for exclusive use until it is finished updating the resource. Pessimistic locking
+is generally undesirable for REST API development. It forces the server to maintain state, a big REST no-no. It also complicates the design
+of the client and raises the possibility of deadlocking. 
+
+An ETag is an identifier for the version of the underlying resource. It can be implemented using a hashing algorithm or using a version numbering
+scheme. It is also possible to use a timestamp for an ETag, though this is generally not recommended since machine clock times may be skewed 
+across the distributed servers that back your API. The key quality of a good ETag scheme is that it produces a different ETag for each version
+of the resource. 
+
+To use make a request using optimistic concurrency, the client application first retrieves the resource that it wishes to update and stores the
+ ETag that the server returns with the response body. The client application then performs any relevant updates and POSTs the resource back with
+ the If-Match condition header and the ETag that it retrieved previously. If the ETag matches the resource’s current ETag, the server performs
+ that update and responds with success. Otherwise, the server rejects the update with a 412 Precondition Failed response.
+ 
+
+refer - https://medium.com/swlh/api-concurrency-control-strategies-cd546c2cdc16
+
+
+ Ans : Spring will throw NoUniqueBeanDefinitionException
+
+
+What design pattern does spring use to manage bean creation and wiring.
+
+Ans : Dependency Injection 
+
+How do you validate request bodies in Spring REST ?
+
+Ans : Use @valid annotation
+
+How To execute a bulk update, without using repository's save method ?
+
+Use @ Modifying @Query ("pass update query") 
+ 
+ What is Spring Boot’s WebClient, and how does it differ from RestTemplate?
+ 
+
+ 
+ How do you design an API reponse contains both jaison and xml based on content type
+
+ can we customize a specific autoconfiguration in Spring Boot
+ 
+ What are the challenges while implementing microserice
+
+ 
+ Maven life cycles and phases 
+ 
+
+
+How do we can write a test case for asyn method 
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+ 
+ 
+
+How to cretae cache with collections
+
+Single Sign on implementation
+
+How do we can write a test case for asyn method 
+
+Can you explain connection pooling
+
+ What is Spring Boot’s WebClient, and how does it differ from RestTemplate?
+ 
+ How to do monitor performace in Microservice.
+ 
+ How do you design an API reponse contains both jaison and xml based on content type
+
+ can we customize a specific autoconfiguration in Spring Boot
+ 
+ What are the challenges while implementing microserice
+ 
+ What design pattern does spring use to manage bean creation and wiring ?
+ 
+  Ans : Dependency Injection
+  
+ Which type of dependency injection helps to create immutable classes ?
+
+  Ans : Constructor Baesed DI
+
+How do you validate request bodies in Spring REST
+
+Ans: Use @valid
+
+How to execute bulk update without using repositories save method ?
+
+ Ans : Use @Modifying and @Query("pass update query")
+
+How to externalize configuration in spring boot ?
+
+How to allowe public access to specific URL's while keeping others secure ?
+
+How multithreading is being implemented in spring boot?
+
+Ans : 1) Declarative Multithreading with @Async : Gemini said
+In Spring Boot, multithreading is primarily implemented through an abstraction called the TaskExecutor. While Java provides the low-level Thread class, Spring Boot manages concurrency at a higher level using thread pools and, in modern versions, Virtual Threads.
+
+Here is how multithreading is implemented across different layers of a Spring Boot application.
+
+1. The Core Abstraction: TaskExecutor
+The TaskExecutor interface is the heart of Spring's multithreading. It is a simplified version of Java’s java.util.concurrent.Executor. When you run a task asynchronously, Spring doesn't just "create a thread"; it delegates the task to a bean implementing this interface.
+
+ThreadPoolTaskExecutor: This is the most common implementation. It wraps a Java ThreadPoolExecutor, allowing you to configure a Core Pool Size, Max Pool Size, and Queue Capacity.
+
+How it works: When a task arrives, Spring tries to use an idle "core" thread. If they are busy, the task goes into a queue. If the queue is full, Spring creates "max" threads.
+
+2. Declarative Multithreading with @Async
+The easiest way to implement multithreading is using the @Async annotation. It tells Spring to execute the method in a separate thread.
+Enable it: Add @EnableAsync to your main configuration class. Annotate it: Add @Async to a method in a @Service or @Component.
+Return type: Asynchronous methods usually return void or CompletableFuture<T>.
+Example :
+
+@Service
+public class EmailService {
+    @Async
+    public CompletableFuture<String> sendEmail(String user) {
+        // This runs in a background thread from the pool
+        return CompletableFuture.completedFuture("Email sent to " + user);
+    }
+}
+
+How to increase memory and cpu in spring boot application ?
+ 1) Increase Memory (Heap) from command line (local / standalone JAR). When running a Spring Boot JAR: java -Xms512m -Xmx2g -jar app.jar
+    Meaning: -Xms512m → Initial heap = 512 MB, -Xmx2g → Maximum heap = 2 GB
+ 2) Increase Memory & CPU using application.properties : Spring Boot internally uses the JVM, so memory must be passed to JVM (not set directly in
+ properties). But you can configure Tomcat threads (which uses CPU):	a) server.tomcat.threads.max=500 b) server.tomcat.threads.min-spare=50
+ This increases capacity to handle more parallel requests → increased CPU usage.
+ 3) Increase Memory/CPU in Docker (most common in microservices). In Dockerfile — do NOT set CPU/memory here.Run container with higher memory & CPU:
+ Example 
+ 
+docker run -d \
+  --memory="2g" \
+  --cpus="2" \
+  --name app \
+  myapp:latest
+
+This assigns: 2 GB RAM, 2 CPUs
+4) Increase Memory/CPU in Docker Compose
+ example :
+ 
+ 
+services:
+  app:
+    image: myapp:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+          cpus: "2.0"
+What is transitive dependency ?
+
+Ans : A transitive dependency is a dependency that your project needs indirectly—not because you explicitly added it, but because one of your direct
+ dependencies depends on it. A transitive dependency is a library that is pulled into your project because another library you use internally depends
+ on it.Example (Very Common in Java + Maven/Gradle)
+ Suppose your pom.xml has:
+ 
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+You didn’t add Jackson yourself, but spring-boot-starter-web depends on:
+
+spring-web
+spring-webmvc
+jackson-databind
+logging libraries
+… and many more.
+
+So Jackson becomes a transitive dependency.
+
+What is a secret manager ?
+
+Ans : A Secret Manager is a secure system for storing and retrieving sensitive information such as passwords and API keys. It prevents hard‑coding
+secrets in applications and provides encryption, access control, audit logging, and automated rotation of secrets. A Secret Manager is a tool or
+ service used to securely store, manage, and access sensitive information such as:
+
+Passwords
+API keys
+Database credentials
+OAuth tokens
+Certificates
+Encryption keys
+
+Instead of hard‑coding secrets in your code or configuration files, you store them in a centralized, encrypted vault and access them securely at
+ runtime.
+ 
+Why Secret Manager is used ?
+Ans: 
+Avoid hardcoding secrets in code (prevents exposure in GitHub, logs, etc.)
+Centralized management of all sensitive values.
+Automatic rotation of passwords, API keys, and certificates.
+Fine‑grained access control (only specific apps/users can read secrets).
+Audit logs to track who accessed secrets and when.
+Encrypted at rest and in transit → increased security.
+
+How Secret Manager Works ?
+
+Ans : 
+Developer saves a secret (e.g., DB password) into the Secret Manager.
+The application fetches it at runtime using:
+
+API call
+SDK
+Environment variable injection
+
+Secret Manager returns the value securely (through encrypted channel).
+Your application never stores the secret locally. 
+ 
+ Examples of Secret Manager Services
+ 
+Cloud Platforms
+
+AWS Secrets Manager
+Azure Key Vault
+Google Secret Manager
+
+
+How to read data from a secret manager ?
+Ans :
+
+Reading data from a Secret Manager depends on which cloud provider or tool you're using (AWS, Google Cloud, Azure, or HashiCorp Vault). However,
+the general workflow is almost always the same: Authenticate → Request → Parse. Here is a breakdown of how to handle this for the most popular
+ services.
+ 
+ What is rate limiting ?
+ 
+ Ans : Rate limiting restricts the number of requests a user or system can make to an API within a defined time window (e.g., 100 requests per
+ minute). If the limit is exceeded, the server blocks or delays further requests.
+ 
+ How to restrict api access ?
+ 
+ Ans : Restricting API access is about moving from a "wild west" setup to a Zero Trust model. You want to ensure that only the right people, 
+ using the right devices, can access the right data.
+ 
+ 1. Authentication (Who are you?)
+This is the first gate. You must prove your identity before the API even looks at your request.
+
+API Keys: Simplest method. A unique string passed in the header. Best for internal tools or low-security public data.
+
+OAuth2 / OpenID Connect: The gold standard for user-facing apps. Users log in via a provider (Google, GitHub, Auth0), and your API receives a JWT (JSON Web Token).
+
+mTLS (Mutual TLS): High-security "handshake" where both the client and the server must present a valid certificate. Common in microservices or banking.
+
+2. Authorization (What can you do?)
+Just because I'm "logged in" doesn't mean I should be able to delete your database.
+
+RBAC (Role-Based Access Control): Assigning permissions to roles (e.g., Admin, Editor, Viewer).
+
+Scopes: Limiting what a specific token can do (e.g., read:profile vs. write:settings).
+
+ABAC (Attribute-Based Access Control): More granular. Access is granted based on attributes like time of day, IP address, or department.
+
+3. Network-Level Restrictions
+If you know exactly where your traffic is coming from, you can lock the door at the network layer.
+
+IP Whitelisting: Only allow requests from specific, trusted IP addresses.
+
+VPC Peering / Private Links: If your API and your app are both in the cloud (AWS/GCP/Azure), you can keep the traffic entirely off the public internet.
+
+CORS (Cross-Origin Resource Sharing): A browser-level security feature that restricts which domains (e.g., myapp.com) are allowed to call your API.
+
+4. Traffic Control & Shielding
+This protects your API from being "hugged to death" or attacked.
+
+Rate Limiting: As discussed, this prevents abuse by capping requests per user/IP.
+
+Web Application Firewall (WAF): A filter that sits in front of your API to block common attacks like SQL injection or Cross-Site Scripting (XSS).
+
+API Gateways: Tools like Kong, AWS API Gateway, or Apigee act as a single entry point that handles auth, logging, and rate limiting for you.
+
+
+For a kafka topic we have multiple consumers. How to know how many consumers are consuming a particular kafka topic?
+
+Ans : To find how many consumers are consuming a particular Kafka topic, you need to check consumer groups and their active members.
+A topic may have many consumers, but Kafka tracks them per consumer group.
+
+.How do you reprocess messages in kafka?
+Ans : You reprocess messages in Kafka by resetting consumer offsets, creating a new consumer group, replaying from a DLQ, or copying data into a
+ new topic. The most common method is offset reset (--reset-offsets) which allows consumers to start reading messages again from the beginning or
+ from a specific timestamp or offset.
+ 
+ How to ensure all the messages are processed correctly?
+ 
+ Ans : 
+
+ 
+ 

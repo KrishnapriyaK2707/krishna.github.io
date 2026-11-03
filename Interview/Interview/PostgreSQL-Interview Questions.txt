@@ -1,0 +1,64 @@
+
+
+PostgreSQL Interview Questions
+
+
+
+What Is PostgreSQL, And How Does It Differ From Other SQL Databases?
+
+PostgreSQL is often called Postgres, an open-source relational database management system (RDBMS), that support both relational and non-relational(JSON) queries. he postgreSQL support 
+the standard SQL query and its syntax are similar. PostgreSQL supports a variety of ranges of data types. The data types allow the user to store JSON directly into the database.
+The Hstore is a data type in PostgreSQL that allows users to store sets of key-value pairs within a single column. It supports geometric data such as points, circles, and polygons.
+
+Difference between JSON and JSONB in PostgreSQL?
+
+Ans: JSON stores text representation; slower for querying. JSONB stores binary format; supports indexing and faster operations. Use JSONB for performance and advanced querying.
+
+Explain PostgreSQL Index Types.
+
+B-Tree → Default, good for equality and range queries.
+Hash → For equality comparisons only.
+GIN → For full-text search and JSONB.
+GiST → For geometric data and custom indexing.
+BRIN → For large sequential data.
+
+What is a schema in PostgreSQL?
+
+Ans: A database schema contains the logical and visual configuration of the entire relational database. In PostgreSQL, it includes the tables, along with the data types, views, indexes, 
+sequences, constraints, and functions.
+
+How can you select the five first rows in a table called ‘customers’ in PostgreSQL?
+
+Ans: You can retrieve that data using the following query: SELECT * FROM customers LIMIT 5;
+
+What is the difference between a foreign key and a primary key in PostgreSQL?
+
+Ans: A foreign key provides shared keys between two or more tables, whereas a primary key allows only unique and strictly non-null values. Both are considered types of constraints.
+
+What is an index in PostgreSQL?
+
+Ans: An index is a special data structure related to a table and used for storing its important parts and enabling faster data search and retrieval. This is achieved by creating a sorted 
+data structure that allows PostgreSQL to locate rows more quickly compared to a full table scan. Indexes are especially efficient for large databases, where they significantly enhance 
+query performance.
+
+What is partitioning in PostgreSQL?
+
+It’s the process of splitting a large table into smaller pieces. It can be done through several methods, including range partitioning, list partitioning, and hash partitioning.
+
+What is a View in PostgreSQL, and How to Create One?
+
+Views represent the result of a query to one or more underlying tables. Views are used to simplify complex queries since these queries are defined once in the view, and can then be 
+directly queried via the same.
+CREATE VIEW view_name AS
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+
+
+
+
+How to Implement Foreign Keys in PostgreSQL?
+
+Explain the Concept of Transactions in PostgreSQL.
+
+ How to Perform a Backup and Restore in PostgreSQL?

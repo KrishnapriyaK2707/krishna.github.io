@@ -1,0 +1,789 @@
+Core Java
+
+
+How to solve out of memory error?
+
+Ans : To solve an out-of-memory (OOM) error, you can try closing unnecessary applications, clearing browser cache and browsing data, increasing 
+virtual memory, or optimizing your code to use less memory. How to fix it: In some cases, to mitigate the problem, it is enough to increase the 
+maximum heap size by adding the -Xmx to your JVM application startup settings and setting it to a larger value. For example, to increase the maximum
+ heap size to 8GB, you would add the -Xmx8g parameter to your JVM application start parameters
+ 
+ Why Comparabale interface is not a functional interface even thoug it contains only one abstarct method.
+ 
+It has compareTo() method which can be another method by overiding it.
+   
+
+String Builder and String Buffer. where we prefer String Builder over String Buffer
+
+Ans : StringBuilder is preferred over StringBuffer in scenarios where thread safety is not a concern, primarily in single-threaded environments. StringBuilder is
+ generally faster than StringBuffer because it does not incur the overhead of synchronization. StringBuffer's methods are synchronized, meaning they acquire and 
+ release locks, which adds a performance penalty, especially during frequent string manipulations.
+ 
+What is the difference between Collection and Collections ?
+
+Collection is an interface and Collections is a utility class. Both present in java.util package. Collections contains some pre-defined
+methos like sort(), reverse(), disjoin() ete.. which can be used while working with collection.
+
+
+ Deadlock in Java Threads
+ 
+ Ans: A deadlock in Java occurs when two or more threads are waiting indefinitely for each other to release locks on resources.
+ This creates a situation where no thread can proceed, resulting in a system freeze. Deadlocks usually happen when:
+ A thread locks Resource A and waits for Resource B. Another thread locks Resource B and waits for Resource A. Neither thread can
+ proceed because they are both waiting on each other.
+ 
+ 
+ How HashMap works and what happened whe tow keys have the same hashcode. How HashMap handles such collition
+ 
+ Ans : The phenomenon when two keys have same hash code is called hash collision. When multiple keys end up in the same bucket, 
+ we create a linked list(or another data structure) inside that bucket to store all the key-value pairs. if two keys end up in the
+ same bucket, instead of replacing the old key-value pair, a new entry is added to the linked list. When you want to retrieve data, the 
+ HashMap will check the bucket and look through the linked list to find the right key.
+ 
+  Provide an example where you use the reduce operation in Steam ?
+  
+  Ans : Using reduce() to Sum Numbers. int sum = numbers.stream().reduce(0, (a, b) -> a + b);
+
+ 
+  How String and String Buffer handle memory differently ?
+  
+  Ans : String will always create new memory space, whereas StringBuffer will not, it will update the existing memory whenever we 
+  append with new value. 
+  
+   What’s the difference between class lock and object lock?
+   
+   Object level locking is mechanism when you want to synchronize a non-static method or non-static code block such that only one thread
+   will be able to execute the code block on given instance of the class. This should always be done to make instance level data thread
+   safe. Class level locking prevents multiple threads to enter in synchronized block in any of all available instances on runtime. 
+   This means if in runtime there are 100 instances of DemoClass, then only one thread will be able to execute demoMethod() in any one 
+   of instance at a time, and all other instances will be locked for other threads. This should always be done to make static data 
+   thread safe.
+   
+   What's the difference between User thread and Daemon thread?
+   
+   Daemon threads are low priority threads which always run in background and user threads are high priority threads which always run 
+   in foreground. User Thread or Non-Daemon are designed to do specific or complex task where as daemon threads are used to perform
+   supporting tasks
+   
+   How can we create daemon threads?
+   
+   Yes. To create a daemon thread, you can use the setDaemon(true) method on a Thread object.
+   
+   Explain the meaning of the deadlock and when it can occur?
+   
+   A deadlock is a situation in which two computer programs sharing the same resource are effectively preventing each other from 
+   accessing the resource, resulting in both programs ceasing to function. Deadlock is a situation in computing where two or more
+   processes are unable to proceed because each is waiting for the other to release resources.
+   
+   What is ConcurrentHashMap and Hashtable? In java, why is ConcurrentHashMap considered faster than Hashtable?
+   
+   Hashtable locks the entire table during a write operation, thereby preventing other reads or writes. This could be a bottleneck 
+   in a high-concurrency environment. ConcurrentHashMap, however, allows concurrent reads and limited concurrent writes, making it 
+   more scalable and often faster in practice. ConcurrentHashMap: Utilizes a fine-grained locking mechanism (or lock striping) that
+   allows multiple threads to access different segments of the map concurrently. This reduces contention and improves throughput in 
+   scenarios with many concurrent operations. ConcurrentHashMap: Divides the map into segments (or buckets), each of which can be 
+   locked independently. This allows for concurrent updates and reads across different segments, enhancing performance in 
+   multi-threaded applications.
+   
+   How ConcurrentHashMap works internally and what are it's main features.
+   
+   ConcurrentHashMap internally uses HashTable as its data structure. It is thread safe just like Hashtable. It provides all the functionalities 
+   of HashMap except thread safety. ConcurrentHashMap internally divides it into segments. Each segment works independently and can be accessed by 
+   different reader threads simultaneously. However, each segment can be accessed only by one writer thread at a time. The default level of concurrency 
+   is 16. Which means by default, there are 16 segments. Read operations don’t require locking of cocurrent hash map, where as write operations do require
+   locking. Locking is known as segment or bucket locking. Concurrent hash map doesn’t allow null key or null values. 
+   
+   ConcurrentHashMap returns a fail safe iterator. It means, using this iterator, we can modify ConcurrentHashMap while iterating. Each segment works
+   as an individual HashMap. So, if one thread is writing onto one segment, it locks that segment. Now until that thread is done, no other thread will
+   get access to that segment. However, reader threads can still access this segement. If another thread, wants to write to another segment at the
+   same time, it is free to do so. It will acquire lock on that segment and will start doing its job. Read operations return most recently updated 
+   operations, which means the it may not fetch the currently updating value.
+   
+   What is synchronized method and synchronized block? Which one should be preferred?
+   
+   Synchronized block is used to prevent multiple threads from executing a portion of a code in a method at the same point in time. 
+   On the other hand, synchronized method will prevent multiple threads from executing the entire method at the same point in time.
+   synchronized blocks offer better performance as they minimize the scope of synchronization.
+    
+   Suppose i have a try block. i am writing a piece of code that code is throwing IOException. then i am writing a catch block, inside
+   the catch block i am handling RuntimeException. will this work.
+   
+   Ans : No, this will not work in Java. If your try block is throwing an IOException, then the corresponding catch block must be able to handle 
+   IOException or its superclass (such as Exception or Throwable). However, you are catching a RuntimeException, which is not related to IOException 
+   (a checked exception).As a result, the IOException will go unhandled and might cause a compilation erro
+   
+   Checked vs Unchecked Exceptions in Java
+   
+   Checked exceptions are exceptions that are checked at compile-time. The compiler forces you to either handle them using a try-catch block or declare 
+   them using throws in the method signature. Example IOException, SQLException, FileNotFoundException , 
+   Unchecked exceptions are exceptions that occur at runtime and are not checked at compile-time. They are caused by programming logic errors, such as 
+   invalid input or incorrect usage of APIs. Example NullPointerException, ArrayIndexOutOfBoundsException, ArithmeticException,IllegalArgumentException
+   
+   ClassNotFoundException. How do we can resolve.
+   
+   Ans :  In Java that occurs when the Java ClassLoader tries to load a class at runtime but cannot find its definition in the classpath. It may be 
+   caused due to Class Not Available in the Classpath, Missing JAR File, Wrong ClassLoader Usage, Corrupted Class Files. It can be resolved or prevented
+   Ensure the Class is in the Classpath, Verify Class Name in Class.forName(), Add Missing JAR File, If the missing class is from an external library, 
+   ensure the required JAR file is added, Use correct ClassLoader, Recompile the project. If the class file or JAR file is not located in the correct 
+   directory or on the classpath, you can add it to the classpath
+   
+   How do you ensure your java application is scaleable and maintaintable.
+    Ans : First thing we need to make sure there is a loose coupling. 	 
+   
+  What is collectors in Java 8 
+  
+  Ans : Collectors is one of the utility class in JDK which contains a lot of utility functions. It is mostly used with Stream API 
+  as a final step When it comes to the functional style of programming in Java, we typically have few functions which we use widely 
+  and those functions are filter(), map(), reduce(), and collect() which belongs to the Streams API. collect() and reduce() methods
+  are called as the terminal methods because here, the operation gets terminated with some outcome. Functions associated with
+  Collectors usually get used inside collect() methods. Collectors are used to combine the result of processing on the elements of 
+  a stream. Collectors can be used to return a list or a string.
+  
+  What is Consumer in java 8
+  
+  The Consumer Interface is a part of the java.util.function package which has been introduced since Java 8, to implement functional
+  programming in  Java. It represents a function which takes in one argument and produces a result. However these kind of functions 
+  don’t return any value. T: denotes the type of the input argument to the operation. The Consumer interface consists of two functions:
+  accept() and andThen()
+  
+  How does exception handling with try catch finally affect the performance of java application. 
+  Ans : it affect performace slightly due to overhead of managing exceptions but is generally minimal unless exceptions are thrown 
+  frequently.
+  
+  Tell me a condion where finall block will not be executed.
+  
+  Ans : The finally block will not execute if the JVM exit	via System.exit() during try or catch execution.
+  
+  What algorithm JVM uses for garbage collection ?
+  
+  JVM uses mutiple garbae collection algorithm such as Mark-Sweep, Mark-compact and Generational Copying depending on thev collector 
+  chosen.
+  
+  How can memory leak occurs in java even if we have automatic garbage collection ?
+  
+  Ans : Memory leaks in java occurs when objects are  no longer needed but still referenced from other reachable objects, and hence
+  preventing the garbage collector from reclaiming their memory
+  
+  Can we declare pointer in java ?
+  
+  No, Java doesn't provide the the support of pointer.
+  
+  why we use Wrapper classes in collections
+   Ans: Because ArrayList, HashMap, and others in java collection framework , can only hold objects and not premitive data types. 
+   Wrapper classes allow primitive values to be treated as objects. enabling them to be stored and managed within these  collections.
+   
+   Can you provide an example where autoboxing could lead to unexpected behaviour ?
+   
+    Ans : When comparing two Integer instancesusing == , autoboxing might lead to false result because it compares object references,
+	not values.
+	
+   Is there a scenario where autoboxing and unboxing could cause a NullPointerException ?
+   
+    Ans: NullPointerException can occur if you unbox a null object.
+
+   Give a scenario where StringBuffer is better than String ?
+    Ans : In a Multi-threaded server application where multiple thread modify a shared string such as a complex log entry concurrently
+	      from different thread.	
+		  
+  Why multiple inheritance is not possible in java 
+  
+   Ans: Java disallows multiple inheritance to avoid the complexity and ambiguity associated with it, particularly the "diamond problem,"
+   where a class inherits from two classes that have a common ancestor, leading to conflicts in the inheritance of methods. 	
+
+   What is dynamic method dispatch in java?
+   
+   Ans : Dynamic method dispatch is the mechanism in which a call to an overridden method is resolved at run time instead of compile 
+   time. This is an important concept because of how Java implements run-time polymorphism. Method overriding is one of the ways in 
+   which Java supports Runtime Polymorphism. Dynamic method dispatch is the mechanism by which a call to an overridden method is 
+   resolved at run time, rather than compile time.   
+   
+   Can you provide an example where abstraction is effectively used in java ?
+   
+  Ans:   When we use a List, you don't need to know how it stores data, whether as an ArrayList or a LinkedList
+	
+	Where we use ArrayList and where we use LinkedList ?
+	
+	Ans: Use ArrayList we we need Fast random access,Low memory usage and Use LinkedList Frequent insertions/removals at the start/middle
+	and High modification operations. Use ArrayList as the default choice unless you specifically need frequent insertions/deletions in the 
+	middle or beginning, in which case LinkedList might be better
+
+   Can you provide an example of when to use an interface Vs  when to extend a class.
+   
+   Ans: Use an interface when you want to define behavior that multiple unrelated classes can implement and when You want to decouple code by 
+   defining contracts for classes without enforcing how they should be implemented. when you need to achieve multiple inheritance. Use an inteface 
+   when we want to  list the methods a class should have, without detailing how they work.When a subclass extends a class, it allows the subclass to
+   inherit (reuse) and override code defined in the supertype. In short Use a Class (extends) when: You want to reuse existing functionality.
+   There is a clear hierarchical relationship. The subclass inherits fields and methods from the superclass.
+   
+   Can the this or super keyword be used in a static method. ?
+   
+    No, this and super keyword can't be used in static method. Static method belongs to calss not object. But super refers to super
+	class's objct 
+
+  What changes were done for HashMap in Java 8	?
+  
+  Ans : Java 8 introduced significant improvements in HashMap to optimize performance, especially in scenarios with a high number of hash collisions.
+  When multiple keys collide (have the same hash value), Java 7 stored them in a linked list. If the number of elements in a single bucket exceeds 8,
+  the linked list automatically converts into a Red-Black Tree.his improves the worst-case lookup time from O(n) → O(log n). If the number of elements 
+  in a bucket drops below 6, it converts back to a linked list to reduce memory usage.
+  
+  
+  What is Lamda expression ?
+    
+	It is an anonimous function, no name, no modifier, no return type. It is used to work with functional programming.	
+
+
+StringBuffer vs StringBuilder in Java
+
+StringBuffer and StringBuilder are mutable. This means they allow modifications to the character sequence without creating new objects.
+tringBuffer is thread-safe due to synchronization and this is slower. On the other hand, StringBuilder is faster but not thread-safe 
+and is introduced in JDK 1.5. If we do not need thread safety, StringBuilder is the better choice due to its speed. 
+
+ 
+ Maven Build Lifecycle
+
+ The Maven build lifecycle is a fundamental concept that defines the sequence of phases and goals executed to build and manage a Maven
+ project. default: This is the main lifecycle, as it's responsible for project deployment.
+clean: Handles project cleaning, ensuring that all artifacts generated by previous builds are removed.
+site: Manages the creation of the project's site documentation.
+
+ 
+
+ Why main method is called static?
+ 
+ Main method are static because of which no object is required to call the main method. 
+ 
+ Can we run main method without static?
+ 
+ No, you cannot run the main method without it being static in Java as JVM requires it to be static in order to call it without
+ creating an instance of the class.
+ 
+ What happened when the run() in the Spring Boot called 
+ 
+ The run() method creates this application context and starts managing the beans for your app. From this run method, the application 
+ context of IOC (Inversion Of Control) searches the class annotated with @Configuration annotation which calls all the beans in the 
+ classpath and initializes those classes. Beans are stored inside a particular space in JVM (Java Virtual Machine). That particular
+ space is known as the IOC Container.After beans are created the requests will go to the dispatcher servlet and the dispatcher servlet
+ will distribute all the requests among the appropriate controllers.
+ 
+
+  Why Overriding equals() and hashCode() in Java
+  
+  equals() and hashcode() are by default present in Java super class java.lang.Object.
+  Overriding equals and hashCode is crucial when working with collections. Collections like HashSet, HashMap, or Hashtable rely on the
+  hashCode method to organize and search for objects efficiently.  If we don’t override equals and hashCode correctly, these collections
+  may not function as expected. Objects that should be considered equal might not be properly identified, leading to duplicates in sets
+  or incorrect retrieval from maps. Two objects are considered equal only if their references ponits to the same object. unless we override
+  equals() and hashcode() method, the class object will not behave properly on hash-based collections like HashMap, HashSet and  HashTable
+  This is because hash based collections are organized like a sequence of buckets  and hash code value of an object is used to determine
+  the bucket where the object would be stored and the same hashcode value of an object is used again to find the object position in the 
+  bucket. The key retrieveal is basically a two step process.  Finding the correct bucket using hashcode and linearly searching the bucket
+  for the key using equal().Overriding equals() without overriding hashCode() causes the two equal instances to have unequal hashcode. which
+  violate the hashcode contract.
+  
+ 
+  
+  What are the different ways to break a singleton pattern in Java?
+  
+  There are two ways to break the structure of a Singleton: Java Reflection and Deserialization. The hashCode results obtained are 
+  completely different. Serialization:- Serialization can also cause breakage of singleton property of singleton classes. Serialization
+  is used to convert an object of a byte stream and save in a file or send it over a network. Suppose you serialize an object of a 
+  singleton class. Then if you de-serialize that object it will create a new instance and hence break the singleton pattern. 
+  Reflection: Reflection can be caused to destroy singleton property of the
+  
+  What is Java Reflection
+  
+  Reflection is an API that is used to examine or modify the behavior of methods, classes, and interfaces at runtime. The required 
+  classes for reflection are provided under java.lang.reflect package. Reflection gives us information about the class to which an 
+  object belongs and also the methods of that class that can be executed by using the object.Through reflection, we can invoke methods
+  at runtime irrespective of the access specifier used with them.Java reflection is useful because it supports dynamic retrieval of
+  information about classes and data structures by name, and allows for their manipulation within an executing Java program. 
+  
+  Java 17 Features
+  
+a) Sealed classes and Interfaces
+  
+  Enhances the java programming language with sealed classes and interfaces. Sealed classes and interfaces restrict which other classes 
+  or interfaces may extend or implement them. Sealed classes powerful feature that allows you to control the inheritance hierarchy of a 
+  class or interface. They provide a way to explicitly define which classes or interfaces are permitted to extend or implement a sealed type. 
+  Restricted Inheritance: A sealed class or interface is declared using the sealed keyword, followed by a permits clause that lists the specific
+  classes or interfaces allowed to extend or implement it. 
+      public sealed class Shape permits Circle, Square, Rectangle {
+        // ... common properties and methods
+    }
+  	
+  
+b) Pattern matching for the switch:  
+
+   With pattern matching developers can now match the values ​​of Strings, enums, and records, which makes it much easier to write short 
+   and readable code.It expands the expressiveness and applicability of switch expressions and statements by allowing patterns and 
+   statements by allowing patterns to appear in case labels. It also allows the historical null-hostility of the switch to be relaxed 
+   when desired .  There are two new patterns introduced. 1) Guarded pattern: Uses pattern && boolean expression for further refinement.
+   2) Parenthesized pattern. The syntax for pattern matching in Java is fairly straightforward and involves a ‘case’ keyword followed by
+   an arrow (‘->’) to indicate what code should be executed if the pattern matches.
+   
+c) Enhanced pseudo-Random Number Generators :
+   
+   It provides a new interface type and implementations for pseudorandom number generators to make it easier to use various PRNG algorithms and to 
+   better support stream-based operations. 
+   
+d) Strongly Encapsulated JDK Internals:
+
+    It strongly encapsulates all non-critical internal elements of the JDK 
+
+e) Foreign Functions & memory API
+
+   It introduces an API by which java programs can interpret code and data outside of the java runtime.
+   
+f)  Vector API   : It introduces an API to express vector computations that reliably compile at runtime to optimal vector instructions.
+
+ 
+  What is collectors in Java 8 
+  
+  Ans : Collectors is one of the utility class in JDK which contains a lot of utility functions. It is mostly used with Stream API 
+  as a final step When it comes to the functional style of programming in Java, we typically have few functions which we use widely 
+  and those functions are filter(), map(), reduce(), and collect() which belongs to the Streams API. collect() and reduce() methods
+  are called as the terminal methods because here, the operation gets terminated with some outcome. Functions associated with
+  Collectors usually get used inside collect() methods. Collectors are used to combine the result of processing on the elements of 
+  a stream. Collectors can be used to return a list or a string.
+  
+ 
+  
+  What is record in java
+  
+  In Java, a record is a special type of class introduced in Java 14 (as a preview) and finalized in Java 16. It is designed to be a simple way to 
+  create immutable data carrier classes, automatically providing commonly needed methods like equals(), hashCode(), and toString().
+  a) No need to write boilerplate code for getters, constructors, equals(), hashCode(), and toString().
+  b) Immutable by Default : All fields in a record are final, meaning they cannot be modified after initialization.
+  c) Auto-Generated Methods : Auto-Generated Methods - auotomatically provides Getters (but no setters), equals() and hashCode(), toString()
+  d) Can Implement Interfaces - Records can implement interfaces but cannot extend other classes because they implicitly extend java.lang.Record.
+  
+  How does exception handling with try catch finally affect the performance of java application. 
+  Ans : it affect performace slightly due to overhead of managing exceptions but is generally minimal unless exceptions are thrown 
+  frequently.
+  
+  Tell me a condion where finall block will not be executed.
+  
+  Ans : The finally block will not execute if the JVM exit	via System.exit() during try or catch execution.
+  
+  What algorithm JVM uses for garbage collection ?
+  
+  JVM uses mutiple garbae collection algorithm such as Mark-Sweep, Mark-compact and Generational Copying depending on thev collector 
+  chosen.
+  
+  How can memory leak occurs in java even if we have automatic garbage collection ?
+  
+  Ans : Memory leaks in java occurs when objects are  no longer needed but still referenced from other reachable objects, and hence
+  preventing the garbage collector from reclaiming their memory
+  
+  Can we declare pointer in java ?
+  
+  No, Java doesn't provide the the support of pointer.
+  
+  why we use Wrapper classes in collections
+  
+   Ans: Because ArrayList, HashMap, and others in java collection framework , can only hold objects and not premitive data types. 
+   Wrapper classes allow primitive values to be treated as objects. enabling them to be stored and managed within these  collections.
+   
+   Can you provide an example where autoboxing could lead to unexpected behaviour ?
+    Ans : When comparing two Integer instancesusing == , autoboxing might lead to false result because it compares object references,
+	not values.
+	
+   Is there a scenario where autoboxing and unboxing could cause a NullPointerException ?
+   
+    Ans: NullPointerException can occur if you unbox a null object.
+
+   Give a scenario where StringBuffer is better than String ?
+    Ans : In a Multi-threaded server application where multiple thread modify a shared string such as a complex log entry concurrently
+	      from different thread.	
+		  
+  Why multiple inheritance is not possible in java 
+  
+   Ans: Java disallows multiple inheritance to avoid the complexity and ambiguity associated with it, particularly the "diamond problem,"
+   where a class inherits from two classes that have a common ancestor, leading to conflicts in the inheritance of methods. 	
+
+   What is dynamic method dispatch in java?
+   
+   Ans : Dynamic method dispatch is the mechanism in which a call to an overridden method is resolved at run time instead of compile 
+   time. This is an important concept because of how Java implements run-time polymorphism. Method overriding is one of the ways in 
+   which Java supports Runtime Polymorphism. Dynamic method dispatch is the mechanism by which a call to an overridden method is 
+   resolved at run time, rather than compile time.   
+   
+   Can you provide an example where abstraction is effectively used in java ?
+   
+    When we use a List, you don't need to know how it stores data, whether as an ArrayList or a LinkedList
+
+   Can you provide an example of when to use an interface Vs  when to extend a class.
+   
+   Ans: Use an inteface when we want to  list the methods a class should have, without detailing how they work.When a subclass 
+   extends a class, it allows the subclass to inherit (reuse) and override code defined in the supertype.   
+   
+   Can the this or super keyword be used in a static method. ?
+    No, this and super keyword can't be used in static method. Static method belongs to calss not object. But super refers to super
+	class's objct 
+
+  What changes were done for HashMap in Java 8	
+  
+  In Java 8, HashMap replaces linked list with a binary tree when the number of elements in a bucket reaches certain threshold. When the number of elements in a bucket exceeds a certain
+  threshold (called TREEIFY_THRESHOLD, which is 8), the linked list is converted into a balanced binary tree (specifically a red-black tree).This reduces the lookup time for that bucket
+  from O(n) to O(log n). If the number of elements drops below another threshold (UNTREEIFY_THRESHOLD, which is 6), the tree is converted back to a linked list.
+  
+  What is Lamda expression ?
+    
+	It is an anonimous function, no name, no modifier, no return type. It is used to work with functional programming.
+	
+
+What is MetaSpace in Java 8?
+
+In Java 8, Metaspace stores class metadata in native memory, separate from the heap. It can dynamically expand, overcoming size 
+limitations, and enhances garbage collection efficiency, auto-tuning, and metadata distribution. It is used by the JVM to store
+ metadata about loaded classes and methods. It replaces the PermGen space, offering dynamic allocation, separate memory management
+from the heap, and improved garbage collection, thereby mitigating PermGen space errors.	
+
+BiFunction Interface in Java 8
+
+The BiFunction Interface is a part of the java.util.function package which has been introduced since Java 8, to implement functional
+programming in Java. It represents a function which takes in two arguments and produces a result. Hence this functional interface which 
+takes in 3 parameters
+namely:-
+
+T: denotes the type of the first argument to the function
+U: denotes the type of the second argument to the function
+R: denotes the return type of the function
+
+The lambda expression assigned to an object of BiFunction type is used to define its apply() which eventually applies the given function
+ on the arguments. The main advantage of using a BiFunction is that it allows us to use 2 input arguments while in function we can only
+ have 1 input argument.
+
+StringBuffer vs StringBuilder in Java
+
+StringBuffer and StringBuilder are mutable. This means they allow modifications to the character sequence without creating new objects.
+tringBuffer is thread-safe due to synchronization and this is slower. On the other hand, StringBuilder is faster but not thread-safe 
+and is introduced in JDK 1.5. If we do not need thread safety, StringBuilder is the better choice due to its speed. 
+
+
+ 
+ Maven Build Lifecycle
+
+ 
+ The Maven build lifecycle is a fundamental concept that defines the sequence of phases and goals executed to build and manage a Maven
+ project. default: This is the main lifecycle, as it's responsible for project deployment.
+clean: Handles project cleaning, ensuring that all artifacts generated by previous builds are removed.
+site: Manages the creation of the project's site documentation.
+ 
+  What happened when your database is down in your application.
+ 
+
+ In java why does the static block execute before the main method ?
+ 
+ The static blocks always execute first before the main() method in Java because the compiler stores them in memory at the time of 
+ class loading and before the object creation. Here, the compiler executes all the static blocks first, and after finishing the 
+ static block execution, it invokes the main() method.
+ 
+ Why main method is called static?
+ 
+ Main method are static because of which no object is required to call the main method. 
+ 
+ Can we run main method without static?
+ No, you cannot run the main method without it being static in Java as JVM requires it to be static in order to call it without
+ creating an instance of the class.
+ 
+
+ 
+ What change you faced while implementing Auth2
+  .
+  
+     
+ What is the Callable Interface in Java?
+ 
+ Ans : The Callable interface in Java is similar to Runnable, but it allows a thread to return a result and throw checked exceptions. Unlike Runnable,
+ which does not return a result, Callable<T> returns a result of type T. Can be used with ExecutorService for concurrent execution.
+ 
+ What is Future in Java?
+ 
+ Ans : Future<T> is an interface in Java’s concurrent API that represents the result of an asynchronous computation. It provides methods to:
+ Check if the task is completed, Retrieve the result once available, Cancel the task if needed, A Future interface provides methods to check
+ if the computation is complete, to wait for its completion and to retrieve the results of the computation.Future is part of java.util.concurrent 
+ and is commonly used with ExecutorService to manage asynchronous tasks.
+ 
+ What is ExecutorService in Java?
+ 
+ Ans : The ExecutorService interface extends Executor by adding methods that help manage and control the execution of threads. An ExecutorService is 
+ a utility in Java that provides a way to execute tasks concurrently. It manages a pool of worker threads, and allows you to submit tasks for execution.
+ The ExecutorService handles creation, management, and reusability of threads, making it easier to handle concurrent tasks in multithreaded applications.
+ 
+ Why Use ExecutorService Instead of Creating Threads Manually?
+ 
+ a) Thread Pooling  - Reuses threads instead of creating new ones. 
+ b) Efficient Resource Management ⚡ - Reduces CPU and memory overhead.
+ c) Task Scheduling - Supports executing tasks with delays or periodically.
+ d) Graceful Shutdown - Provides methods to terminate tasks cleanly
+ 
+ 
+ 
+ What is the Difference Between CompletableFuture And Future In Java ?
+ 
+ Ans : Both Future and CompletableFuture are used for asynchronous programming in Java, but CompletableFuture is more powerful and provides additional
+ features like chaining, combining, non-blocking execution, and handling multiple tasks. CompletableFuture extends Future and provides non-blocking 
+ methods, chaining, and exception handling.
+ 
+ Difference between Concurrency and Parallelism
+ 
+ oncurrency relates to an application that is processing more than one task at the same time. Concurrency is an approach that is used for decreasing
+ the response time of the system by using the single processing unit. Concurrency creates the illusion of parallelism, however actually the chunks
+ of a task aren’t parallelly processed, but inside the application, there are more than one task is being processed at a time. It doesn’t fully 
+ end one task before it begins ensuing. Concurrency is achieved through the interleaving operation of processes on the central processing unit(CPU) 
+ or in other words by the context switching. that’s rationale it’s like parallel processing. It increases the amount of work finished at a time. 
+ in Concurrency means multiple tasks start, run, and complete in overlapping time periods.
+ 
+ Parallelism is related to an application where  tasks are divided into smaller sub-tasks that are processed seemingly simultaneously or parallel.
+ It is used to increase the throughput and computational speed of the system by using multiple processors. 
+ 
+
+what is the difference between static method and default method in interfaces.
+
+Ans: In Java 8, interfaces gained the ability to include method implementations through two new types of methods: static methods and default methods. While both 
+allow for method bodies within an interface, they differ in their purpose and how they are accessed and inherited.
+
+Default Methods:
+
+Purpose:
+Default methods were introduced to allow for the addition of new methods to existing interfaces without breaking compatibility with classes that already implement 
+those interfaces. They provide a "default" implementation that implementing classes can either use directly or override.
+Access:
+Default methods are instance methods. They are inherited by implementing classes and can be called on instances of those classes, similar to regular instance methods.
+Overriding:
+Implementing classes can override default methods to provide their own specific implementation, if desired.
+Keyword:
+Declared using the default keyword. 
+Static Methods:
+Purpose:
+Static methods in interfaces are similar to static methods in classes. They are utility or helper methods that belong to the interface itself, not to any specific 
+instance of an implementing class. They are useful for providing common functionality related to the interface that does not depend on the state of an object.
+Access:
+Static methods are accessed directly through the interface name, not through an instance of an implementing class. For example, InterfaceName.staticMethod().
+Overriding:
+Static methods in interfaces cannot be overridden by implementing classes. They are part of the interface's definition and are not inherited in the same way as 
+instance methods.
+Keyword:
+Declared using the static keyword.
+
+
+Local cache : Local cache refers to a cache that resides in the same JVM (Java Virtual Machine) or process as your application. This is sometimes known as an 
+"in-memory" cache because the cached data is stored in the main memory of the server running the application. The primary advantage of local caching is speed.
+Since the cache is in the same memory space as your application, accessing this data is extremely fast. Another benefit is simplicity; such systems are easier 
+to implement and manage because they do not require network configuration or additional dependencies.
+
+Distributed Cache : Distributed cache, on the other hand, is a cache shared over multiple nodes/servers. It provides a solution to both the scalability problem 
+and the data inconsistency issue intrinsic to local caches. A distributed cache can handle much larger data volumes because it spreads data across multiple nodes.
+It also maintains data consistency across different instances of your application by ensuring that all instances refer to the same cache. However, distributed caches
+are generally slower than local caches because they often require network calls to retrieve data. They're also more complex to set up and  manage due to the networking
+requirements
+
+What is String Pooling ?
+
+The String Pool in Java refers to a special memory area inside the Heap, called the String Constant Pool, where Java stores string literals to optimize memory usage and improve
+ performance.
+
+
+Name The super class in Java
+
+java.lang.Object
+
+
+Every class in Java implicitly inherits from Object (unless it explicitly extends another class).
+It provides common methods that all Java classes have, such as:
+
+toString() – Returns a string representation of the object.
+equals(Object obj) – Compares two objects for equality.
+hashCode() – Returns a hash code for the object.
+clone() – Creates and returns a copy of the object.
+getClass() – Returns the runtime class of the object.
+finalize() – Called by the garbage collector before object destruction.
+
+Why was finalize() deprecated?
+
+finalize() was deprecated starting from Java 9 because it was considered unreliable, unsafe, and harmful for performance
+
+Unpredictable Execution
+The Garbage Collector decides when (or if) to call finalize().
+There is no guarantee that it will run promptly or even at all before the program exits.
+Performance Issues
+Objects with finalize() take longer to collect because they require an extra GC cycle.
+This can lead to memory leaks and increased GC overhead.
+Risk of Resurrection
+Inside finalize(), an object can make itself reachable again (called object resurrection), which complicates GC and can cause bugs.
+Better Alternatives Exist
+Resource cleanup should use try-with-resources and AutoCloseable instead of relying on GC.
+
+
+What is System class
+
+The System class in Java is a final class in the java.lang package that provides utility methods and system-related functionalities. It cannot be instantiated because its constructor 
+is private.
+Provides Standard Input/Output Streams
+System.in → Standard input stream (keyboard)
+System.out → Standard output stream (console)
+System.err → Standard error stream
+
+
+Does  Java supports global variables ? why/why not
+
+Ans: Java does not support true global variables like languages such as C or C++ 
+Reason
+Object-Oriented Design:
+Java is designed around the principle of encapsulation and object-oriented programming. Global variables would break encapsulation by allowing unrestricted access to data across the 
+entire application.
+
+Namespace Pollution:
+Global variables can lead to naming conflicts and make code harder to maintain. Java avoids this by requiring variables to be declared within classes or methods.
+
+Thread Safety & Security:
+Global variables can cause concurrency issues in multi-threaded environments and pose security risks. Java promotes controlled access through class fields and methods. 
+
+How is an RMI objct is developed in java
+
+An RMI(Remote Method invokation) object is a server-side object whose methods can be invoked remotely by clients running in a different JVM (possibly on another machine). RMI handles the networking,
+marshaling/unmarshaling of parameters, and stubs/skeletons behind the scenes.
+Define a Remote Interface
+Must extend java.rmi.Remote
+All remote methods must throw java.rmi.RemoteException
+
+
+Time slicing and preemptive scheduling in Java
+
+Time Slicing
+
+Definition:
+Time slicing is a CPU scheduling technique where each thread/process gets a fixed time slice (quantum) to execute. After its time expires, the CPU switches to the next thread in the ready 
+queue.
+Purpose:
+Ensures fairness among threads so that no single thread monopolizes the CPU.
+In Java:
+
+Java threads rely on the underlying OS scheduler for time slicing.
+The JVM does not guarantee strict time slicing; it depends on the platform.
+Example: Multiple threads running with Thread.yield() can hint the scheduler to give up CPU, but actual slicing is OS-controlled.
+
+ 2. Preemptive Scheduling
+
+Definition:
+Preemptive scheduling means the CPU can forcibly take control from a running thread and give it to another thread with higher priority or when its time slice expires.
+Difference from Non-Preemptive:
+
+In non-preemptive, a thread runs until it voluntarily releases the CPU (e.g., completes or waits).
+In preemptive, the scheduler can interrupt a thread at any time.
+
+In Java:
+
+Java uses preemptive, priority-based scheduling for threads.
+Higher priority threads are favored, but not guaranteed (depends on OS).
+The JVM maps Java thread priorities to OS thread priorities.
+
+what is the life cycle of a thread
+
+New (Created)
+
+When you create a thread using Thread t = new Thread(); but haven’t started it yet.
+The thread object exists, but it’s not running.
+Transition to Runnable happens when you call t.start().
+
+Runnable
+
+After calling start(), the thread is ready to run but waiting for CPU time.
+It’s in the ready queue, and the OS scheduler decides when it runs.
+Methods like yield() can influence scheduling.
+
+Running
+
+When the thread gets CPU and executes its run() method.
+Only one thread per CPU core can be in Running state at a time.
+
+Blocked / Waiting
+
+Blocked: Waiting to acquire a lock (e.g., synchronized block).
+Waiting: Waiting indefinitely for another thread to signal (via wait()).
+Timed Waiting: Waiting for a specific time (e.g., sleep(ms), join(ms)).
+
+Terminated (Dead)
+
+After run() completes or the thread is stopped.
+Cannot restart a dead thread (calling start() again throws IllegalThreadStateException).
+
+what is the default value of a local variables
+In Java, local variables do not have a default value
+
+Two differne types of type casting
+
+1. Primitive Type Casting
+This involves converting one primitive data type into another.
+It can be of two kinds:
+
+a)Implicit (Widening) Casting:
+Happens automatically when converting a smaller type to a larger type.
+
+int num = 10;
+double d = num; // int to double (widening)
+
+b) Explicit Casting (Narrowing)
+Done manually by the programmer when converting a larger type to a smaller type.
+
+double d = 10.5;
+int num = (int) d; // double to int (narrowing)
+
+2. Reference Type Casting
+This involves converting one object type into another within the same inheritance hierarchy.
+It can be of two kinds:
+
+a) Upcasting
+Converting a subclass object to a superclass type.
+Done implicitly. 
+Example
+class Animal {}
+class Dog extends Animal {}
+Animal a = new Dog(); // Upcasting
+
+b)Downcasting
+
+Converting a superclass reference back to a subclass type.
+Requires explicit casting and usually checked with instanceof.
+Example:
+
+Animal a = new Dog();
+Dog d = (Dog) a; // Downcasting
+
+
+What is a Predicate ?
+
+Ans : A Predicate in Java 1.8 is a functional interface that represents a single argument function that returns a boolean value. It is part of the 
+java.util.function package and is commonly used in Streams, Lambda expressions, and collections filtering. It support functional programming, 
+especially with Streams.
+
+Mapped super class : In Java Persistence API (JPA), a mapped superclass is a class annotated with @MappedSuperclass that defines common persistent
+state and mapping information inherited by its entity subclasses. It is not an entity itself and, therefore, does not have a corresponding table
+in the database. Purpose: The primary use is to reuse common fields (like id, creationDate, version) and their mapping logic across multiple 
+entities without repeating code. Abstract or Concrete: The class can be either abstract or a concrete class. Override Mappings: Subclasses can
+override the column mappings inherited from the superclass using the @AttributeOverride and @AssociationOverride annotations.
+
+Composite Primary Key (2 0r 3 clolumn as Primary Keyword) 
+Ans: In Spring Data JPA, a Composite Primary Key means an entity’s primary key is made up of more than one field, and JPA needs a special way to 
+represent that key. There are two standard ways to do this in JPA: a) @EmbeddedId b) @IdClass. A composite primary key is a separate key class that
+combines multiple columns and is used as the entity’s identifier. Create an embeddable key class. Must be @Embeddable. Must implement equals() and
+hashCode(). Serializable (recommended)
+
+In collection which collection maintains insertion order ?
+
+Ans : "ArrayList, LinkedList, LinkedHashSet, and LinkedHashMap maintain insertion order in Java.". LinkedList - Maintains insertion order.Doubly 
+Linked List. Faster insert/delete in middle. LinkedHashSet - Only Set that maintains insertion order.LinkedHashMap- Only Map that maintains insertion
+order.
+
+Collection which is faster:
+
+Is String Thread Safe ?
+
+Ans : String in Java is thread‑safe. Why String is Thread-Safe. 1) Strings are Immutable. Once created, the value cannot be changed. No thread can modify it. No lock is needed. Multiple
+ threads can safely share the same String object. mmutable objects are inherently thread-safe.Even though String is thread-safe, operations that create a new String are not thread-safe 
+ by themselves. In Short String is thread-safe because it is immutable. Multiple threads can share the same String instance safely since its value cannot change. However, operations that
+ assign new String values are not thread-safe at the variable level. For mutable alternatives, StringBuffer is thread-safe, while StringBuilder is not.”
+
+

@@ -1,0 +1,64 @@
+
+
+Kubernetes Interview Questions
+
+What Is Kubernetes? | New RelicKubernetes, often abbreviated as k8s (Azure Kubernetes Service AKS), is an open-source platform designed to automate the deployment, scaling, and management of
+containerized applications. Kubernetes is used to manage and scale applications running in containers, which are small, isolated environments. It simplifies the
+reliable management of numerous apps and services, even when they are distributed across multiple servers.
+
+What is orchestration when it comes to software and DevOps? 
+
+Orchestration refers to integrating multiple services that allow them to automate processes or synchronize information promptly. For example, you have six or seven 
+microservices for an application to run. If you place them in separate containers, this would inevitably create obstacles for communication. Orchestration would help 
+in such a situation by enabling all services in individual containers to work seamlessly to accomplish a single goal.
+
+How are Kubernetes and Docker related?
+
+Docker is an open-source platform used to handle software development. Its main benefit is that it packages the settings and dependencies that the software/application
+needs to run into a container, which allows for portability and several other advantages. Kubernetes allows for the manual linking and orchestration of several 
+containers, running on multiple hosts that have been created using Docker
+
+What is meant by Azure Services ?
+
+Azure offers a range of cloud services, including computing, analytics, storage, networking, and AI. Customers choose from these services to develop and scale new 
+applications, or run their existing applications, in the cloud. Azure helps businesses manage and deploy applications globally with ease and flexibility.
+
+What are the Azure services and functions?
+
+Azure Functions is a serverless solution that allows you to write less code, maintain less infrastructure, and save on costs. Instead of worrying about deploying and 
+maintaining servers, the cloud infrastructure provides all the up-to-date resources needed to keep your applications running.
+
+what is azure SQL MI ?
+
+Azure SQL Managed Instance is a cloud database service that provides a fully managed, always up-to-date platform as a service (PaaS) for SQL Server databases. It
+offers near 100% compatibility with the SQL Server engine, including support for SQL Server 2008 and later versions. It's designed to simplify database management 
+by handling updates, backups, and infrastructure maintenance, allowing users to focus on database-specific tasks.
+ 
+Azure SQL Managed Instance
+ 
+Azure SQL Managed Instance is a PaaS service that has near 100% compatibility with the latest Enterprise Edition SQL Server database engine, providing a native 
+virtual network (VNet) implementation that addresses common security concerns, and a business model favorable to existing SQL Server customers. SQL Managed Instance
+allows existing SQL Server customers to lift and shift their on-premises applications to the cloud with minimal application and database changes. At the same time, 
+SQL Managed Instance provides all PaaS capabilities (automatic patching and version updates, automated backups, high availability) to drastically reduce management 
+overhead and the total cost of ownership (TCO).
+
+Kubernetes automates things like:
+
+Starting new apps when needed.
+Restarting apps if they crash.
+Spreading out work so that no one part of the system is overloaded.
+Scaling up or down based on demand.
+
+What is Role-Based Access Control (RBAC) in Kubernetes?
+
+RBAC is a security mechanism that restricts users and services based on their permissions. It consists of:
+Roles and ClusterRoles: Define the actions allowed on resources.
+RoleBindings and ClusterRoleBindings: Assign roles to users or service accounts.
+
+How does Kubernetes autoscaling work?
+
+Kubernetes provides three types of autoscaling to optimize resource usage:
+
+Horizontal Pod Autoscaler (HPA): Adjusts the number of Pods based on CPU usage, memory usage, or custom metrics.
+Vertical Pod Autoscaler (VPA): Adjusts the CPU and memory requests for individual Pods.
+Cluster Autoscaler: Adjusts the number of worker nodes in the cluster based on resource needs.

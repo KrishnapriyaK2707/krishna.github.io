@@ -1,0 +1,47 @@
+1. What is offset in Kafka ?
+2. Java 21 features
+3. Explain any of the design pattern with example.
+4. What will be the output of the given java program ? (javafile)
+5. Write an example for left join query.
+6. Multithreading concepts.
+7. Kubernetes deployment.
+8. Why maven pom.xml is used ? explain the tags.
+9. Component and Bean difference
+10. Apache spark
+11. Apache Airflow
+12. How we know how much memory is needed for an application?
+13. Explain microservice architecture w.r.t project and explain the technology stack used.
+14. What is circular dependency in spring boot and how to resolve ?
+15. How can we insert a bulk of data ?
+16. How caching is working ?
+17. Write a program to merge two sorted array of integers and get the output also sorted in java 8 and old java.
+18. How we can optimize a rest api ?
+19. Spring security explain in context of project
+20. Oauth and JWT difference.
+21. Java 8 memory management.
+22. How can we improve the performance of an application ?
+23. Why functional interface is used? and why it has only one abstract method ?
+
+
+
+1. What are the Jenkins pipeline stages ?
+2. How performance can be improved in microservice application ?
+3. Java 21 features used
+4. A design pattern with example.
+5. How exception is handled in spring boot application ?
+
+6.  What is component testing ?
+7.  Why we are using load testing ?
+8.  What is an AI model ?
+9.  What is Database pooling and transaction management ?
+10. Development process and AI usage.
+11. How to minimize token usage ?
+12. Jenkins and GitHub Actions
+13. What is Code Quality & Security and vulnerability check in Jenkins pipeline and what are the tools used ?
+14. Which is the Performance monitoring tool used ? - Amazon Cloud Watch
+
+
+
+
+
+

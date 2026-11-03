@@ -1,0 +1,399 @@
+
+ what is evet driven microservice.
+ 
+ Ans: Event‑driven microservice architecture is a design approach where microservices communicate by producing and consuming events,instead of making
+ direct synchronous API calls. Event‑driven microservices rely on events—messages that represent something that has happened in the system. Each event
+ is published to a message broker (like Kafka, RabbitMQ, AWS SNS/SQS), and other microservices react to those events asynchronously. An event is a 
+ simple message describing an action or a state  change. A microservice that publishes an event. Example- Order Service → publishes OrderCreatedEvent 
+ when a new order is placed. Consumer - A microservice that listens to events and performs an action.  Example - 
+ Payment Service → consumes OrderCreatedEvent and charges the customer. Event Broker - A system that transports
+ events between microservices. Common brokers: Apache Kafka RabbitMQ,  AWS SQS/SNS,  Azure Service Bus
+ How It Works -> Order Service receives a new order.-> It saves the order in DB. -> It publishes an event → OrderCreatedEvent. -> Event broker 
+ sends this event to all subscribers. -> Payment Service receives it → processes the payment. -> Inventory Service receives it → reduces stock.-> 
+ Notification Service receives it → sends email/SMS. 
+ 
+ All these actions happen asynchronously, without waiting for each other.
+ 
+ What is Resilience Patterns
+
+ Ans : Resilience Patterns are architectural and design strategies used to make distributed systems reliable, fault‑tolerant, and stable even when 
+ parts of the system  fail, slow down, or behave unpredictably.In microservices—especially when calling multiple external systems—failures are normal,
+ not exceptional. Resilience patterns help ensure your service continues working gracefully. Resilience patterns are techniques used to keep
+ microservices stable when external systems fail or behave unpredictably. They include timeouts, retries, circuit breakers, bulkheads, rate limiting,
+ fallbacks, caching, and idempotency. Together, they ensure your service stays responsive, avoids cascading failures, and provides graceful 
+ degradation under stress or partial outages.
+ 
+ Why Resilience Patterns Are Needed.
+ 
+ Ans:
+
+ External services may be down
+ Network may be slow or unreliable
+ APIs may timeout
+ High traffic may exhaust threads
+ Dependencies may return errors repeatedly
+
+Resilience patterns help your system withstand all these situations.
+ 
+ Common Resilience Patterns are
+ Timeout Pattern : Never wait forever for external systems. Set maximum time to wait for a response.Prevents thread starvation.
+ Retry Pattern : Retry failed calls only for transient errors (like timeouts, 5xx). Use exponential backoff. Add jitter to avoid spikes.
+ Circuit Breaker Pattern : If an external system fails repeatedly: Open the circuit → stop sending requests temporarily.
+ Half‑open → test if it recovered Closed → normal flow.
+ 
+Resilience4j Implements All These Patterns
+Resilience4j provides:
+CircuitBreaker
+Retry
+TimeLimiter
+RateLimiter
+Bulkhead
+Cache
+
+1) How do you handle distributed transactions in microservices?. 
+
+Ams: 1. The Saga Pattern (Recommended). : The Saga pattern is the industry standard for distributed transactions. Instead of one giant transaction, a
+ Saga breaks the process into a series of local transactions. Each service performs its work and publishes an event or message to trigger the next 
+ step. If a step fails, the Saga executes compensating transactions to undo the changes made by the previous steps. There are two ways to coordinate
+ a Saga:
+
+ a) Choreography: Each service produces and listens to events from other services. It's decentralized and simple for small workflows but can become 
+ "spaghetti" as it grows.
+ b) Orchestration: A central "Orchestrator" (state machine) tells each service what to do. It’s easier to manage and debug for complex business
+ processes.
+ 
+2. Two-Phase Commit (2PC) : 2PC is a "strong consistency" approach where a coordinator asks all participating databases if they are ready to commit
+ (Prepare phase)  and then tells them to finalize (Commit phase). Pros: Guarantees data consistency across services.Cons: It is a blocking protocol,
+ meaning if the coordinator fails, resources stay locked.  It significantly hurts performance and scalability, so it is rarely used in modern 
+ high-scale microservice3. The Outbox Patterns. 
+ 
+3. The Outbox Pattern : One of the biggest risks in Sagas is a service updating its database but failing to send the "success" event to the next 
+service (or vice-versa). The Transactional Outbox pattern solves this. The service updates its data and inserts a record into an "Outbox" table in 
+the same database transaction. A separate Message Relay process polls the Outbox table and publishes the message to the broker (like Kafka or 
+RabbitMQ). A separate Message Relay process polls the Outbox table and publishes the message to the broker (like Kafka or RabbitMQ).
+
+Summary of Best Practices
+
+Design for Idempotency: Services must be able to handle the same message twice without causing side effects. Prefer Eventual Consistency: Accept that
+ data might be "out of sync" for a few milliseconds to gain massive performance benefits. Use Monitoring: Because Sagas are distributed, you need
+ robust logging  (Distributed Tracing) to see exactly where a transaction stalled.
+ 
+
+2) What challenges arise in microservices testing?
+
+Ans: Testing microservices is significantly more complex than testing a monolith because you are moving from a single, predictable process to a 
+distributed system where "the network"  is a constant variable. 
+
+1. Managing Service Dependencies : In a monolith, dependencies are just method calls. In microservices, a single function might rely on three other 
+   services, a message broker, and two external APIs. The Challenge: If you want to test Service A, do you need to spin up Services B, C, and D? If
+   any of those "downstream" services are down or slow, your tests will fail (flakiness), even if Service A is perfect. The Solution: Use Service
+   Virtualization or Mocks/Stubs to simulate the behavior of dependencies so you can test your service in isolation
+ 
+2. Brittle End-to-End (E2E) Tests : End-to-end tests verify the entire user journey (e.g., "Add to Cart" → "Checkout" → "Payment"). The Challenge: 
+   These tests are notoriously "flaky" in microservices. Because they involve multiple services, databases, and network hops, a minor network blip or
+   a slow container startup can cause a test to fail randomly. They are also slow to run and expensive to maintain.
+   
+3. "The Dual-Interface Problem" (Contract Breaks) : Microservices communicate via APIs (REST, gRPC) or messages.  
+
+
+
+4) What is bounded context in microservices?
+
+  Ans : Bounded Context is one of the core patterns in Domain Driven Design and is about how we divide a large project or team into domains. It also
+  provides basic information on how to divide the project into microservices when we use a microservice architecture. Although there is no specific 
+  rule in this regard and it is necessary to do this work with more business knowledge and experience, Bounded Context shows us a method. Basically,
+  it is necessary to design the parts that do independent work as separate microservices as much as possible. It is a Domain-Driven Design (DDD) 
+  concept defining a specific, explicit boundary within which a  particular domain model, terminology, and business logic are consistently applied. 
+  It acts as a, logical boundary separating different parts of a system, ensuring each microservice has its own data model and functions autonomously 
+  without model conflict
+
+5) How do you handle versioning in REST APIs?
+
+URI versioning: /v1/resource.
+Header versioning: Accept: application/vnd.api.v1+json.
+Query parameters: ?version=1.
+
+6) How do you handle configuration in microservices?
+
+7) What is eventual consistency?
+
+  Eventual consistency means that when data is updated in one service, it may take some time before that change is reflected across other services.
+  Instead of syncing immediately, the system eventually becomes consistent, usually through event-driven communication.
+
+For example, when an order is placed, the inventory service may update a little later through an event.It’s a trade-off between speed and accuracy—but
+ works well when real-time syncing isn’t critical, and system availability is more important.
+
+8) How do you handle service discovery in microservices?
+
+ Ans : Service discovery is implemented using tools like: Client-side discovery: Services register with a service registry (e.g., Eureka, Consul).
+ Server-side discovery: Services register, and the API Gateway resolves requests using a registry.
+	
+9) How to implement idempotency in a microservices-based system	
+
+  Ans: idempotency ensures that performing the same operation multiple times has the same effect as performing it once. The "Idempotency Key" Pattern:
+  The most robust way to handle this is by requiring clients to send a unique Idempotency Key (usually a UUID) in the request header. How the Workflow
+  Looks: Check: The service receives a request and checks a fast-access store (like Redis) to see if the key exists. Execute/Wait: * If the key exists
+  and the status is "Completed, " return the cached response immediately. If the key exists and the status is "In-Progress," return a 409 Conflict or
+  202 Accepted. Store: If the key is new, create a record with a "Processing" state. Execute the logic, then update the record with the final
+  response and an "Ended" timestamp.
+
+14) What is a container
+
+ Ans : A container is a light weight, standalone unit that bundles an application along with it's dependencies, including libraries, configurations 
+ and runtime, to ensure consistency across different environment. 
+ 
+ 15) How do you can ensure backward compatibility in microservices ?
+ 
+  Ans : Backward compatibility means new versions of your microservices should not break existing clients. a) API versioning: Allows changes without
+  breaking old  clients b) Backward‑compatible schema evolution :Ensures old clients can parse responses c) Consumer-driven contracts :Prevents 
+  breaking downstream consumers
+  
+16) What is SSL/TLS encryption–decryption ?
+    Ans: SSL (Secure Sockets Layer) and TLS (Transport Layer Security) are cryptographic protocols designed to provide secure communication over a 
+	computer network. They ensure that data transmitted between a client (such as a web browser) and a server (such as a website) remains private and
+	integral. In other words SSL/TLS encryption–decryption is the mechanism that keeps data secure and private when it travels over the internet
+	(for example, when you access HTTPS websites or send data between microservices).  
+  
+17) What is SSL offload
+  Ans : SSL Offload (or SSL Termination) is a technique used in web/application architectures to move the SSL/TLS encryption–decryption work away 
+  from the application servers and handle it at a load balancer, reverse proxy, or dedicated SSL device. When a client (browser/mobile app) makes an
+  HTTPS request:Normally, the application server performs the SSL handshake, decrypts the request, processes it, and then encrypts the response. This
+  is CPU‑intensive. With SSL Offload, the load balancer (like F5, NGINX, AWS ALB, Azure Application Gateway, Citrix ADC) terminates the SSL connection,
+  decrypts traffic, and forwards it to backend servers in plain HTTP.
+ Without SSL Offload : Client → HTTPS → App Server decrypts + processes + encrypts → Client With SSL Offload : Client → HTTPS → Load Balancer decrypts
+ → HTTP → App  Server → Response → LB encrypts → Client. App server only handles the business logic, not the encryption.
+  
+18) Why Do We Use SSL Offload? Ans : Encryption/decryption is CPU heavy. By offloading it Application servers can handle more traffic and Lower
+ latency and faster  response times. Centralized Certificate Management : Certificates are managed only on the load balancer. No need to
+ install/renew certificates on each backend server. 
+
+19) Blue–Green Deployment in Microservices : Blue–Green Deployment is a release strategy where you maintain two identical environments: Blue → Current
+ live/production version. Green → New version you want to deploy. At any time, only one environment serves production traffic. After testing the new
+ version in Green, you switch traffic from Blue → Green. This switch is instant, giving zero downtime and safe rollback. Why Is It Used in Microservices?
+ - Each service is independently deployable. You don’t want downtime when deploying. You need quick rollback. You want to test changes safely before 
+ exposing to real users. How Blue–Green Deployment Works -  Blue is live . Blue serves all production traffic. Example: order-service v1.  Deploy new
+ version to Green. Deploy new version to an identical environment. Example: order-service v2 runs on Green pods/servers. Test Green. Switch traffic
+ to Green. Blue is kept as rollback. Blue stays available temporarily. If issues occur →  switch back immediately. If after switching to Green, an 
+ issue occurs: Load balancer switches back to Blue. System becomes stable immediately. No downtime and no re-deployment required.
+ 
+20) What is Consistency? : Consistency refers to the ability of a distributed system to ensure that all nodes reflect the same state of data at any
+ point in time-even during concurrent reads/writes or network delays. When multiple clients interact with the same data, consistency guarantees that
+ they all see a correct and unified version of the truth.	 
+	 
+21)How do we can ensure data consistency in a microservice  : In microservices, each service has its own database, often using different technologies.
+ This createschallenges in keeping data accurate and synchronized across services. About data consistency in microservices, we’re essentially addressing
+ how differentservices maintain accurate and up-to-date information. Strong Consistency vs. Eventual Consistency . Strong Consistency : Strong
+ consistency ensures that all users and all nodes in a distributed system always see the same data immediately after it is updated. It provides a
+ strict guarantee that every read returns the most recent write, making the system behave as if all operations occur i n a single, consistent order.
+ Eventual Consistency : Over time, the system converges towards consistency, but during the transient period, users accessing different data centers
+ may observe different versions of the data. This is the characteristic behavior of eventual consistency. While the system guarantees that updates
+ will eventually be propagated and all nodes will reach a consistent state, there can be temporary discrepancies between nodes at any given moment.
+ This model is more practical for distributed systems because it prioritizes availability and performance over immediate consistency. The CAP theorem
+ states that in any distributed system, you can only choose two out of three properties: Consistency ©: All nodes see the same data at the same time.
+ Availability (A): The system is always responsive. Partition Tolerance (P): The system continues to operate even if some parts fail.Since microservices
+ are inherently distributed, we often have to sacrifice strong consistency in favor of availability and partition tolerance. This means adopting 
+ strategies like eventual consistency and compensating mechanisms to keep data aligned across services. There are several patterns and techniques 
+ that microservices use to maintain data consistency. Each has its strengths and is suited for different scenarios. 1) The Saga Pattern 2)  Event
+ Sourcing 3) Transactional Outbox Pattern 4)  Idempotency. Maintaining data consistency in microservices requires careful planning and choosing the 
+ right strategy based on business requirements. The Saga pattern, event sourcing, and outbox patterns are commonly used to achieve eventual 
+ consistency while ensuring system  reliability	  
+  
+ -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  16) What is CQRS pattern in microservices ?
+  17) What are common microservice design principle ?
+  18) How do you ensure security in a microservice ?
+  19) How do you implement Rate Limiting in microservice ?
+ 
+  22) How does Saga ensure eventual consistency?
+  
+  Ans : Sagas break a large transaction into a sequence of smaller, local transactions. Saga ensures eventual consistency by replacing a single 
+  atomic transaction with a sequence of local transactions plus compensating actions. Each step updates its local database immediately
+  (locally consistent). If any step fails, Saga ensures consistency by executing compensating transactions that undo the impact of previous steps.
+  The Sequence of Local TransactionsIn a Saga, each step in a business process updates data within a single service. Once that local transaction 
+  is complete, it triggers the next service in the chain.
+  Happy Path: Service A completes -> Service B completes -> Service C completes.The "Eventual" Part: The system is technically in an inconsistent
+  state while Service B is running but C hasn't started yet. However, the Saga ensures that eventually, all steps will either finish or be undone.
+  2. Handling Failures with Compensating Transactions If one step fails (e.g., Service C has insufficient funds), the Saga cannot "roll back" the
+  previous databases because those transactions are already committed. Instead, it triggers Compensating Transactions.These are "undo" operations 
+  that restore the system to its original state: Transaction: Charge Credit Card.Compensation: Refund Credit Card. A compensation doesn't necessarily
+  delete data; it "counter-acts" the previous action to ensure business logic remains consistent.3. Coordination Strategies To ensure these steps 
+  and compensations actually happen, Sagas use one of two coordination methods:
+  Choreography (Decentralized)Services exchange events without a central controller. Each service "listens" for an event. Services emit events
+  (e.g., OrderCreated, PaymentFailed).Other services react to those events. No central controller  
+  Orchestration (Centralized): A central "Saga Orchestrator" (a state machine) tells each service what to do and when. A central Saga orchestrator 
+  tells each service what to do next. Explicitly decides when to trigger compensations. Both approaches rely on asynchronous messaging, which is key
+  to eventual consistency. Example: Order Placement Saga:
+  Order Service → Create Order (pending)
+  Publishes OrderCreatedEvent
+  Payment Service → Deduct payment
+  Publishes PaymentCompletedEvent
+  Inventory Service → Reduce stock
+  Publishes StockReducedEvent
+  Order Service → Mark order as Confirmed
+
+  If stock reduction fails:
+
+  Inventory Service publishes StockReductionFailed
+  Payment Service runs compensation → Refund Payment
+  Order Service runs compensation → Cancel Order
+
+  Final result = consistent state.
+  
+ 22) if kafka topic is missed then how will you handle it ? 
+    Ans : How you handle it depends on whether you are looking for a "quick fix" or a long-term architectural "vaccine." Here is the breakdown of how
+	to manage a missing topic. 1. The Immediate "Band-Aid" Fixes : If your application is crashing because the topic doesn't exist, check these two
+	configurations first: auto.create.topics.enable (Broker Side): If this is set to true, the broker will automatically create the topic the first
+	time a producer or consumer tries to access it.
+	Warning: This is usually discouraged in production because it creates topics with default partitions and replication factors (often just 1), 
+	which is bad for performance and reliability.
+	Manual Creation: Use the Kafka CLI to get back online immediately: kafka-topics.sh --create --topic my-missing-topic --bootstrap-server 
+	localhost:9092 --partitions 3 
+	--replication-factor 2
+	The Architectural Strategy (The Right Way) : To prevent "Topic Not Found" errors from breaking your system, implement these patterns:
+	Never create topics manually. Use tools like Terraform, Ansible, or GitOps (e.g., Strimzi for Kubernetes). This ensures that your topics are
+	version-controlled. If a topic is "missed," you simply re-run your pipeline to redeploy the state.
+	Error Handling in Code : Metadata Check: On startup, have your application describe the topics it needs. If they aren't there, log a "Critical"
+	alert and fail gracefully rather than entering a crash loop. Retries: Configure your producer with retries and delivery.timeout.ms. If a topic
+	is missing but auto.create is on, the producer will wait for the metadata to refresh rather than instantly failing.
+	Dealing with Data Loss : If the topic was "missed" because it was deleted, you have a recovery challenge:Check Retention: If you have a tiered
+	storage solution or backups, you might be able to restore the underlying log segments. Upstream Replay: The most common fix is to "rewind" your
+	producers. If your source data (e.g., a database or another Kafka cluster) still has the records, you can re-process them into the new topic.
+  
+  23) Explain eventual consistency with Kafka
+  
+     Ans : Eventual consistency is a consistency model where, if no new updates are made to a given data item, eventually all accesses to that item
+	 will return the last updated value. In systems using Apache Kafka, this is typically achieved in distributed microservices architectures by using
+	 an asynchronous, event-driven approach that prioritizes high availability and scalability over immediate, strong consistency. In a microservices
+	 architecture using Kafka, each service often has its own independent database. When a change is made in one service, an event is published to a
+	 Kafka topic, and other interested services (consumers) asynchronously read that event and update their own local data stores accordingly. 
+	 Producer Publishes an Event: When an application makes a data change (e.g., a user updates their address), the service responsible for that data
+	 writes the change to its local database and publishes an event to a relevant Kafka topic.
+	 Decoupled Consumption: Other services, which are subscribers to that topic, consume the message at their own pace. This loose coupling ensures
+	 that one service's failure or slow processing does not block others.
+	 Asynchronous Updates: Each consumer updates its own local data store based on the event's information. During this propagation window 
+	 (which can range from  milliseconds to seconds), different services might temporarily have different views of the same data
+	 Convergence: Given enough time and a lack of new updates to that specific data item, all replicas will process the event, and the system will
+	 converge to a consistent state 
+	 
+	 In Short what “eventual consistency” actually means : A system is eventually consistent when:Different components may temporarily see different
+	 versions of data No global, instantaneous agreement is required. Given enough time (and no new updates), all components converge to the same
+	 state.
+	 
+ 24) What will happen if we change the configuration at running application
+ 
+    Ans: If you change configuration in a running Spring Boot microservice, it will NOT reflect unless you use Spring Cloud Config + @RefreshScope or
+	Spring Cloud Bus. Default Spring Boot properties are loaded at startup, so updating them at runtime requires a restart. With Config Server, you
+	can refresh configuration using /actuator/refresh, and beans annotated with @RefreshScope get updated without restarting the app. 
+	
+25) How do you trace a request across multiple microservices. // https://www.youtube.com/watch?v=K52ixb9GI9Y
+
+  Ans : Tracing a request across multiple microservices is achieved through distributed tracing, which assigns a unique Trace ID to a request at the
+  edge (e.g., API Gateway) and propagates it via HTTP headers or messaging metadata to all subsequent service calls.  The Core Concept: Trace IDs and
+  Span IDs : Trace ID: A unique identifier generated at the very start of a request (usually at the API Gateway). This ID stays the same as the 
+  request moves through every service. Span ID: Represents a specific unit of work within a single service. A new Span ID is created for every "hop" 
+  or  internal operation (like a database query). The Mechanics of Propagation : How does Service B know the ID that Service A generated? Through 
+  Context Propagation. Headers: When Service A calls Service B via HTTP, it injects the Trace ID into the request headers (common headers include
+  X-B3-TraceId or the W3C standard traceparent). Messaging: If using Kafka or RabbitMQ, the Trace ID is placed in the message metadata/headers so 
+  the consumer can pick it up and continue the "story.". How it flows : Request enters Service A. Service A generates (or receives) a trace_id. 
+  Service A calls Service B and passes the trace context in headers. Service B continues the trace, and so on. 
+ 
+ 26) How can we pass tokens in microservice in a secure manner
+ 
+  Ans: Passing tokens securely in a microservices architecture requires careful consideration of several factors. Here are key methods for achieving
+    this:
+  a) Use HTTPS/TLS for all communication: Encrypt all communication channels between microservices and between clients and microservices using HTTPS
+    (TLS). This prevent the unauthorized alteration. Consider mutual TLS (mTLS) for service-to-service communication, where both client and server
+	authenticate each other using certificates, providing stronger identity  verification.
+	 
+  b) Implement Robust Token Management: JWTs (JSON Web Tokens): Utilize JWTs for stateless authentication. Sign JWTs with strong cryptographic 
+     algorithms (e.g., HS256, RS256) to ensure their integrity and authenticity. Short-lived Access Tokens and Refresh Tokens: Issue access tokens
+	 with a limited lifespan to minimize the impact of compromise. Use refresh tokens (kept secure) to obtain new access tokens when the current one 
+	 expires. Securely Store Tokens:  Client-side, avoid storing tokens in easily accessible locations like local storage. Consider using HTTP-only
+	 cookies for access tokens to mitigate XSS attacks. Token Revocation: Implement mechanisms to revoke compromised or expired tokens.
+
+  c) Centralized Authentication and Authorization: API Gateway: Employ an API Gateway as a single entry point for client requests. The API Gateway 
+  can handle initial authentication and token validation, then forward validated requests (and potentially tokens/claims) to the appropriate
+  microservices. Dedicated Authentication  Service: Centralize authentication logic in a dedicated service that handles token issuance, validation,
+  and user management. This avoids duplicating security logic across multiple microservices. 
+  
+  d) Secure Inter-Service Communication: OAuth2 Client Credentials Flow: For service-to-service communication where a user context isn't directly 
+  involved, use the OAuth2 client credentials flow to obtain tokens that represent the service itself, allowing it to access other services securely.
+  Role-Based Access Control (RBAC): Embed role information or permissions within JWT claims to enable fine-grained authorization within microservices.
+  Each microservice can then validate these claims against its own resources.
+  
+  d)Secure Configuration and Secrets Management: Environment Variables/Secrets Management Tools: Store sensitive configuration data, including private
+  keys for signing JWTs, in secure locations like environment variables or dedicated secrets management tools. Avoid Hardcoding Secrets: Never 
+  hardcode secrets directly into your application code.
+
+ 27)Token based othentication in microservice 
+ 
+ Ans : Token-based authentication in microservices involves using a security token, typically a JSON Web Token (JWT), to verify the identity of a user
+ or service making requests to different microservices. This approach offers advantages in distributed environments like microservices by providing a
+ stateless and scalable way to manage authentication. Token-based authentication in microservices uses securely signed tokens, typically JSON Web 
+ Tokens (JWT) generated by an identity provider (OIDC/OAuth 2.0), to verify user identity without centralized session storage. The API gateway handles
+ initial authentication, passing the JWT to downstream services for stateless validation, which ensures scalability, security, and smooth 
+ service-to-service communication. Token-based authentication is the "standard" for microservices because it solves a major problem: statelessness. 
+ Instead of every single microservice checking the token, an API Gateway often sits at the entrance. It validates the token once and then passes the 
+ request (along with user info) to the internal services.
+ Steps:
+ 1) identity Provider (IdP): Issues a signed JWT after validating user credentials.
+ 2) API Gateway: Acts as the entry point, authenticating incoming requests and validating the token's signature (often using public/private keys).
+ 3) Token (JWT): Contains encoded, signed claims (user ID, roles, expiration) and is included in the Authorization: Bearer <token> header for each 
+ request.
+ JWT consist of three parts: 
+ a) Header: Specifies the algorithm used (e.g., HS256).
+ b) Payload: Contains "claims" (User ID, roles, expiration time).
+ c) Signature: Ensures the token hasn't been tampered with.
+ 
+ 
+ 28) What is veracode and what are it's used ?
+ 
+ Ans: Veracode is a cloud-based Application Security (AppSec) platform that helps organizations identify, analyze, and fix security vulnerabilities
+       across their software applications. Veracode Provides application security testing through multiple methods such as: Static Application Security
+	   Testing (SAST) – scans source or binary code without executing it. Dynamic Application Security Testing (DAST) – tests running applications by
+	   simulating real-world attacks. Software Composition Analysis (SCA) – detects vulnerabilities in open‑source libraries and third‑party components.
+	   Interactive Application Security Testing (IAST) – monitors applications in real time during runtime tests. Integrates into CI/CD pipelines like
+	   Jenkins, GitHub, GitLab, Azure DevOps, enabling security checks early in DevOps/DevSecOps workflows. Offers manual penetration testing, policy
+	   governance, remediation guidance, and security dashboards for tracking risks. In Short eracode = A cloud-based platform that scans your 
+	    applications (source code and running apps) to find and fix security vulnerabilities, helping you build secure software.   	
+
+9) How do you maintain the Security in a distributed system
+
+ Ans: Securing a distributed system is significantly more complex than securing a centralized one. To maintain security, you have to address three main pillars: 
+ Identity, Communication, and Observability. a) Secure Communication Between Services. Use TLS/HTTPS everywhere. Encrypt all traffic between services.
+ b)Encrypt all traffic between services. Use centralized identity. OAuth2, OpenID Connect, Keycloak / Auth0 / Okta / Azure AD. Use token-based authentication:
+ Access tokens, Access tokens, JWT tokens (signed, not encrypted).Protect JWTs: Validate signature,Check expiry, Use short-lived tokens. 
+ c) Authorization (Access Control): Use a unified access control system:, Role-Based Access Control (RBAC), Attribute-Based Access Control (ABAC),
+ Policy engines (OPA – Open Policy Agent). Service-to-service authorization. Microservices should verify:Who is calling?,What can they access?.
+ API Gateway Security : An API Gateway or Ingress Controller helps enforce, Authentication & Authorization, Rate limiting, Request validation,
+ Logging & monitoring. d) Data Protection (In Transit and At Rest). Encryption in Transit: All data moving between nodes must be encrypted 
+ (typically via TLS 1.3) to prevent "man-in-the-middle" attacks. Encryption at Rest: Data stored in distributed databases (like Cassandra or DynamoDB)
+ should be encrypted. Secrets Management: Never hardcode passwords or API keys in your code. Use tools like HashiCorp Vault or AWS Secrets Manager to
+ inject credentials into services at runtime. e) Network Security and Segmentation: Service Mesh: Tools like Istio or Linkerd help manage security policies,
+ retries, and encryption between services automatically. Firewalls and VPCs: Isolate your most sensitive services (like databases) into private subnets 
+ that have no direct access to the public internet. f) Observability and Incident Response :You can't secure what you can't see. Distributed Tracing:
+ Use tools like Jaeger or Zipkin to follow a single request as it travels through multiple services. This helps identify where a malicious injection
+ might have occurred. Centralized Logging: Aggregate logs from all nodes into one place (like an ELK stack) so you can spot patterns of unauthorized 
+ access attempts.
+
+10) How do you ensure consistency across services when each has its own database? Describe the patterns you used
+
+11) “How have you deployed and scaled microservices? What container/orchestration tools did you use?
+
+12) How did you ensure high availability, fault tolerance and resiliency of your microservices?
+
+14) How to do monitor performace in Microservice.
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Atomicity: Ensures that every operation attempted within a transaction either fully completes or entirely fails. If any step in the operation fails,
+the entire transaction is aborted.
+Consistency: Ensures that any changes made to the database leave it in a valid and consistent state.
+Isolation: Allows multiple transactions to run simultaneously without interfering with each other. This is achieved by making sure that any 
+intermediate 
+changes made during the execution of a transaction are invisible to other transactions.
+Durability: Ensures that once a transaction has been completed, the data will not be lost, even in the event of a system failure.

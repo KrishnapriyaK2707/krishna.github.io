@@ -1,0 +1,52 @@
+
+
+Training Sites
+
+https://www.youtube.com/@TutorialsPoint_/videos // good
+
+https://www.youtube.com/@CodeDecode
+
+https://www.youtube.com/@Javatechie/videos
+
+https://www.youtube.com/@Telusko/videos
+
+https://www.youtube.com/@ThinkConstructive/videos // good
+
+https://www.youtube.com/@sudocode/videos// Microservice notes
+
+https://www.geeksforgeeks.org/microservices/ 
+
+https://www.youtube.com/@enggadda/videos
+
+Interview Sites
+
+https://www.youtube.com/@MockInterviews-cr3zg/videos
+
+https://www.youtube.com/@ShristiTechAcademy/videos
+
+https://www.youtube.com/@CodeDecode
+
+https://www.youtube.com/@genz-career/videos
+
+https://www.youtube.com/@TheKiranAcademy/videos
+
+https://www.youtube.com/watch?v=Sjw4OHXpb7U
+
+https://www.youtube.com/watch?v=aTX1RTojkTE // Core java questions
+
+https://www.youtube.com/watch?v=a9R3Gq1BKxI // Auth2 Vs JWT
+
+https://www.youtube.com/watch?v=muRr4dImv1k //Auth2 Vs JWT
+
+https://www.youtube.com/@ByteMonk/videos // JWT, OAuth2,
+
+https://www.youtube.com/@ConceptAndCodingByShrayansh/videos
+
+https://www.youtube.com/@CodeWithVighnesh // Top 75 interview 
+
+https://www.youtube.com/@SeleniumExpress/videos
+
+upGrad
+
+https://www.youtube.com/@upGrad_edu/videos
+

@@ -1,0 +1,182 @@
+Java Interview Questions  - Design Patterns
+
+ Main classifications
+ 
+ 1) Creational patterns
+ 2) Structural patterns
+ 3) Behavioral patterns
+ 
+ 
+ 1) Creational patterns : Creational design patterns govern how classes and objects are created in a systematic and scalable way. They provide blueprints for creating
+    objects so you don't repeat code. They also keep your system consistent and makes your app easy to extend.
+
+a)Factory design pattern
+
+The factory design pattern is used when we have a superclass with multiple sub-classes and based on input, we need to return one of the sub-class.
+This pattern takes out the responsibility of the instantiation of a class from the client program to the factory class. Super class in factory design
+pattern can be an interface, abstract class or a normal java class. provides an interface for creating objects in a superclass but allows subclasses to alter
+the type of objects that will be created. It encapsulates the object creation logic, decoupling it from the client code that uses the objects. The Factory Method
+pattern is best suited for scenarios where a) The exact class of objects to be created is not known
+at compile time. b) The client code needs to be decoupled from the concrete classes of objects it creates. c) There’s a need for flexibility in object creation,
+allowing subclasses to provide variations of the created objects. Factory Method pattern delegates the responsibility of object creation to subclasses, 
+ allowing for greater flexibility and extensibility.
+Use Cases for the Factory Pattern : 1) When the exact type of object to be created is unknown until runtime: This is the most common use case. For example,
+a document editor application might need to open different types of documents (WordDocument, PdfDocument, etc.) based on a user's file selection.
+2) To decouple client code from concrete classes: If you frequently add new types of products to your system, the Factory pattern prevents you from having
+to modify the client code every time a new class is introduced. 3) To manage complex object creation logic: If creating an object involves multiple steps or
+conditional logic 
+
+// Product Interface
+public interface Notification {
+    void send(String to, String message);
+}
+
+// Concrete Products
+public class EmailNotification implements Notification {
+    @Override
+    public void send(String to, String message) {
+        System.out.println("Sending EMAIL to " + to + " : " + message);
+    }
+}
+
+public class SmsNotification implements Notification {
+    @Override
+    public void send(String to, String message) {
+        System.out.println("Sending SMS to " + to + " : " + message);
+    }
+}
+
+public class PushNotification implements Notification {
+    @Override
+    public void send(String to, String message) {
+        System.out.println("Sending PUSH to " + to + " : " + message);
+    }
+}
+
+// Simple Factory
+public class NotificationFactory {
+    public static Notification create(String channel) {
+        if (channel == null) throw new IllegalArgumentException("channel required");
+        switch (channel.toLowerCase()) {
+            case "email": return new EmailNotification();
+            case "sms":   return new SmsNotification();
+            case "push":  return new PushNotification();
+            default: throw new IllegalArgumentException("Unknown channel: " + channel);
+        }
+    }
+}
+
+// Client
+public class Demo {
+    public static void main(String[] args) {
+        Notification n1 = NotificationFactory.create("email");
+        n1.send("alice@example.com", "Welcome!");
+
+        Notification n2 = NotificationFactory.create("sms");
+        n2.send("+911234567890", "OTP: 123456");
+    }
+}
+
+b)Abstract Factory Design Pattern  // 
+Abstract Factory pattern is almost similar to Factory Pattern except the fact that its more like factory of factories.In Abstract Factory pattern an 
+interface is responsible for creating a factory of related objects without explicitly specifying their classes. Each generated factory can give the 
+objects as per the Factory pattern. Abstract Factory pattern is almost similar to Factory Pattern and is considered as another layer of abstraction 
+over factory pattern. Abstract Factory patterns work around a super-factory which creates other factories. 
+
+b1) Factory vs. Abstract Factory : Factory Method: Creates one product. Abstract Factory: Creates families of related products (e.g., a "Modern Furniture" factory 
+that makes chairs, sofas, and coffee tables all in the same style).
+
+c)Explain Builder Pattern
+
+Ans : The Builder Pattern involves creating a separate builder class responsible for constructing the object. This design pattern allows us to 
+construct objects step by step, specifying only the attributes we need. It separates the construction process from the object’s representation,
+enabling the same method to create different variations of an object. For example, let’s think about how to create a House object. To build a simple house,
+you need to construct four walls and a floor, install a door, fit a pair of windows, and build a roof. But what if you want a bigger, brighter house, with a
+backyard and other goodies (like a heating system, plumbing, and electrical wiring)?.This pattern is particularly useful when an object has many optional
+ or mandatory parameters and different configurations are required during its creation.
+
+d)Explain Prototype Design Pattern
+
+Ans : A Prototype Design Pattern is a creational pattern that helps to create new objects by copying an existing object. This pattern is particularly 
+useful when creating objects is complex, time consuming or resource-intensive.  Instead of creating new objects from scratch, it creates copies of 
+existing objects to improve performance and efficiency. Objects are created by cloning existing instances rather than instantiating new ones.
+The cloned object can modify only the required properties. The cloned object can modify only the required properties. The clone() method is 
+commonly used, though cloning logic depends on the business requirement. Imagine you own a sheep farm, and you need to create multiple sheep 
+with similar characteristics. Instead of creating each sheep from scratch, you can use the Prototype Pattern to clone existing sheep. Each cloned 
+sheep will retain the common attributes while allowing for individual customization. 
+
+e) Explain Singleton Method Design Pattern
+
+Ans: The Singleton Method Design Pattern ensures a class has only one instance and provides a global access point to it. It’s ideal for scenarios 
+requiring centralized control, like managing database connections or configuration settings. While developing software applications, sometimes we 
+need to ensure that a class has only one instance and that instance is easily accessible from anywhere in our application. This is where the 
+Singleton Design Pattern roles comes to the rescue.
+
+2) Structural patterns
+
+a) Adapter design pattern: It is one of the structural design pattern and it is used so that two unrelated interfaces can work together. It is often
+ used to make existing classes work with others without modifying their source code. The pattern involves creating an adapter class that bridges the
+ gap between the interfaces, allowing them to communicate effectively. One real-world example of the Adapter Design Pattern is a mobile charger. Mobile
+ chargers act as adapters between the power socket and the mobile device, converting the voltage to a suitable level for charging the device. It acts as 
+ a bridge between two incompatible interfaces, making them work together. This pattern involves a single class, known as the adapter, which is 
+ responsible for joining functionalities of independent or incompatible interfaces.
+
+b) Explain Facade Pattern?
+ 
+A Facade Pattern makes the workflow more efficient and smooth for the client. Daily, we might use different interfaces to acquire different types 
+of databases and generate reports. However, with an increase in workload comes complexity, leading to difficulty in work management. Hence, 
+Facade Pattern comes to the rescue and provides a wrapper interface on top of the existing interface for better workflow.
+
+
+ What is a Decorator Pattern?
+ 
+The Decorator Design Pattern helps modify the functionality of an Object while it's in runtime. It ensures that other instances 
+resembling the same class are not affected, and the individual Object gets the modified behavior. This is structured under Structural
+ Design Patterns.
+ 
+ 
+  What are Behavioural Design Patterns?
+  
+The main aim of Behavioural Patterns is to provide loose coupling and flexibility to extend the functionality easily. It aids in providing 
+solutions for better interaction between Objects.
+
+Domain-Driven Design (DDD)
+
+Domain-Driven Design (DDD) is a method that prioritizes understanding and modeling the specific problem area where a software system functions.
+ It highlights the need for close collaboration with domain experts to gain a thorough understanding of the domain’s details and complexities.
+ DDD offers principles, patterns, and practices to help developers accurately capture and represent domain concepts in their software designs.
+
+
+Creational patterns
+
+Factory method/Template
+Abstract Factory
+Builder
+Prototype
+Singleton
+
+Structural patterns:  // https://medium.com/@psdevraye/understanding-structural-design-pattern-in-java-ebd2772d351f
+
+Structural design patterns in Java play a crucial role in software development by focusing on class and object composition. They help in forming larger structures from individual parts,
+ making the system more flexible and efficient.
+
+Adapter Pattern : It’s a structural pattern that lets two incompatible interfaces work together. It acts as a bridge between two incompatible interfaces.
+Bridge
+Filter
+Composite
+Decorator
+Facade
+Flyweight
+Proxy
+
+Behavioral patterns
+
+Interpreter
+Template method/ pattern
+Chain of responsibility
+Command pattern
+Iterator pattern
+Strategy pattern
+Visitor pattern
+ 
+ 

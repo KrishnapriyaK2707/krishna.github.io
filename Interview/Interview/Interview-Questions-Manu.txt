@@ -1,0 +1,116 @@
+
+
+
+1. Microservice vs monolithic architecture
+2. If you have new functionality will you design new microservice or add to current one.
+3. Spring profiles
+4. Asychnorunous and Synchronous calls 
+5. Can 2 microservice call a DB at same time using Asychnorunous calls
+6. Redis cache
+7. why Redis is in-memeory cache
+8. Spring starters
+9. dependencies present in Spring starter web
+10. On what criteria do you prefer monolithic/microservice arch
+11. How to make thread safe asynchronus calls.
+12. If you are making ayschronous calls from microservice how to handle that response.
+13. Other Caching techniques rather than redis or DB.
+14. Jenkins 
+15.	How data is saved in Redis Cache
+16. Why Microservice architecture  is not suitable for some projects.
+
+17. Disadvantages of microservice architecture.
+ Ans:  Microservices improve scalability and flexibility but introduce complexity in architecture, operations, and data consistency. They are best suited for large, complex systems
+ 1. Increased Complexity
+Distributed System Challenges: Each service runs independently, so you deal with network latency, partial failures, and service discovery. Harder Debugging: Tracing issues across multiple
+services requires distributed tracing tools (Zipkin, Jaeger). Complex Deployment: Requires orchestration (Kubernetes, Docker) and CI/CD pipelines.
+
+2. Higher Operational Overhead
+
+Infrastructure Costs: Multiple services mean more containers, more VMs, and higher resource usage. Monitoring & Logging: You need centralized logging (ELK, OpenSearch) and metrics
+ aggregation
+ 
+ 
+ 3. Data Management Challenges
+
+Distributed Data: Each microservice often has its own database, making transactions across services hard.
+Eventual Consistency: No global ACID transactions; you must implement patterns like Saga for consistency.
+
+4. Network Dependency
+
+Latency: Calls between services add network hops, increasing response time.
+Failure Points: If one service fails, it can cascade unless you implement resilience patterns (Circuit Breaker, Retry).
+
+5. Testing Complexity
+
+Integration Testing: Requires spinning up multiple services and dependencies.
+Contract Testing: You need tools like Pact to ensure API compatibility.
+
+
+18. Are you aware about Completable future class, for handling asynchronous calls
+ 
+ 
+How to the maven load the dependencies configured in POM?
+
+How the authentication and authorization is done for payment gateway?
+
+How do throw custom message to user if application fails to respond the request?
+
+How to resolve memory leakage in server?
+
+How to fix heap memory issue in server?
+
+Streams scenario base questions?
+
+Microservices architcture distributed system. 
+
+----------------------------------------------------------------------------------------------------------
+
+, Below are interview questions
+ 
+Client Interview Questions
+ 
+1. Introduce Yourself
+ 2. Explain about the system architecture of the recent project you have worked in
+ 3. Suppose you have an application how you decide it should be monolithic or microservice based architecture
+ 4. If you are implementing as microservice what all are the components needed
+ 5. What all aspects you should consider when designing a microservice based system
+ 6. Any work experience with integration of AI tools like Copilot
+ 7.Cron Job 
+ Ans : A Cron Job is a scheduled task that runs automatically at specified intervals on Unix/Linux systems. It’s commonly used for automation, such as running scripts, backups, 
+ or maintenance tasks.
+ 8. Have you worked on batch processing, how to implement spring batch processing
+ 9. Authentication and Authorization method used in your application, How do you handle the session expiry and token validation
+ 10. Version of Java you have used and features
+ 11. Distributed transactions in microservices
+ 12. How will you implement a spring boot project from scratch
+ 13. How to track down issues in production, how to support in production bugs, any recent examples how you have resolved production bugs
+14. Communication between microservices in your project
+ 
+ 
+ --------------------------------------------------------------------------------------------------
+Coding Questions
+ 
+1. Given a start Date, End Date and period, 
+ 
+Period can have these set of values :- month, week, biweekly
+ 
+In General we need find count of that period between Start Date and End Date.
+ 
+(We need to consider February only have 28 days, Some month have 30 days, some can have 31 days)
+ 
+I/P : start Date - '2025-01-01'
+ 	 End Date - '2025-01-02'
+ 	 Period - 'month'
+ 	 
+ 	 
+ O/P - 1 ( There is only 1 month between end date and start date)
+ 
+ 
+I/P : start Date - '2025-01-01'
+ 	 End Date - '2025-01-02'
+ 	 Period - 'week'
+ 	 
+ 	 
+ O/P - 4 ( There is 4 weeks between end date and start date)
+ 
+ 

@@ -1,0 +1,21 @@
+
+Database Questions
+
+1) What is a primary key in the context of databases, and what is its significance?
+
+  Ans : A primary key in the context of databases is a column (or a set of columns) that uniquely identifies each record in a table. It ensures that
+  no two rows in the table have the same value for the primary key, maintaining uniqueness and data integrity.
+  Significance of a Primary Key:
+  a)Uniqueness – Ensures that each record can be uniquely identified.
+  b)Non-nullability – Primary key values cannot be NULL, ensuring every record has a valid identifier.
+  c)Indexing – Most database systems automatically create an index on the primary key for faster lookups.
+  d)Referential Integrity – Other tables can reference the primary key using foreign keys, maintaining data consistency.
+  e)Prevention of Duplicate Records – Helps avoid unintentional duplication of data.
+  
+2) What are the distinctions between stored procedures and functions?
+
+  Ans: Both stored procedures and functions are reusable SQL blocks, but they have distinct purposes and behaviors.
+  stored procedures are Used for executing a sequence of SQL statements (e.g., data modification, business logic). it can Can return multiple values
+  using OUT parameters or RETURN. stored procedures cannot be used inside SELECT statements.It Supports COMMIT and ROLLBACK.
+  where as functions are Used for computations and returning a value. it must return a single value or table. Functions Can be used within SELECT,
+  WHERE, or JOIN clauses.

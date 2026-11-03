@@ -1,0 +1,229 @@
+
+UST - Interview Questions
+----------------------------------------------------------------------------------------------
+
+Best Practices in RestAPi design
+
+what are metods we can adopt to improve the application performance.
+
+interenal working of Parallel stream
+
+How Java handles automatic grabage collection in java
+
+mutithredaing in java 21	
+
+
+--------------------------------------------------------------------------------------
+
+
+1. Microservice vs monolithic architecture
+2. If you have new functionality will you design new microservice or add to current one.
+3. Spring profiles
+4. Asychnorunous and Synchronous calls 
+5. Can 2 microservice call a DB at same time using Asychnorunous calls
+6. Redis cache
+7. why Redis is in-memeory cache
+8. Spring starters
+9. dependencies present in Spring starter web
+10. On what criteria do you prefer monolithic/microservice arch
+11. How to make thread safe asynchronus calls.
+12. If you are making ayschronous calls from microservice how to handle that response.
+13. Other Caching techniques rather than redis or DB.
+14. Jenkins 
+15.	How data is saved in Redis Cache
+16. Why Microservice architecture  is not suitable for some projects.
+17. Disadvantages of microservice architecture.
+18. Are you aware about Completable future class, for handling asynchronous calls
+
+
+
+
+
+
+ 
+how did u achieve security in ur project ?
+
+Ans: 
+
+1. Authentication & Authorization
+
+Implemented OAuth 2.0 / JWT tokens for secure user authentication.
+Role-based access control (RBAC) to ensure users only access what they’re authorized for.
+
+2. Data Protection
+
+Encryption in transit using HTTPS/TLS.
+Encryption at rest for sensitive data in databases (AES-256 or similar).
+Avoid storing plain-text passwords; use hashing algorithms like bcrypt or PBKDF2.
+
+3. API Security
+
+Input validation and sanitization to prevent SQL Injection and XSS attacks.
+Rate limiting and throttling to prevent DoS attacks.
+hashmap internal working
+
+4. Secure Coding Practices
+
+Follow OWASP Top 10 guidelines.
+Regular code reviews and static analysis tools (e.g., SonarQube) to detect vulnerabilities.
+
+5. Infrastructure Security
+
+Use firewalls, network segmentation, and VPNs for internal services.
+Enable IAM policies and least privilege access in cloud environments.
+
+6. Monitoring & Logging
+
+Implement audit logs for critical actions.
+Use SIEM tools for real-time threat detection.
+ 
+collections questions
+ 
+about restapis
+ 
+error codes
+ 
+ ---------------------------------------------
+ 
+ Answers 
+ 
+ 1) If you have new functionality will you design new microservice or add to current one.
+ 
+ Ans : The decision to create a new microservice or extend an existing one is based on scalability, maintainability, and separation of concerns.
+ Independent Business Logic – If the new functionality is distinct and can operate independently, it's better to create a separate microservice.
+ Scalability Needs – If the new feature requires separate scaling (e.g., high load or different performance needs), it should be a new service.
+ Ownership & Team Structure – If another team will own and maintain it, a new microservice is preferable
+ Technology Stack Difference – If the new functionality requires a different tech stack or framework, it's best to separate it.
+ Security & Compliance – If it handles sensitive data and needs separate security policies, it should be a new service.
+ 
+ When to Add to an Existing Microservice:
+ 
+ Closely Related Functionality – If the new feature enhances existing behavior, it should be part of the current service.
+ Avoiding Overhead – If the new service would be too small and not justify the overhead of maintaining it separately.
+ Shared Data Model – If it heavily relies on the same database and data structures as the existing service.
+ Low Coupling with Other Services – If it won’t increase dependencies and complexity in the system.
+ 
+ 2) Can 2 microservice can call a DB at same time using Asychnorunous calls ?
+ 
+ Ans : Yes, two microservices can call the same database simultaneously using asynchronous calls, but there are some important considerations:
+ How It Works: a)Asynchronous Calls: Each microservice sends a request to the database and continues processing without waiting for an immediate response.
+ b)Concurrent Access: Multiple services can query, update, or insert data at the same time, but the database must handle concurrency properly.
+Key Considerations:
+
+3)  On what criteria do you prefer monolithic/microservice arch
+
+ Ans: Choosing between Monolithic and Microservices Architecture depends on several factors, including business needs, scalability, team structure, 
+ and complexity management.
+ 
+4) How to make thread safe asynchronus calls.
+
+ Ans : a)  Using CompletableFuture (Preferred for Asynchronous Tasks) CompletableFuture in Java 8+ provides a non-blocking, thread-safe way to execute
+ async tasks. Thread-Safety: Since CompletableFuture uses separate threads and doesn't modify shared state, it's inherently thread-safe.
+ b)  Using ExecutorService (Thread Pool for Controlled Execution)  Instead of creating threads manually, use ExecutorService to manage thread safety.
+ c) Ensuring Thread Safety in Shared Resources If multiple threads modify a shared resource, use synchronization mechanisms like: Using synchronized 
+ for Critical Sections
+ 
+ 5) Why Microservice architecture  is not suitable for some projects.
+ 
+a) Increased Complexity
+ 
+Managing multiple services, databases, and communication mechanisms (like API gateways or messaging queues) adds overhead. Requires skilled 
+developers and DevOps expertise to handle deployment, monitoring, and debugging.
+
+b) High Infrastructure Costs
+
+Each microservice requires separate hosting, databases, and networking, increasing operational costs. Requires robust cloud or containerization 
+solutions (Docker, Kubernetes), which may not be cost-effective for small projects.
+
+c) Difficult Data Management
+
+Distributed databases make consistency, transactions, and data synchronization more challenging. Requires strategies like eventual consistency, 
+which may not be ideal for applications needing strong data integrity.
+
+d) Latency & Performance Issues
+
+Communication between services happens over the network, which can introduce latency. Multiple API calls between services can slow down response times.
+
+f) Overhead in Deployment & Maintenance
+
+Continuous integration, versioning, and deployments become more complex. Requires automation tools for CI/CD, logging, and monitoring, which small 
+teams may struggle to maintain.
+
+g) Not Suitable for Small or Simple Applications
+
+If the application is small, a monolithic approach is more efficient and easier to manage. Splitting a small app into microservices can lead
+ to unnecessary fragmentation and complexity.
+
+h) Cross-Service Communication Challenges
+
+Requires API contracts, service discovery, and handling of failures in inter-service communication. If one service fails, it may cause cascading 
+failures in dependent services.
+
+When to Avoid Microservices?
+
+Startups or MVPs that need rapid development and iteration. Small applications with limited functionality. Projects with strict latcy requirements 
+where inter-service communication is a bottleneck. Teams without microservice expertise who might struggle with DevOps and cloud infrastructure.
+
+6) If you are making ayschronous calls from microservice how to handle that response.
+
+ Ans: Message Queues (Pub/Sub) Services communicate through a message broker (e.g., Kafka, RabbitMQ, SQS).
+ 
+Example:
+
+Service A sends a request to Service B via a message queue.
+Service B picks up the message, processes it, and publishes the response to another queue.
+Service A listens for the response on the response queue.
+
+7) Disadvantages of microservice architecture.
+
+ a) Increased Complexity : More moving parts mean more effort in deployment, monitoring, and debugging. Requires additional tooling for service
+ discovery, communication, and orchestration. Example: Instead of managing one monolithic app, you now manage multiple independent services.
+
+b) Difficult Debugging & Troubleshooting : Logs and errors are spread across multiple services, making it harder to trace failures. Requires 
+distributed tracing tools like Jaeger, Zipkin, or OpenTelemetry to track requests. Example: A failed request might involve five different 
+microservices, making root cause analysis difficult.
+
+c) Network Latency & Performance Issues : Microservices communicate over the network, leading to increased response times. High inter-service 
+communication can introduce network failures or timeouts. Example: A monolithic function call is now replaced with multiple HTTP/gRPC requests 
+between services.
+
+d) Data Management Challenges : Each microservice typically has its own database, making data consistency hard to maintain. Transactions across 
+multiple services require sagas or event-driven patterns. Example: If a payment service fails after an order is placed, rolling back changes across
+services is tricky.
+
+e) Increased Deployment & Operational Overhead : Continuous Integration/Continuous Deployment (CI/CD) pipelines must handle multiple services.
+Service discovery, load balancing, and configuration management require extra tools (e.g., Kubernetes, Consul). Example: Deploying a monolithic
+app is straightforward; deploying microservices requires managing dependencies, scaling rules, and networking.
+
+f) Security Risks : More services mean a larger attack surface. Authentication & Authorization must be handled across multiple services 
+(e.g., OAuth, JWT, API gateways). Example: Unlike a monolith with internal security, microservices expose multiple endpoints, making them
+ vulnerable to attacks.
+
+g) Cost Overheads : More services = more infrastructure, monitoring, logging, and management tools. Requires investment in DevOps, cloud resources,
+ and specialized engineers. Example: Running multiple instances of small services can be more expensive than a single monolith.
+
+8) Other Caching techniques rather than redis or DB.
+
+   a) In-Memory Caching
+      Local Variables/Objects: Store frequently used data in memory within the application.
+      Singletons: Maintain cached data in singleton instances to share across the application.
+      Guava Cache (Java): Google’s Guava library provides an in-memory caching mechanism.
+   b) Distributed Caching (Other than Redis)
+      Memcached: A high-performance, distributed memory object caching system
+	  Apache Ignite: Provides in-memory data grid and caching features.
+   c) CDN (Content Delivery Network) Caching : Cloudflare, Akamai, AWS CloudFront: Cache static and dynamic content at edge locations to reduce 
+      server load.
+   d) Application-Level Caching : Spring Cache (Java): Framework-level caching abstraction in Spring.
+      Django Cache (Python): Built-in support for various caching backends.  
+   e) File System Caching : Disk-based Caching: Store frequently accessed data as temporary files.
+      OS Page Cache: Operating systems cache files in memory (e.g., Linux’s tmpfs).
+   f) Browser Caching : HTTP Cache Headers: Use Cache-Control, ETag, and Expires for efficient browser caching.
+      Service Workers: Cache resources using Service Workers for offline access.
+   g) Proxy Caching : NGINX/Fastly/Varnish: Reverse proxies that cache responses and serve them without hitting the origin server.	  
+         
+      
+          
+	  
+	  
+	  
+	  
