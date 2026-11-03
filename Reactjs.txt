@@ -1,0 +1,86 @@
+ 
+What
+----
+Reactjs is a JavaScript library created by Facebook for the main purpose of SPA.
+
+Why
+---
+ It is very fast and uses JSX which is similar to JavaScript and has single.
+ React allows adding JavaScript library to the source code which helps in rapid development of UI.
+ Code Stability with One-directional data binding.
+
+When 
+-----
+You need an app with multiple events.
+When your application development team has expertise in HTML, CSS, and JavaScript.
+You should use React when your requirement demands a personalized app solution.
+You want to create shareable components in your app project.
+
+Inside React JS
+---------------
+
+VIRTUAL DOM - In React, Virtual DOM exists which is like a lightweight copy of the actual DOM. 
+So for every object that exists in the original DOM, there is an object for that in React Virtual DOM. 
+It is exactly the same, but it does not have the power to directly change the layout of the document.
+
+
+DIFFING - React maintains two Virtual DOM at each time, one contains the updated Virtual DOM and one
+which is just the pre-update version of this updated Virtual DOM. Now it compares the pre-update version 
+with the updated Virtual DOM and figures out what exactly has changed in the DOM. 
+Once React finds out what exactly has changed then it updated those objects only, on real DOM
+
+
+Commands
+---------
+From nodejs command prompt / visual studio code
+
+-> npx create-react-app “App name”
+
+To start application
+
+-> npm start
+
+Application will start by default in port 3000
+
+Project structure:
+******************
+
+1. Open a empty directory and open command prompt.
+2. Type npx create-react-app “App name”.
+3. When you first run create-react-app, you’ll end up with a folder.
+4. Inside src folder following are the common pattern followed while creating a react app.
+5. src/api.js - You’ll probably need to make calls to a backend API at some point. Put all that code here. 
+   If it gets too unwieldy in one file, make a src/api directory and put the area-specific API files under 
+   there – like userApi.js, productApi.js, etc.
+6. src/components - All your Presentational (aka Dumb) components go here. These are the simple stateless 
+   ones that just take props.
+7. src/containers - The Container components go here. These are the stateful ones, 
+   and the ones that make the API calls. If you’re using Redux, these are the ones that are 
+   connected to the store. Notice that CSS and tests are in the same folder as their respective components.
+8. src/index.js - This is where you initialize the app and call ReactDOM.render, 
+   so it makes sense to keep this at the top level.
+9. src/utils - You’ll probably end up with miscellaneous utility functions – error handlers, 
+   formatters, and the like. I usually put them in a file inside utils so I can access them easily.
+10. src/images - Put the images in one place to start with.
+
+Now run “npm start” in the same command prompt and your app will be launched in http://localhost:3000 this url.
+
+
+Other info:
+-----------
+
+ReactDom -> Used to render to browser. Finally render and data pushed to DOM.
+React -> For dealing with js related code.
+
+-> In index.js, all components should include in <App/>.
+-> All application will render in index.html <div id="root"></div>, and only one html will be there.
+-> In js we need to do export the functions and needed ones are imported.
+-> There will be one default export, and can be named anything while import. 
+   But other exports should be imported using curly braces.
+   Ex: import App1, {App2}
+
+-> Short cut to create class component -> rcc
+-> Shortcut to create function component -> rfc
+
+
+

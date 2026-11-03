@@ -1,0 +1,262 @@
+1. What is a servlet?
+
+Java Servlets are programs that run on a Web or Application server and act as a middle layer between a request coming from a Web browser or other HTTP client
+and databases or applications on the HTTP server.
+
+Java Servlet is server side technologies to extend the capability of web servers by providing support for dynamic response and data persistence.
+
+The javax.servlet and javax.servlet.http packages provide interfaces and classes for writing our own servlets.
+
+All servlets must implement the javax.servlet.Servlet interface, which defines servlet lifecycle methods. 
+When implementing a generic service, we can extend the GenericServlet class provided with the Java Servlet API. 
+The HttpServlet class provides methods, such as doGet() and doPost(), for handling HTTP-specific services.
+
+2. What is difference between ServletConfig and ServletContext?
+
+Some of the differences between ServletConfig and ServletContext are:
+
+    ServletConfig is a unique object per servlet whereas ServletContext is a unique object for complete application.
+    ServletConfig is used to provide init parameters to the servlet whereas ServletContext is used to provide application level init parameters
+    that all other servlets can use.
+    We can’t set attributes in ServletConfig object whereas we can set attributes in ServletContext that other servlets can use in their implementation.
+
+3. What is Request Dispatcher?
+
+RequestDispatcher interface is used to forward the request to another resource that can be HTML, JSP or another servlet in the same application.
+We can also use this to include the content of another resource to the response. This interface is used for inter-servlet communication in the same context.
+
+There are two methods defined in this interface:
+
+    void forward(ServletRequest request, ServletResponse response) – forwards the request from a servlet to another resource (servlet, JSP file, or HTML file) 
+    on the server.
+    void include(ServletRequest request, ServletResponse response) – includes the content of a resource (servlet, JSP page, HTML file) in the response.
+
+    We can get RequestDispatcher in a servlet using ServletContext getRequestDispatcher(String path) method. The path must begin with a / and is interpreted 
+    as relative to the current context root.
+
+
+4. Can you call a jsp from the servlet?
+
+Yes, one of the way is RequestDispatcher interface for example:
+
+    RequestDispatcher rd=request.getRequestDispatcher("/login.jsp");  
+    rd.forward(request,response);  
+
+5. Difference between forward() method and sendRedirect() method ?
+
+forward() method
+	
+1) forward() sends the same request to another resource.	
+2) forward() method works at server side.	
+3) forward() method works within the server only.	
+
+sendRedirect() method
+
+1) sendRedirect() method sends new request always because it uses the URL bar of the browser.
+2) sendRedirect() method works at client side.
+3) sendRedirect() method works within and outside the server.
+
+6. What is difference between Cookies and HttpSession?
+
+Cookie works at client side whereas HttpSession works at server side.
+
+7. How can we perform any action at the time of deploying the project?
+
+By the help of ServletContextListener interface.
+
+8. What is difference between PrintWriter and ServletOutputStream?
+
+PrintWriter is a character-stream class whereas ServletOutputStream is a byte-stream class. We can use PrintWriter to write character based information such 
+as character array and String to the response whereas we can use ServletOutputStream to write byte array data to the response.
+
+We can use ServletResponse getWriter() to get the PrintWriter instance whereas we can use ServletResponse getOutputStream() method 
+to get the ServletOutputStream object reference.
+
+9. What is the use of servlet wrapper classes?
+
+Servlet HTTP API provides two wrapper classes – HttpServletRequestWrapper and HttpServletResponseWrapper. 
+These wrapper classes are provided to help developers with custom implementation of servlet request and response types.
+We can extend these classes and override only specific methods we need to implement for custom request and response objects.
+These classes are not used in normal servlet programming.
+
+
+10. What is difference between GenericServlet and HttpServlet?
+
+The GenericServlet is protocol independent whereas HttpServlet is HTTP protocol specific. HttpServlet provides additional functionalities 
+such as state management etc.
+
+11. Which HTTP method is non-idempotent?
+
+An HTTP method is said to be idempotent if it returns the same result every time. HTTP methods GET, PUT, DELETE, HEAD, and OPTIONS are idempotent method 
+and we should implement our application to make sure these methods always return the same result. 
+HTTP method POST is non-idempotent method and we should use post method when implementing something that changes with every request.
+
+12. What is servlet attributes and their scope?
+
+Servlet attributes are used for inter-servlet communication, we can set, get and remove attributes in web application. 
+There are three scopes for servlet attributes – request scope, session scope and application scope.
+
+ServletRequest, HttpSession, and ServletContext interfaces provide methods to get/set/remove attributes from request, session and application scope respectively.
+
+Servlet attributes are different from init parameters defined in web.xml for ServletConfig or ServletContext.
+
+13. How can we perform any action at the time of deploying the project?
+
+By the help of ServletContextListener interface.
+
+14. What are life cycle methods of a servlet?
+
+Servlet Life Cycle consists of three methods:
+
+    public void init(ServletConfig config) – This method is used by container to initialize the servlet, this method is invoked only once in the lifecycle of servlet.
+
+    public void service(ServletRequest request, ServletResponse response) – This method is called once for every request, container can’t invoke service() method 
+    until unless init() method is executed.
+
+    public void destroy() – This method is invoked once when servlet is unloaded from memory.
+
+
+15. What is URL Rewriting?
+
+We can use HttpSession for session management in servlets but it works with Cookies and we can disable the cookie in client browser. 
+Servlet API provides support for URL rewriting that we can use to manage session in this case.
+
+The best part is that from a coding point of view, it’s very easy to use and involves one step – encoding the URL. 
+Another good thing with Servlet URL Encoding is that it’s a fallback approach and it kicks in only if browser cookies are disabled.
+
+We can encode URL with HttpServletResponse encodeURL() method.
+
+16. What are different ways for servlet authentication?
+
+Servlet Container provides different ways of login based servlet authentication:
+
+    HTTP Basic Authentication
+    HTTP Digest Authentication
+    HTTPS Authentication
+    Form Based Login: A standard HTML form for authentication, advantage is that we can change the login page layout as our application requirements 
+    rather than using HTTP built-in login mechanisms.
+
+
+17. Which event is fired at the time of project deployment and undeployment?
+
+ServletContextEvent.
+
+18. Which event is fired at the time of session creation and destroy?
+
+HttpSessionEvent.
+
+19. Which event is fired at the time of setting, getting or removing attribute from application scope?
+
+ServletContextAttributeEvent.
+
+20. How to read form data in servlet?
+
+Servlets handles form data parsing automatically using the following methods depending on the situation:
+
+    getParameter(): You call request.getParameter() method to get the value of a form parameter.
+
+    getParameterValues(): Call this method if the parameter appears more than once and returns multiple values, for example checkbox.
+
+    getParameterNames(): Call this method if you want a complete list of all parameters in the current request.
+
+
+
+JSP 
+***
+
+1. What is JSP?
+
+Java Server Pages technology (JSP) is a server-side programming language used to create a dynamic web page in the form of HyperText Markup Language (HTML). 
+It is an extension to the servlet technology.
+
+A JSP page is internally converted into the servlet. JSP has access to the entire family of the Java API including JDBC API to access enterprise database.
+Hence, Java language syntax has been used in the java server pages (JSP). The JSP pages are more accessible to maintain than Servlet 
+because we can separate designing and development. It provides some additional features such as Expression Language, Custom Tags, etc.
+
+2. What are the life-cycle methods for a JSP?
+
+public void jspInit()	- It is invoked only once, same as init method of the servlet.
+public void _jspService(ServletRequest request,ServletResponse)throws ServletException,IOException -
+	It is invoked at each request, same as service() method of the servlet.
+public void jspDestroy() -	It is invoked only once, same as destroy() method of the servlet.
+
+3.  What are the JSP implicit objects?
+
+JSP provides nine implicit objects by default. They are as follows:
+
+Object		Type
+
+1) out		JspWriter
+2) request	HttpServletRequest
+3) response	HttpServletResponse
+4) config	ServletConfig
+5) session	HttpSession
+6) application	ServletContext
+7) pageContext	PageContext
+8) page		Object
+9) exception	Throwable
+
+4.  Is JSP technology extensible?
+
+Yes. JSP technology is extensible through the development of custom actions, or tags, which are encapsulated in tag libraries.
+
+5. How can I implement a thread-safe JSP page? What are the advantages and Disadvantages of using it?
+
+You can make your JSPs thread-safe by having them implement the SingleThreadModel interface. 
+This is done by adding the directive <%@ page isThreadSafe="false" %> within your JSP page.
+
+
+6. How can I prevent the output of my JSP or Servlet pages from being cached by the browser?
+(OR) How to disable caching on the back button of the browser?
+
+    <%  
+    response.setHeader("Cache-Control","no-store");   
+    response.setHeader("Pragma","no-cache");   
+    response.setHeader ("Expires", "0"); //prevents caching at the proxy server  
+   %>  
+
+7. What are the two ways to include the result of another page. ?
+
+There are two ways to include the result of another page:
+
+    By include directive
+    By include action
+
+8.  How is JSP used in the MVC model?
+
+JSP is usually used for presentation in the MVC pattern (Model View Controller ), i.e., it plays the role of the view. 
+The controller deals with calling the model and the business classes which in turn get the data, and this data is then presented to the JSP for rendering on 
+to the client.
+
+9. What do JSP literals consist of?
+
+    Boolean
+    Integer
+    Floating point
+    String
+    Null
+
+10. What is EL in JSP?
+
+The Expression Language(EL) is used in JSP to simplify the accessibility of objects. 
+It provides many objects that can be used directly like param, requestScope, sessionScope, applicationScope, request, session, etc.
+
+11. Which directive is used in JSP custom tag?
+
+The JSP taglib directive.
+
+12. Explain the steps for creating custom tags in JSP?
+
+For creating any custom tag, we need to follow the following steps:
+
+    Create the Tag handler class
+    To generate the Tag Handler, we are inheriting the TagSupport class and overriding its method doStartTag().To write data for the JSP, we need to use the JspWriter class.
+    The PageContext class provides getOut() method that returns the instance of JspWriter class. TagSupport class provides an instance of pageContext by default.
+    Create the TLD file
+    Tag Library Descriptor (TLD) file contains information of tag and Tag Hander classes. It must hold inside the WEB-INF directory.
+    Create the JSP file
+    Let's use the tag in our JSP file. Here, we are specifying the path of tld file directly. However, it is recommended to use the URI name instead of 
+    full a path of tld file. We will learn about URI later. It uses taglib directive to use the tags defined in the tld file.
+
+
+
