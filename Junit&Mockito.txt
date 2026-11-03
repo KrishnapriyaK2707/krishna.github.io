@@ -1,0 +1,154 @@
+Junit
+------
+
+1. What is JUnit and why is it used?
+
+	JUnit is a popular Java testing framework used to write and run unit tests. It helps verify that individual methods or classes work correctly, improving code quality and catching bugs early in development 
+
+2.Difference between JUnit 4 and JUnit 5
+
+	JUnit 5 is modular, consisting of JUnit Platform, JUnit Jupiter, and JUnit Vintage, offering advanced features and better architecture compared to JUnit 4. 
+
+3. What is the use of @Test annotation?
+
+	The @Test annotation marks a method as a test case. JUnit automatically executes all methods annotated with @Test
+
+4.What are assertions in JUnit?
+
+	Assertions check whether the actual output matches the expected output. Common methods include assertEquals, assertTrue, and assertNotNull.
+
+5. How do you test protected or private methods?
+
+	Protected methods can be tested directly if the test class is in the same package. Private methods are usually tested indirectly through public methods or using reflection.
+
+6. What are the advantages of automated testing?
+
+	Automated testing is faster, more reliable, and can be programmed to run repeatedly, reducing human error and improving code quality.
+
+
+Mockito
+--------
+
+1. What is Mockito and why is it used?
+
+	Mockito is a mocking framework for Java that allows developers to create mock objects to simulate the behavior of real objects. It helps isolate the unit under test and ensures tests are repeatable and reliable.
+
+2. Why do we need mocking?
+	Mocking is used when dependencies are unavailable, incomplete, or when testing interactions without affecting external systems like databases or APIs.
+
+3. Difference between doReturn and thenReturn
+	Both are used to stub methods. thenReturn is commonly used with when(), while doReturn is useful for void methods or when spying on real objects 
+
+4. How to verify method calls in Mockito?
+	Use verify(mockObject, times(n)).methodName() to check if a method was called a specific number of times 
+
+5. How do Mockito and JUnit work together?
+	Mockito creates mock objects and defines their behavior, while JUnit provides the framework to execute tests and verify results. Together, they enable isolated and repeatable unit tests 
+
+Example of Mockito with JUnit
+-----------------------------
+
+@Mock
+private MyDependency myDependency;
+private MyService myService;
+@Before
+public void setUp() {
+    MockitoAnnotations.initMocks(this);
+    myService = new MyService(myDependency);
+}
+@Test
+public void testMyServiceMethod() {
+    when(myDependency.someMethod()).thenReturn("Mocked Response");
+    String result = myService.myServiceMethod();
+    assertEquals("Mocked Response", result);
+}
+
+
+6. Difference between doReturn and thenReturn.
+
+Answer: Mockito provides two different syntaxes for creating stubs, like:
+
+doReturn and thenReturn
+doNothing (no thenNothing)
+doThrow and thenThrow
+Both these methods set up stubs and can create/setup stubs and could be used interchangeably at times.
+
+
+So how do both of these differ?
+
+a) The thenReturn way of stubbing is a type-safe way of setting up stubs. What this essentially means is that it does a compile-time check against the return types that you want to stub to.
+
+// works
+when(mockedItemService.getItemDetails(123)).thenReturn(new ItemSku());
+
+// throws compile time exception
+when(mockedItemService.getItemDetails(123)).thenReturn(expectedPrice);
+
+
+// with doReturn,  both the stub setup works as it’s not compile safe.
+
+// here we are trying to return an object of type double, which still works and does not throw any compile time warning.
+
+doReturn(expectedPrice).when(mockedItemService.getItemDetails(123));
+doReturn(new ItemSku()).when(mockedItemService.getItemDetails(123));
+
+b) Another important difference between these 2 ways to the stub is for Mocked objects, apart from compile safety, there is not much difference.
+
+
+7. When and why should a spy be used?
+  
+     Spy is a type of partial mock supported by Mockito.
+
+
+a) When no mock is set up, any interaction on spy results in calling the real methods. But it still allows you to verify the interactions with the spied object – was a method called, how many times the method was called, what were the arguments using which the method was called, etc.
+
+b) It gives you the flexibility to set up partial mocks.
+
+For example, if you have an object with 2 methods – method1 and method2, and you want method1 to be called and method2 to be mocked. Spies provide this kind of setup.
+
+So, the difference between a mock and a stub in simple terms is that a mock is created from a type and not from an instance, whereas a stub wraps an actual instance of the class object.
+
+8. Why can’t static methods be mocked using Mockito?
+
+	Static methods are associated with the class itself and not any particular instance of the class. 
+This means that all instances/objects of the class use the same instance of the static method.
+
+9. What are the limitations of Mockito?
+
+ Mockito is a framework of choice for most of Java-based projects. It is easy to implement, read, and understand.
+
+	Some of the drawbacks or limitations in terms of functionality are:
+
+Its inability to mock static methods.
+Constructors, private methods, and final classes cannot be mocked.
+
+10. Which frameworks can support mocking Private and Static methods?
+
+Answer: Frameworks like PowerMockito (extensions of the Mockito framework), JMockit, etc. do provide means to mock private and static methods.
+
+11. What are the different types of mocking frameworks and how do they work?
+
+Answer: Types of the Mocking framework and how they work are explained below.
+
+There are broadly 2 categories of mocking frameworks:
+
+Proxy-based – Example, Mockito, EasyMock, etc.
+Bytecode based – Example, PowerMock, JMockit, etc.
+
+
+Let’s compare both these frameworks on different parameters.
+
+			Proxy based						Bytecode based
+			------------						---------------
+Simplicitly		More simple and easy to use				Might involve complex mock setup logic
+
+Mode of creation	A proxy or fake object which does not actually 
+			require instance of class / interface is created	It essentially involves creating objects and at runtime manipulates the 										instances for the mocked/stubbed behavior
+                       
+Functionality		Mocking classes and interfaces				In addition to classes and interfaces, allows mocking static methods, 
+										final classes etc
+
+Java dependency		Not very tightly coupled to Java versions	        Since these frameworks involve bytecode manipulation they are tightly coupled 										and might not be backward/forward compatible across java versions.
+
+Examples		Mockito, EasyMock etc.					PowerMock, JMockit etc.
+

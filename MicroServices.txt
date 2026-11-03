@@ -1,0 +1,391 @@
+What is done ?
+
+Spike work:
+
+Business Services (BS MS) - Business logic broken up into services - each service layer (jar) includes the following components: ejb, helper, jdo, 
+hibernate, 
+jdbc, VO, Jasper reports, license manager, guice end points (his.jar, mm.jar, emr.jar, alis.jar, hr.jar, fiis.jar, asset.jar, bb.jar). 
+Business layers of HMOSCore jar, Kodo RAR included in every microservice, as a core dependency.
+
+UI Services  (UI MS) - Frontend layer will include UI for all the modules put together (represents entire AHIS UI) - JSP, Controller, VO, VM templates, 
+JCS Caching (in ahis-ui.war). UI layers of HMOSCore jar to be included into UI Services, as a core dependency.
+
+Service discovery using Consul library, from UI MS to BS MS and also between BS MS and communication using rest calls. Netflix for failover/loadbalancing.
+
+EJBs will have to be be converted into transactional REST endpoints (@Stateless, @Path using JAX-RS). No more EJB interfaces.
+
+****************
+
+Q. What are microservices and why would someone want to look at implementing it.
+
+
+Microservices are an architectural style that develops a single application as a set of small services. 
+Each service runs in its own process. The services communicate with clients, and often each other, using lightweight protocols, 
+often over messaging or HTTP.
+
+Instead of a monolithic app, you have several independent applications that can run on their own. You can create them using different programming languages
+and even different platforms. You can structure big and complicated applications with simpler and independent programs that execute by themselves. 
+These smaller programs are grouped to deliver all the functionalities of the big, monolithic app.
+
+It is an architectural style which structures and application as a collection of loosely coupled, independently maintainable,
+testable and deployable services which are organized around business capabilities. 
+
+Q. Drawbacks of Monolithic applications. 
+
+1. As the application grows, so does the associated code base, which can overload your development environment each time it loads the application, 
+   reducing developer productivity.
+2. Because the application has been packaged in one EAR/WAR, changing the technology stack of the application becomes a difficult task. 
+3. If any single application function or component fails, then the entire application goes down. 
+4. Scaling monolithic applications can only be accomplished by deploying the same EAR/WAR packages in additional servers, known as horizontal scaling. 
+   Each copy of the application in additIonal servers will utilize the same amount of underlying resources, which is inefficient in its design.
+5. Monolithic architecture impacts both the development and application deployment stage.Because everything in the monolithic approach is tied together, 
+   developers cannot work independently to develop or deploy their own modules and must remain totally dependent on others, 
+   increasing overall development time.
+
+Q. What are the advantages and disadvantages of microservices?
+
+Here, are some significant advantages of using Microservices:
+
+
+* Improved fault isolation: Larger applications can remain mostly unaffected by the failure of a single module. That is a process failure should not 
+  bring the whole system down.
+* Eliminate vendor or technology lock-in: Microservices provide the flexibility to try out a new technology stack on an individual service as needed. 
+  There won’t be as many dependency concerns and rolling back changes becomes much easier. With less code in play, there is more flexibility.
+  Microservices can mix easily with other frameworks, libraries,  and databases.
+* Ease of understanding: With added simplicity, developers can better understand the functionality of a service.
+* Smaller and faster deployments: Smaller codebases and scope = quicker deployments, which also allow you to start to explore the benefits of
+  Continuous Deployment.Greater support for smaller and parallel team.
+* Scalability: Since your services are separate, you can more easily scale the most needed ones at the appropriate times, 
+  as opposed to the whole application. The cost of scaling is comparatively less than the monolithic architecture.
+* Independent deployment.
+* Deployment time reduce.
+* Easy to Maintain, Troubleshoot and Extend.
+
+
+
+Q. How does Microservice Architecture work?
+
+A microservice architecture has the following components:
+
+    Clients – Different users from various devices send requests.
+    Identity Providers – Authenticates user or clients identities and issues security tokens.
+    API Gateway – Handles client requests.
+    Static Content – Houses all the content of the system.
+    Management –  Balances services on nodes and identifies failures.
+    Service Discovery – A guide to find the route of communication between microservices.
+    Content Delivery Networks – Distributed network of proxy servers and their data centers.
+    Remote Service – Enables the remote access information that resides on a network of IT devices.
+
+Q. What is client side and server side service discovery?
+
+Instead of clients directly connecting to load balancer, in this architectural pattern the client connects to the service registry and 
+tries to fetch data or services from it.
+
+Once it gets all data, it does load balancing on its own and directly reaches out to the services it needs to talk to.
+
+This can have a benefit where there are multiple proxy layers and delays are happening due to the multilayer communication.
+
+In server-side discovery, the proxy layer or API Gateway later tries to connect to the service registry and makes a call to appropriate service afterward. 
+Over here client connects to that proxy layer or API Gateway layer.
+
+Q. What is Cohesion?
+
+The degree to which the elements inside a module belong together is said to be cohesion.
+
+Q.  What is Coupling?
+
+The measure of the strength of the dependencies between components is said to be coupling. A good design is always said to have High Cohesion and Low Coupling.
+
+Q. What is OAuth?
+
+
+OAuth means open authorization protocol. This protocol allows you to access the client applications on HTTP for third-party providers
+GitHub, Facebook, etc. It helps you to share resources stored on one site with another site without the need for their credentials. 
+
+
+Q. What is API Gateway?
+
+API Gateway is a special class of microservices that meets the need of a single client application (such as android app, web app, angular JS app, iPhone app, etc) and provide it with single entry point to the backend resources (microservices), providing cross-cutting concerns to them such as security, 
+monitoring/metrics & resiliency. 
+
+Client Application can access tens or hundreds of microservices concurrently with each request, aggregating the response and transforming them to 
+meet the client application’s needs. Api Gateway can use a client-side load balancer library (Ribbon) to distribute load across instances based on 
+round-robin fashion. It can also do protocol translation i.e. HTTP to AMQP if necessary. It can handle security for protected resources as well.
+
+Features of API Gateway
+
+    Spring Cloud DiscoveryClient integration
+    Request Rate Limiting (available in Spring Boot 2.x)
+    Path Rewriting
+    Hystrix Circuit Breaker integration for resiliency
+
+Q: What does one mean by Service Registration and Discovery ? How is it implemented in Spring Cloud?
+
+A: When we start a project, we usally have all the configurations in the properties file. As more and more services are developed and deployed,
+ adding and modifying these properties become more complex. Some services might go down, while some the location might change. 
+This manual changing of properties may create issues.
+Eureka Service Registration and Discovery helps in such scenarios. As all services are registered to the Eureka server and lookup done by calling the 
+Eureka Server, any change in service locations need not be handled and is taken care of
+Microservice Registration and Discovery with Spring cloud using Netflix Eureka.
+
+Q. What does one mean by Load Balancing ? How is it implemented in Spring Cloud?
+A: In computing, load balancing improves the distribution of workloads across multiple computing resources, such as computers, a computer cluster, network links,
+ central processing units, or disk drives. Load balancing aims to optimize resource use, maximize throughput, minimize response time, 
+and avoid overload of any single resource. Using multiple components with load balancing instead of a single component may increase reliability and 
+availability through redundancy. Load balancing usually involves dedicated software or hardware, such as a multilayer switch or a Domain Name System server process.
+
+In SpringCloud this can be implemented using Netflix Ribbon.
+
+Q. In which business scenario to use Netflix Hystrix ?
+A: Hystrix is a latency and fault tolerance library designed to isolate points of access to remote systems, services and 3rd party libraries, 
+stop cascading failure and enable resilience in complex distributed systems where failure is inevitable.
+
+Usually for systems developed using Microservices architecture, there are many microservices involved. These microservices collaborate with each other.
+
+Suppose if a microservice failed, then using the traditional approach we will propagate an exception. But this will still cause the whole system to crash anyways.
+This problem gets more complex as the number of microservices increase. The number of microservices can be as high as 1000. This is where hystrix comes into picture-
+We will be using two features of Hystrix-
+
+    Fallback method
+    Circuit Breaker
+
+
+Microservices 
+---------------------
+
+Key Characteristics:
+
+Characteristic			Description
+
+Independent Deployment		Each service can be deployed without affecting others
+Technology Diversity		Different services can use different tech stacks
+Loose Coupling			Services don't depend on internal implementations
+High Cohesion			Service contains related business logic
+Scalability			Scale individual services based on demand
+Resilience			Failure in one service doesn't crash the system
+Decentralized Data		Each service manages its own data
+API Communication		Services communicate via REST, gRPC, Message Queues
+
+
+Microservice Architecture Pattern
+--------------------------------
+
+Typical Microservice Ecosystem
+
+┌─────────────────────────────────────────────────────────────┐
+│                      CLIENT (Web/Mobile)                     						│
+└──────────────────────────┬──────────────────────────────────┘
+                           │
+                           ↓
+          ┌────────────────────────────────┐
+          │      API GATEWAY               			│
+          │ (Routing, Auth, Rate Limiting) 			│
+          └────────────────────────────────┘
+                           │
+         ┌─────────────────┼─────────────────┐
+         ↓                 ↓                 ↓
+   ┌──────────┐     ┌──────────┐     ┌──────────┐
+   │  USER    │     		│  ORDER   │     	│ PAYMENT  │
+   │ SERVICE  │     		│ SERVICE  │     	│ SERVICE  │
+   ├──────────┤     ├──────────┤     ├──────────┤
+   │User DB   │     		│Order DB  │     	│Payment DB│
+   └──────────┘     └──────────┘     └──────────┘
+         │                 │                 			│
+         │                 ↓                 			│
+         │          ┌──────────────┐         	│
+         │          │ Message Bus  		│◄────────┘
+         │          │(RabbitMQ,    		│
+         │          │Kafka)        		│
+         └─────────→└──────────────┘
+                           │
+                           ↓
+          ┌────────────────────────────────┐
+          │   NOTIFICATION SERVICE         			│
+          │   (Sends emails, SMS)          			│
+
+
+Communication:
+  - REST / HTTP
+  - gRPC
+  - Message Queues (RabbitMQ, Kafka)
+
+Infrastructure:
+  - Service Registry (Eureka)
+  - Config Server
+  - Circuit Breaker (Resilience4j)
+  - Monitoring (Prometheus + Grafana)
+  - Tracing (Zipkin)
+  - Container (Docker)
+  - Orchestration (Kubernetes)
+
+
+Core Microservice Patterns
+---------------------------
+
+1. API Gateway Pattern
+
+Single entry point for all clients.
+
+Client Request
+    ↓
+API Gateway
+  ├─ Route to correct service
+  ├─ Authentication/Authorization
+  ├─ Rate limiting
+  ├─ Load balancing
+  ├─ Request transformation
+  └─ Response aggregation
+    ↓
+Microservice
+
+Spring Boot Example:
+
+@Configuration
+@EnableWebFlux
+public class GatewayConfig {
+    
+    @Bean
+    public RouteLocator routes(RouteLocatorBuilder builder) {
+        return builder.routes()
+            .route("user-service", r -> r
+                .path("/users/**")
+                .uri("http://user-service:8081"))
+            .route("order-service", r -> r
+                .path("/orders/**")
+                .uri("http://order-service:8082"))
+            .route("payment-service", r -> r
+                .path("/payments/**")
+                .uri("http://payment-service:8083"))
+            .build();
+    }
+}
+
+
+2. Service Discovery Pattern
+
+Services dynamically discover each other.
+
+Service Registry (Eureka, Consul, Zookeeper)
+├─ User Service: localhost:8081
+├─ Order Service: localhost:8082
+├─ Payment Service: localhost:8083
+└─ Notification Service: localhost:8084
+
+When Order Service needs User Service:
+1. Query Service Registry: "Where is User Service?"
+2. Get: "localhost:8081"
+3. Call User Service directly
+
+Eureka Configuration:
+
+java
+// User Service (registers itself)
+@SpringBootApplication
+@EnableEurekaClient
+public class UserServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(UserServiceApplication.class, args);
+    }
+}
+
+// Order Service (discovers User Service)
+@RestController
+public class OrderController {
+    
+    @Autowired
+    private DiscoveryClient discoveryClient;
+    
+    @GetMapping("/order/{id}")
+    public Order getOrder(@PathVariable Long id) {
+        // Discover User Service
+        List<ServiceInstance> instances = 
+            discoveryClient.getInstances("user-service");
+        
+        ServiceInstance userService = instances.get(0);
+        String url = userService.getUri().toString();
+        
+        // Call User Service
+        RestTemplate restTemplate = new RestTemplate();
+        User user = restTemplate.getForObject(
+            url + "/users/{userId}", 
+            User.class
+        );
+        
+        return new Order(id, user);
+    }
+}
+
+3. Circuit Breaker Pattern
+
+Prevents cascading failures.
+
+When Order Service calls Payment Service:
+
+CLOSED State (Normal):
+Payment Service working
+Order Service calls freely
+All requests go through
+
+OPEN State (Failure):
+Payment Service down
+Circuit opens
+Requests fail immediately (fast fail)
+Don't overwhelm failing service
+
+HALF_OPEN State (Recovery):
+Allow one request through to test
+If succeeds → Close circuit
+If fails → Stay open
+
+Resilience4j Implementation:
+
+java
+@RestController
+@RequestMapping("/orders")
+public class OrderController {
+    
+    @Autowired
+    private RestTemplate restTemplate;
+    
+    @CircuitBreaker(
+        name = "payment-service",
+        fallbackMethod = "paymentServiceFallback"
+    )
+    @GetMapping("/{id}/pay")
+    public String payOrder(@PathVariable Long id) {
+        // Call Payment Service
+        return restTemplate.postForObject(
+            "http://payment-service:8083/pay",
+            new PaymentRequest(id),
+            String.class
+        );
+    }
+    
+    // Fallback when Payment Service is down
+    public String paymentServiceFallback(Long id, Exception e) {
+        return "Payment service is down. Try again later.";
+    }
+}
+
+// application.yml configuration
+resilience4j:
+  circuitbreaker:
+    instances:
+      payment-service:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        failureRateThreshold: 50
+
+
+4. Retry Pattern
+
+Automatically retry failed requests.
+
+5. Bulkhead Pattern
+
+Isolate resources to prevent one service from affecting others.
+

@@ -1,0 +1,283 @@
+Kafka
+______
+
+ Apache Kafka is am open source distributed event streaming platform. It is used to handle large scale real time data streams efficiently
+and reliably.
+
+* Kafka follows publish-subscribe model, where producers send messages to topics and consumers read them.
+* It provides high scalability, fault tolerance and fast data processing, making it ideal for real-time data streaming and event driven applications.
+
+Traditional system often struggle to process large scale data. Kafka solve these problems by providing:-
+
+* Real-time processing: Processes live data streams instantly and helps systems respond quickly to events.
+
+* Fault-Tolerance: Replicates data across brokers to prevent data loss during failures.
+
+* Scalability: Supports horizontal scaling & efficiently handles growing workloads.
+
+* Event driven architecture: Enable systems to automatically react to events while reducing continuous polling.
+
+* High Throughput: Processes millions of messages per sec with low latency.
+
+* Offset management: Consumers can continue reading from saved positions.
+
+
+Core Components
+_______________
+
+1. Kafka broker
+
+     Is a server responsible for storing and managing data. Main functions of brokers are:
+
+     * Store topic partitions
+     * Handle producers & consumer requests
+     * Support scalability & fault tolerance
+     * Work together in a kafka cluster
+
+
+2. Producers
+
+   	- Applications or service that send data to Kafka topics. It can send, logs, transactions, user activities,
+metrics, events. They also decide how messages are distributed across partitions.
+
+3. Kafka Topic
+
+    - Is a category or feed where messages are stored.
+
+         * Producers send messages to specific topics.
+         * Consumer subscribe to topics to read message.
+         * Every Kafka message is associated with a topic.
+         * Topics are divided into partitions for better scalability
+         * Partitions help Kafka process large volumes of data efficiently.
+        
+ A partition is a logical division of a Kafka topic that allows data to be spread across multiple brokers, enabling parallel processing and horizontal scalability.
+
+4. Consumers & Consumer groups
+
+   Consumers are applications that read messages from kafka topics.
+
+   Consumer group helps to
+              * Distribute workload
+              * Process messages in parallel
+              * Ensure each message is processed only once within a group.
+
+Consumers can read message from a specific offset.
+
+5. Zoo keeper
+
+Apache zookeeper helps manage Kafka cluster and is used for 
+
+* Broker coordination
+* Meta data management
+* Cluster synchronization
+* Failure recovery
+
+Important concepts of Apache Kafka
+-----------------------------------
+
+* Topic partition: Kafka topics are divided into a no of partitions, which allow you to split data across multiple brokers.
+* Consumer group: A consumer group is a collection of consumers reading from the same topic.
+* Node: A node refers to a individual server/machine inside a Kafka cluster.
+* Replicas: A replica of a partition is a "backup" of a partition. Replicas never read/write data. They are used to prevent data loss.
+
+
+Workflow of Apache Kafka
+------------------------
+
+Step1 : Producers send data
+  
+       * Producers create & send data to Kafka topics
+       * Data can include logs, transactions, events or user activities.
+       * Kafka divides data into partition for effective processing.
+
+Step 2: Kafka stores the data
+
+       * Kafka stores messages inside topics for a configured time period.
+       * Message are not deleted immediately after being read.
+       * Data is replicated across brokers to prevent the data loss.
+
+Step 3: Consumer read the data
+
+        * Consumer subscribe to topics and read messages.
+        * Consumer groups helps distribute workload effectively.
+        * Consumer can read messages from specific offset.
+
+Step 4: Kafka balances the load
+
+         * Zookeeper manage broker coordination and failure handling.
+         * Kafka distributes partitions across brokers for scalability.
+         * If a broker fails, kafka switches to replica brokers automatically.
+
+Step 5: Data is processed & used.
+
+         * Consumer process data for analytics, storage, monitoring or notifications.
+         * Kafka integrate with tools like spark, flink and Hadoop.
+
+
+Configuration:
+______________
+
+Producer side configuration in yml
+-----------------------------------
+kafka:
+  producer:
+  transport:KAFKA
+  sslBootstrapServers:
+  brokers:
+ event:
+ topic:
+notification
+  topic:
+
+Consumer side configuration
+----------------------------
+kafka:
+  consumer:
+  sslenabled: true
+  sslBootstrapServers:
+  brokers:
+group:
+notification
+  topic:
+  partition:1
+
+
+
+Implementation
+_______________
+
+Producer:
+--------
+
+Example:
+
+public class EmailKafkaProducer{
+
+private KafkaProducerMessageHandler kafkaHandler;
+
+@value("{kafka.notification.topic:alchemyNotificationTopic}")
+private String notificationTopic;
+
+private void produceEmailEvent(String msg) {
+
+  kafkaHandler.sendMessage(msg,notificationTopic);
+
+}
+
+}
+
+Consumer 
+-------
+
+@Configuration
+@EnableConfigurationProperties
+@ConfigurationProperty(prefix = "kafka.consumer")
+public class ListenerKafkaConumserConfig extends KafkaConsumerConfig{
+
+}
+
+public class NotificationListener extens AbstractKafkaListener {
+
+@value("{kafka.notification.topic:alchemyNotificationTopic}")
+private String notificationTopic;
+
+@value("{kafka.topic:partition:1}")
+private int partitionCount;
+
+@Qualifier("notificationConsumerProcessor")
+private MessageConsumerProcessor<String,String,StreamingContent<String,String> notifcationProcessor
+
+
+
+
+
+
+
+
+
+Interview questions:
+
+1. What is Apache kafka ?
+
+ Apache Kafka is am open source distributed event streaming platform that allows publishing, subscribing, storing and processing streams of records
+in real time.
+
+2. How is Kafka different from traditional message queues (Rabbit MQ/JMS) ?
+
+   Kafka and traditional message queues(Rabbit MQ/JMS)  are messaging systems, but designed for different use cases.
+
+Aspect			Kafka							RabbitMQ/JMS
+
+Architecture		Distributed log-based event streaming			Message broker queue-based
+Message Durability	Retained for configurable time				Deleted after consumption
+Multiple Consumers	Each consumer gets all messages (independently)		One message, one consumer (by default)
+Ordering		Guaranteed within partition				Guaranteed per queue
+Throughput		1M+ messages/sec					50K-100K messages/sec
+Scalability		Horizontal (partitions)					Vertical
+Use Case		Event streaming, data pipelines				Task queuing, traditional messaging
+Latency			Low latency (ms)					Very low latency (microseconds)
+Replayability		Messages can be replayed				Once consumed, deleted
+Storage			Persistent on disk					In-memory/disk (configurable
+
+3. What are the key components of Kafka ?
+
+ Producer - Publishes messages to kafka topics 
+ Consumer - Subscribe to topics & process the published messages
+ Broker - A kafka server that stores and manage topics
+ Topic - A category or feed name to which records are published  
+ Partition - Topics are divided into partitions for scalability.
+
+4. What is a topic in kafka ?
+
+    * A topic in kafka is a category or feed name to which records are published. 
+    * A topic in kafka is always multi-subscriber. That is a topic can have zero, one or many consumers that subscribe to the data written to it.
+    * Topics are split into partitions for improved scalability and parallel processing.
+    
+5. What is a partition in Kafka ?
+
+    * A partition in kafka  is an ordered, immutable sequence of records that is continuously appended to.
+    * Each partition is a structured commit log and records in the partition are assigned a sequential id called offset.
+    * Partitions allow kafka to scale horizontally and provide parallel processing capabilities.
+   
+6. What is a broker in kafka ?
+
+   A broker is a kafka server that runs un a kafka cluster. It receives messages from producers, assign offsets to them, and commits the message
+to store in disk. It also services consumers, responding to fetch requests for partitions and responding with the message that have been published.
+
+7. What is the role of zookeeper in kafka ?
+
+  * zookeeper managed kafka cluster meta data, broker registration, topic/partition configuration, and 
+  * As of apache kafka 4.0 zookeeper support has been completely removed.
+  * Kafka now completely runs on KRaft (Kafka raft)
+ 
+8. How does kafka ensures fault tolerance ?
+
+  * Kafka ensures fault tolerance through data replication.
+  * Each partition is replicated across a configurable no of servers for fault tolerance.
+
+9. How does kafka support scalability ?
+
+   Topics can be partitioned across multiple brokers, allowing parallel processing.
+ Consumers can be grouped to read multiple partitions simultaneously.
+
+10. Difference between Kafka consumer and consumer group ?
+
+ * A consumer is a application that reads data from kafka topic.
+
+ * A consumer group is a set of consumers that work together to consume data from one or more topics, with each partition divided to exactly
+one consumer instance with a subscribing group - enabling parallel processing and load balancing.
+
+11. What is the purpose of offset in Kafka ?
+
+  * The offset is a unique, sequential identifier of a record within a partition, making the consumer's position in that partition.
+
+12. How does the concept of offset work in Kafka?
+
+ An offset is a monotonically increasing 64-bit integer assigned sequentially to every message committed to a specific Kafka topic-partition.
+Log Identity: It acts as a unique identifier/index for a message within its partition.
+Consumer Progress: Consumers track their reading position by periodically committing their current offset (either automatically or manually via the ConsumerOffsets topic). This allows them to resume processing precisely where they left off in the event of a failure or rebalance.
+
+
+
+
+
