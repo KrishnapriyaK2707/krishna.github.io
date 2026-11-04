@@ -1236,7 +1236,8 @@ You utilize Java's concurrent framework via CompletableFuture coupled with a ded
 // Supply async tasks to a thread pool
 CompletableFuture<ResponseA> futureA = CompletableFuture.supplyAsync(() -> serviceA.call(), customExecutor);
 CompletableFuture<ResponseB> futureB = CompletableFuture.supplyAsync(() -> serviceB.call(), customExecutor);
-// Combine both and block until both executions finish executionCompletableFuture.allOf(futureA, futureB).join();
+// Combine both and block until both executions finish 
+executionCompletableFuture.allOf(futureA, futureB).join();
 // Extract responses safely without blocking indefinitely
 ResponseA resA = futureA.get();
 ResponseB resB = futureB.get();
