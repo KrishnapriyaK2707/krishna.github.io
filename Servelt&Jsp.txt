@@ -11,6 +11,8 @@ All servlets must implement the javax.servlet.Servlet interface, which defines s
 When implementing a generic service, we can extend the GenericServlet class provided with the Java Servlet API. 
 The HttpServlet class provides methods, such as doGet() and doPost(), for handling HTTP-specific services.
 
+A Java Servlet is a server-side component written in Java that runs inside a web container (such as Apache Tomcat, Jetty, or Glassfish) 
+
 2. What is difference between ServletConfig and ServletContext?
 
 Some of the differences between ServletConfig and ServletContext are:
@@ -159,6 +161,201 @@ Servlets handles form data parsing automatically using the following methods dep
 
     getParameterNames(): Call this method if you want a complete list of all parameters in the current request.
 
+21. How can we perform any action at the time of deploying the project?
+		By the help of ServletContextListener interface.
+
+22. What is load-on-startup in servlet?
+
+The load-on-startup element of servlet in web.xml is used to load the servlet at the time of deploying the project or server start. So it saves time for the response of first request.
+
+23.What is war file?
+
+A war (web archive) file specifies the web elements. A servlet or jsp project can be converted into a war file. Moving one servlet project from one place to another will be fast as it is combined into a single file.
+
+24. What are the annotations used in Servlet 3?
+
+There are mainly 3 annotations used for the servlet.
+
+@WebServlet : for servlet class.
+@WebListener : for listener class.
+@WebFilter : for filter class.
+
+25.What is the use of attribute in servlets?
+
+Attribute is a map object that can be used to set, get or remove in request, session or application scope. It is mainly used to share information between one servlet to another.
+
+26. What is the use of welcome-file-list?
+It is used to specify the welcome file for the project.
+
+27. What Is the Purpose of web.xml in Servlets?
+The web.xml deployment descriptor is a configuration file placed in the WEB-INF directory of a web application. It maps servlet classes to URLs, sets initialization parameters, configures filters and listeners, and defines error pages.
+
+For example:
+
+<servlet>
+    <servlet-name>MyServlet</servlet-name>    
+    <servlet-class>com.example.MyServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>MyServlet</servlet-name>
+    <url-pattern>/path</url-pattern>
+</servlet-mapping>
+
+28. What Are Initialization Parameters in Servlets?
+Servlets often require configuration data (such as database connection strings). These can be provided via init parameters either in web.xml or using annotations like @WebInitParam.
+
+You can obtain these parameters using:
+
+ServletConfig config = getServletConfig();
+String paramValue = config.getInitParameter("paramName");
+This allows customization of servlet behavior without recompiling code.
+
+29.Demonstrate Servlet Session Management
+
+HTTP is inherently stateless. Session management allows maintaining state across multiple requests. Common techniques include:
+
+Cookies – Small data stored in the client browser, sent with each request.
+URL Rewriting – Appending session IDs to URLs when cookies are disabled.
+HTTPSession API – Built-in session management using HttpSession object.
+Example:
+
+HttpSession session = request.getSession();
+session.setAttribute("user", userObject);
+This creates a session object tied to the client.
+
+30. What Is URL Encoding vs URL Rewriting?
+Both are session management techniques:
+
+URL Encoding adjusts URLs to include special characters for safe transfer.
+URL Rewriting appends the session ID in the URL when cookies are not available.
+Example:
+
+response.encodeURL("dashboard");
+This ensures session tracking even if cookies are disabled.
+
+
+31. What Is a Servlet Filter and Its Use Cases?
+A Servlet Filter intercepts requests before they reach a servlet (or responses before they reach the client). Filters handle tasks like:
+
+Authentication
+Logging
+Compression
+Input validation
+Example: Use a filter to check if the request is authenticated before forwarding to secured pages.
+
+32. What Are Servlet Listeners?
+Listeners are event handlers that respond to lifecycle events in a web application. Common listener interfaces include:
+
+ServletContextListener — Application startup/shutdown events.
+HttpSessionListener — Session creation and destruction.
+ServletRequestListener — Request lifecycle events.
+Listeners help manage resource allocation or cleanup in response to application activity.
+
+33. How Do You Forward a Request to Another Resource?
+To forward a request internally:
+
+RequestDispatcher rd = request.getRequestDispatcher("/otherServlet");
+rd.forward(request, response);
+To redirect to a new URL:
+
+response.sendRedirect("newURL");
+
+Difference:
+
+forward() is handled internally without a client redirect.
+sendRedirect() instructs the client to make a new request.
+
+34. How Do You Upload a File Using a Servlet?
+
+To upload a file:
+
+Configure <multipart-config> in web.xml.
+Use ServletFileUpload or servlet 3.0 annotations.
+Process the file parts in doPost().
+This scenario is common in real applications like profile picture uploads.
+
+35. Explain How to Handle Exceptions in a Servlet
+Servlets can handle exceptions in two ways:
+
+Try-catch blocks in servlet code.
+Define <error-page> in web.xml to map exceptions to custom debug pages.
+Example:
+
+<error-page>    <exception-type>java.lang.Exception</exception-type>
+    <location>/error.jsp</location>
+</error-page>
+
+36. What Is the Role of Annotations in Servlets (Servlet 3.0+)?
+
+Since Servlet 3.0, annotations can replace web.xml:
+
+@WebServlet("/path")
+@WebFilter
+@WebListener
+Example:
+
+@WebServlet("/hello")
+public class HelloServlet extends HttpServlet { ... }
+This simplifies configuration and deployment
+
+37. What are the different types of Servlet scopes and how are they used?
+
+Servlet scopes define the visibility and lifetime of attributes stored in a web application. They are essential for managing data sharing across components while maintaining proper isolation.
+
+The four primary scopes are Request, Session, Application, and Page (used mainly in JSP). Request scope lasts for a single HTTP request and is ideal for passing temporary data between servlets or JSPs. Session scope persists across multiple requests from the same client and is commonly used for user-specific data such as login status. Application scope is global and shared across all users, suitable for configuration or shared resources.
+
+Understanding scope selection prevents memory leaks and concurrency issues.
+
+Scope			Lifetime			Visibility			Typical Use
+-----			---------			----------			------------
+Request			Single request		Same request		Validation messages
+Session	User 	session				Single user			Login data
+Application		App lifecycle		All users			Caches, configs
+Page			JSP only			Same JSP			View logic
+
+38. What is the difference between Web Server, Web Container and Application Server?
+
+Web Server - A web server processes HTTP Requests from web clients and responds back with Http Responses. A web server can process and respond to HTTP requests for static content, but it cannot process requests for dynamic content by itself.
+
+Apache Http Server and IBM Http Server are examples of commonly used Web Servers.
+
+Web Container - In Java based web applications the dynamic content is processed by servlets that run in a ‘web container’, also called as ‘servlet container’. Web servers utilize web containers to respond to requests for dynamic data.
+
+A web container implements the Java Servlet specification (including JSP and JSTL). The servlet container contains and manages servlets through their lifecycle.
+
+Apache Tomcat and Jetty are example of web/servlet containers.
+
+Application Server - An application server contains the web container or implements the Servlet API, contains the EJB container which manages EJBs, and implements the complete Java EE specification – JMS, JTA, JNDI, JAX-RPC, JavaMail etc.
+
+Unlike web servers, which support only Http protocol, application servers supports various protocols such as Http, TCP/IP, IIOP, RMI, JRMP etc.
+
+The application server provides various scalability and fault-tolerance techniques, resource pooling, component life cycle management, transaction management, messaging, security etc.
+
+IBM Websphere, Weblogic and JBoss are some of the commonly used Application servers.
+
+39. What are the key interfaces and classes defined in javax.servlet package?
+
+Following are the interfaces and classes defined in javax.servlet package.
+
+Interfaces - Servlet, Filter, ServletRequest, ServletResponse, ServletContext, ServletConfig, RequestDispatcher
+
+Classes - GenericServlet, ServletInputStream, ServletOutputStream
+
+40. How do you authenticate a client request using Servlet API?
+
+The ServletRequest interface defined in Servlet API provides the following methods for authentication.
+
+authenticate() - Uses the container's login mechanism configured for the ServletContext to authenticate the user making this request.
+
+getAuthType() - Returns the name of the authentication scheme used to protect the servlet.
+
+getUserPrincipal() - Returns a java.security.Principal object containing the name of the current authenticated user.
+
+isUserInRole() - Returns a boolean indicating whether the authenticated user is included in the specified logical role.
+
+login() - Validate the provided username and password in the password validation realm used by the web container login mechanism configured for the ServletContext.
+
+logout() - Establish null as the value returned when getUserPrincipal(), getRemoteUser(), and getAuthType() is called on the request.
 
 
 JSP 
