@@ -941,7 +941,7 @@ This optimizes the heap memory by removing duplicate String values to a single c
 This option is introduced in Java 8 u 20.
 
 
-Q. How HashMap works internally
+Q. How HashMap works internally ?
 
 A Java HashMap stores key-value pairs in an array of buckets. When put() is called, it calculates the key's hash code, applies a hashing function, and determines the bucket index using (n-1) & hash. If multiple keys land in the same bucket, collisions are handled using a linked list and, from Java 8 onward, a Red-Black Tree when the bucket becomes large enough. During get(), HashMap recalculates the bucket index and uses equals() to find the exact key. When the number of elements crosses capacity × loadFactor (default 16 × 0.75 = 12), the map resizes and rehashes entries. This provides O(1) average lookup and insertion performance.
 
@@ -971,6 +971,21 @@ Q. What changes were done for HashMap in Java 8	?
   When multiple keys collide (have the same hash value), Java 7 stored them in a linked list. If the number of elements in a single bucket exceeds 8,
   the linked list automatically converts into a Red-Black Tree. This improves the worst-case lookup time from O(n) → O(log n). If the number of elements 
   in a bucket drops below 6, it converts back to a linked list to reduce memory usage.
+
+Q. Why equals() and hashCode() must be consistent in java ? 
+
+    In Java, equals() and hashCode() must be consistent because hash-based collections such as HashMap, HashSet, and Hashtable rely on both methods to store and retrieve objects correctly.
+If two objects are equal according to equals(), they must return the same hashCode().
+
+When storing an object in HashMap:
+hashCode() determines the bucket.
+equals() determines the exact object within that bucket.
+
+hashCode() --> Bucket Selection
+equals()   --> Object Comparison inside bucket
+
+HashMap and HashSet first use hashCode() to locate a bucket and then use equals() to identify the exact object within that bucket. Therefore, if two objects are considered equal by equals(), they must return the same hashCode(). Otherwise, hash-based collections can store duplicates or fail to retrieve existing objects, leading to incorrect behavior.
+
 
 Q. Java 17 Features
   
