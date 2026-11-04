@@ -309,7 +309,7 @@ Understanding scope selection prevents memory leaks and concurrency issues.
 Scope			Lifetime			Visibility			Typical Use
 -----			---------			----------			------------
 Request			Single request		Same request		Validation messages
-Session	User 	session				Single user			Login data
+Session			User session		Single user			Login data
 Application		App lifecycle		All users			Caches, configs
 Page			JSP only			Same JSP			View logic
 
