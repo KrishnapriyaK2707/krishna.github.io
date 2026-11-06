@@ -264,7 +264,14 @@ public ModelAndView handleException(NullPointerException ex)
     return modelAndView;
 }
 
+Q. What are the design patterns in Spring ?
 
+ Front Controller - Dispatcher Servlet
+ Prototype - Beans
+ Dependency Injection
+ Factory Pattern - Bean Factory & Application Context
+ Template Method 
+   - org.springframework.web.servlet.mvc.AbstractController
 
 
 
